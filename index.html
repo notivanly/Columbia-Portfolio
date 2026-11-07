@@ -4,20 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Ivan Ly | Engineering &amp; Development</title>
-  <meta name="description" content="Portfolio of Ivan Ly, a high school student building physics, aerospace and mathematics simulations, interactive tools and independent engineering projects.">
+  <meta name="description" content="Ivan Ly, Huntington Beach High School Class of 2027. Interactive physics simulations and educational tools.">
   <meta name="theme-color" content="#0c0c0d">
   <meta property="og:title" content="Ivan Ly | Engineering &amp; Development">
-  <meta property="og:description" content="Exploring the intersection of engineering, physics, and computer science through simulations, interactive tools, and independent projects.">
+  <meta property="og:description" content="I build interactive physics simulations and educational tools.">
   <meta property="og:type" content="website">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23202123'/%3E%3Cellipse cx='16' cy='16' rx='11' ry='5' fill='none' stroke='%23fff' stroke-width='1.6' transform='rotate(-28 16 16)'/%3E%3Ccircle cx='16' cy='16' r='3.4' fill='%23ff4f2e'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23202123'/%3E%3Cellipse cx='16' cy='16' rx='11' ry='5' fill='none' stroke='%23fff' stroke-width='1.6' transform='rotate(-28 16 16)'/%3E%3Ccircle cx='16' cy='16' r='3.4' fill='%239acfff'/%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-</head>
+<meta property="og:url" content="https://notivanly.github.io/Columbia-Portfolio/"><meta name="twitter:card" content="summary"></head>
 
-<body class="is-loading">
+<body>
   <a class="skip" href="#projects">Skip to projects</a>
 
   <!-- ===== Fixed header ===== -->
@@ -29,7 +29,7 @@
     <nav class="nav" aria-label="Primary">
       <a href="#home" data-nav="1">Home</a>
       <a href="#projects" data-nav="2">Projects</a>
-      <a href="#engineering" data-nav="4">Engineering</a>
+      <a href="#mathematics" data-nav="3">Mathematics</a><a href="#engineering" data-nav="4">Engineering</a>
       <a href="#about" data-nav="5">About</a>
       <a href="#contact" data-nav="6">Contact</a>
     </nav>
@@ -47,7 +47,7 @@
   </div>
 
   <!-- Section progress, filled in by main.js -->
-  <aside class="rail" id="rail" aria-label="Section progress"></aside>
+  <button id="pause-motion" type="button" aria-pressed="false">Pause animation</button><aside class="rail" id="rail" aria-label="Section progress"></aside>
 
   <main>
 
@@ -56,45 +56,25 @@
       <div class="slide hero" data-slide data-tone="light" style="--gx:62%; --gy:40%; --ox:79%; --oy:90%">
         <div class="stage"><canvas data-visual="hero" data-side="1" aria-hidden="true"></canvas></div>
 
-        <p class="index mono" style="--cy:31%"><span>001</span> / 006</p>
+        <p class="preview-label">Illustrative preview · orbital artwork</p><p class="index mono" style="--cy:31%"><span>001</span> / 006</p>
 
         <div class="copy" style="--cy:27%">
-          <h1 class="title">
-            <span class="line"><span style="--i:0">ENGINEERING</span></span>
-            <span class="line"><span style="--i:1">IDEAS INTO</span></span>
-            <span class="line"><span style="--i:2">REALITY.</span></span>
-          </h1>
-          <p class="desc" data-r style="--d:700">Exploring the intersection of engineering, physics, and computer science through simulations, interactive tools, and independent projects.</p>
+          <h1 class="title">IVAN LY<br>BUILDING TO<br>EXPLORE.</h1>
+          <p class="desc" data-r style="--d:700">I build interactive physics simulations and educational tools.</p>
         </div>
 
-        <div class="foot">
-          <a class="link" data-site-href="github" target="_blank" rel="noopener noreferrer">GitHub <svg class="ico" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5"/></svg></a>
-          <a class="cue" href="#projects"><svg class="ico down" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 2v8M2.5 6.5L6 10l3.5-3.5"/></svg>Scroll to explore</a>
+        <div class="foot"><a class="link primary" href="#project-index">Explore projects</a>
+          <a class="link" href="https://github.com/notivanly" target="_blank" rel="noopener noreferrer">GitHub <svg class="ico" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5"/></svg></a>
+
         </div>
       </div>
     </section>
 
     <!-- ===== 002  PROJECTS (six scenes are built by main.js from js/data.js) ===== -->
-    <section class="chapter" id="projects" data-chapter="2" aria-label="Physics and engineering projects"></section>
+    <section class="chapter" id="projects" data-chapter="2" aria-label="Physics and engineering projects"><nav id="project-index" class="project-index" aria-label="Project index"><h2>Explore projects</h2><ol><li><a href="#bridge-physics-simulator">01 · Bridge Physics Simulator</a></li><li><a href="#mini-wind-tunnel-simulator">02 · Mini Wind Tunnel Simulator</a></li><li><a href="#truss-force-analyzer">03 · Truss Force Analyzer</a></li><li><a href="#physics-sandbox">04 · Physics Sandbox</a></li><li><a href="#planetary-gravity-explorer">05 · Planetary Gravity Explorer</a></li><li><a href="#orbital-mechanics-simulator">06 · Orbital Mechanics Simulator</a></li><li><a href="#math-0">07 · SAT Question Bank Tracker</a></li><li><a href="#math-1">08 · AMC Practice</a></li><li><a href="#math-2">09 · Calculus III Visualizer</a></li></ol></nav><article class="slide scene" id="bridge-physics-simulator" data-slide><div class="stage"><canvas data-visual="bridge" data-side="1" aria-hidden="true"></canvas></div><p class="preview-label">Illustrative preview · separate from the linked application</p><p class="index mono">PROJECT 01 / 09</p><div class="copy"><h3 class="title">Bridge Physics Simulator</h3><p class="desc">Build a bridge, choose materials and test it with moving vehicles.</p><p class="try"><b>Try this:</b> Compare the Pratt and Warren presets under a vehicle load.</p><div class="actions"><a class="link" href="https://notivanly.github.io/BridgeGame/" target="_blank" rel="noopener noreferrer">Open simulator ↗</a><a class="link" href="https://github.com/notivanly/BridgeGame" target="_blank" rel="noopener noreferrer">Source code ↗</a></div></div></article><article class="slide scene" id="mini-wind-tunnel-simulator" data-slide><div class="stage"><canvas data-visual="wind" data-side="1" aria-hidden="true"></canvas></div><p class="preview-label">Illustrative preview · separate from the linked application</p><p class="index mono">PROJECT 02 / 09</p><div class="copy"><h3 class="title">Mini Wind Tunnel Simulator</h3><p class="desc">Adjust wind speed and angle of attack to explore lift and drag in a simplified airfoil model.</p><p class="try"><b>Try this:</b> Increase the angle of attack and watch the lift curve change near stall.</p><details><summary>Model notes</summary><p>Lift uses an angle-dependent coefficient with a simplified stall model. Drag uses a quadratic function of the lift coefficient. This is an educational model.</p></details><div class="actions"><a class="link" href="https://notivanly.github.io/Mini-Wind-Tunnel-Simulator/" target="_blank" rel="noopener noreferrer">Open simulator ↗</a><a class="link" href="https://github.com/notivanly/Mini-Wind-Tunnel-Simulator" target="_blank" rel="noopener noreferrer">Source code ↗</a></div></div></article><article class="slide scene" id="truss-force-analyzer" data-slide><div class="stage"><canvas data-visual="truss" data-side="1" aria-hidden="true"></canvas></div><p class="preview-label">Illustrative preview · separate from the linked application</p><p class="index mono">PROJECT 03 / 09</p><div class="copy"><h3 class="title">Truss Force Analyzer</h3><p class="desc">Edit a truss and inspect member forces and support reactions.</p><p class="try"><b>Try this:</b> Select a Warren truss, then choose Analyze forces.</p><div class="actions"><a class="link" href="https://notivanly.github.io/Truss-Force-Analyzer/" target="_blank" rel="noopener noreferrer">Open simulator ↗</a><a class="link" href="https://github.com/notivanly/Truss-Force-Analyzer" target="_blank" rel="noopener noreferrer">Source code ↗</a></div></div></article><article class="slide scene" id="physics-sandbox" data-slide><div class="stage"><canvas data-visual="sandbox" data-side="1" aria-hidden="true"></canvas></div><p class="preview-label">Illustrative preview · separate from the linked application</p><p class="index mono">PROJECT 04 / 09</p><div class="copy"><h3 class="title">Physics Sandbox</h3><p class="desc">Explore a scene of moving bodies and inspect its energy display.</p><p class="try"><b>Try this:</b> Reset the scene and compare its motion with the energy display.</p><div class="actions"><a class="link" href="https://notivanly.github.io/PhysicsSandbox/" target="_blank" rel="noopener noreferrer">Open simulator ↗</a><a class="link" href="https://github.com/notivanly/PhysicsSandbox" target="_blank" rel="noopener noreferrer">Source code ↗</a></div></div></article><article class="slide scene" id="planetary-gravity-explorer" data-slide><div class="stage"><canvas data-visual="gravity" data-side="1" aria-hidden="true"></canvas></div><p class="preview-label">Illustrative preview · separate from the linked application</p><p class="index mono">PROJECT 05 / 09</p><div class="copy"><h3 class="title">Planetary Gravity Explorer</h3><p class="desc">Choose a world and compare gravity through drop and jump demonstrations.</p><p class="try"><b>Try this:</b> Run the drop demonstration on Earth, then choose another world.</p><div class="actions"><a class="link" href="https://notivanly.github.io/Planetary-Gravity-Explorer/" target="_blank" rel="noopener noreferrer">Open simulator ↗</a><a class="link" href="https://github.com/notivanly/Planetary-Gravity-Explorer" target="_blank" rel="noopener noreferrer">Source code ↗</a></div></div></article><article class="slide scene" id="orbital-mechanics-simulator" data-slide><div class="stage"><canvas data-visual="orbital" data-side="1" aria-hidden="true"></canvas></div><p class="preview-label">Illustrative preview · separate from the linked application</p><p class="index mono">PROJECT 06 / 09</p><div class="copy"><h3 class="title">Orbital Mechanics Simulator</h3><p class="desc">Launch an orbit around Earth, Mars or the Moon and inspect the telemetry.</p><p class="try"><b>Try this:</b> Switch the central body from Earth to Mars and launch again.</p><div class="actions"><a class="link" href="https://notivanly.github.io/Orbital-Mechanics-Simulator/" target="_blank" rel="noopener noreferrer">Open simulator ↗</a><a class="link" href="https://github.com/notivanly/Orbital-Mechanics-Simulator" target="_blank" rel="noopener noreferrer">Source code ↗</a></div></div></article></section>
 
     <!-- ===== 003  MATHEMATICS & EDUCATIONAL TOOLS ===== -->
-    <section class="chapter" id="mathematics" data-chapter="3" aria-label="Mathematics and educational tools">
-      <div class="slide math" data-slide data-tone="dark" style="--gx:68%; --gy:36%; --ox:68%; --oy:55%">
-        <div class="stage"><canvas id="mathCanvas" data-visual="fourier" data-side="1" aria-hidden="true"></canvas></div>
-        <p class="index mono" style="--cy:28%"><span>003</span> / 006</p>
-        <div class="copy" style="--cy:24%">
-          <h2 class="title">
-            <span class="line"><span style="--i:0">MATHEMATICS &amp;</span></span>
-            <span class="line"><span style="--i:1">EDUCATIONAL</span></span>
-            <span class="line"><span style="--i:2">TOOLS</span></span>
-          </h2>
-          <ol class="math-list" id="mathList" data-r style="--d:500"></ol>
-          <p class="desc math-desc" id="mathDesc" data-r style="--d:700"></p>
-        </div>
-        <div class="foot" id="mathLinks"></div>
-        <dl class="hud" id="mathHud" aria-hidden="true"></dl>
-      </div>
-    </section>
+    <section class="chapter" id="mathematics" data-chapter="3"><div class="math-content"><p class="mono">003 / 006</p><h2>Mathematics &amp; educational tools</h2><p>Tools for practice and visual exploration.</p><article id="math-0" class="math-resource"><p class="mono">PROJECT 07 / 09</p><h3>SAT Question Bank Tracker</h3><p>A Chrome extension for tracking SAT Question Bank practice.</p><p><b>Try this:</b> Open the extension listing to review its features and installation requirements.</p><div class="actions"><a class="link" href="https://chromewebstore.google.com/detail/sat-question-bank-tracker/eeinjoeegjkhiddemncmbbgianhliopi" target="_blank" rel="noopener noreferrer">View extension ↗</a></div></article><article id="math-1" class="math-resource"><p class="mono">PROJECT 08 / 09</p><h3>AMC Practice</h3><p>An online resource for AMC practice.</p><p><b>Try this:</b> Open AMC Arena to explore the available practice options.</p><div class="actions"><a class="link" href="https://notivanly.github.io/AMCPRactice/" target="_blank" rel="noopener noreferrer">Explore tool ↗</a><a class="link" href="https://github.com/notivanly/AMCPRactice" target="_blank" rel="noopener noreferrer">Source code ↗</a></div></article><article id="math-2" class="math-resource"><p class="mono">PROJECT 09 / 09</p><h3>Calculus III Visualizer</h3><p>Explore three-dimensional surfaces and vector fields.</p><p><b>Try this:</b> Switch between Surfaces and Vector fields, then rotate the view.</p><div class="actions"><a class="link" href="https://notivanly.github.io/Calculus-III-Visualizer/" target="_blank" rel="noopener noreferrer">Explore tool ↗</a><a class="link" href="https://github.com/notivanly/Calculus-III-Visualizer" target="_blank" rel="noopener noreferrer">Source code ↗</a></div></article></div></section>
 
     <!-- ===== 004  ENGINEERING ===== -->
     <section class="chapter" id="engineering" data-chapter="4" aria-label="Engineering">
@@ -107,21 +87,11 @@
             <span class="line"><span style="--i:1">TO WORKING</span></span>
             <span class="line"><span style="--i:2">SYSTEMS.</span></span>
           </h2>
-          <p class="desc" data-r style="--d:500">Every project starts with a question about how something works. It becomes a model, then a simulation, then a tool anyone can use.</p>
-          <ul class="focus" data-r style="--d:650">
-            <li><b>Aerospace</b><span>Orbital mechanics, propulsion, aerodynamics</span></li>
-            <li><b>Computer science</b><span>Simulation, numerical methods, interactive software</span></li>
-            <li><b>Physics</b><span>Classical mechanics, gravitation, fluid dynamics</span></li>
-            <li><b>Applied mathematics</b><span>Modeling, calculus, linear algebra</span></li>
-          </ul>
+          <p class="desc" data-r style="--d:500">I use interactive software to explore topics that interest me. In the wind tunnel, changing an angle changes the lift and drag displays. In the gravity explorer, choosing a different world changes the drop demonstration.</p>
+          <p class="desc">My Calculus III Visualizer connects surfaces and vector fields with a view I can rotate. These projects give me different ways to explore physics and mathematics.</p>
         </div>
         <div class="foot">
-          <ol class="method" aria-label="Method">
-            <li><i>1</i>Observe</li>
-            <li><i>2</i>Model</li>
-            <li><i>3</i>Simulate</li>
-            <li><i>4</i>Iterate</li>
-          </ol>
+          <p>Illustrative preview · engineering artwork</p>
         </div>
         <dl class="hud" aria-hidden="true"></dl>
       </div>
@@ -139,11 +109,11 @@
             <span class="line"><span style="--i:2">THINGS WORK.</span></span>
           </h2>
           <p class="desc" data-r style="--d:500">I&rsquo;m Ivan Ly, a high school student drawn to engineering, aerospace, computer science, physics and applied mathematics.</p>
-          <p class="desc" data-r style="--d:620">I&rsquo;ve built more than twenty independent projects, mostly simulations and interactive tools. Each one starts as a question, and ends as something you can click, drag and test for yourself.</p>
+          <p class="desc" data-r style="--d:620">I explored topics that interested me and learned using resources such as YouTube before building these projects.</p>
           <dl class="facts" data-r style="--d:760">
-            <div><dt>School</dt><dd data-site-text="school"></dd></div>
-            <div><dt>Graduating</dt><dd data-site-text="classOf"></dd></div>
-            <div><dt>Based in</dt><dd data-site-text="location"></dd></div>
+            <div><dt>School</dt><dd data-site-text="school">Huntington Beach High School</dd></div>
+            <div><dt>Graduating</dt><dd data-site-text="classOf">Class of 2027</dd></div>
+            <div><dt>Based in</dt><dd data-site-text="location">Midway City, California</dd></div>
           </dl>
         </div>
       </div>
@@ -161,13 +131,13 @@
           </h2>
           <p class="desc" data-r style="--d:500">Open to conversations about engineering programs, research opportunities and collaboration.</p>
           <ul class="contact-list" data-r style="--d:650">
-            <li><a data-site-href="email"><span class="k">Email</span><span class="v" data-site-text="email"></span></a></li>
-            <li><a data-site-href="github" target="_blank" rel="noopener noreferrer"><span class="k">GitHub</span><span class="v" data-site-text="githubLabel"></span></a></li>
-            <li><a data-site-href="linkedin" target="_blank" rel="noopener noreferrer"><span class="k">LinkedIn</span><span class="v" data-site-text="linkedinLabel"></span></a></li>
+            <li><a href="mailto:notivanly@gmail.com"><span class="k">Email</span><span class="v" data-site-text="email">notivanly@gmail.com</span></a></li>
+            <li><a href="https://github.com/notivanly" target="_blank" rel="noopener noreferrer"><span class="k">GitHub</span><span class="v" data-site-text="githubLabel">github.com/notivanly</span></a></li>
+
           </ul>
         </div>
         <div class="foot">
-          <span class="legal">&copy; <span data-site-text="year"></span> Ivan Ly</span>
+          <span class="legal">&copy; <span data-site-text="year">2026</span> Ivan Ly</span>
           <a class="link" href="#home">Back to top <svg class="ico up" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 10V2M2.5 5.5L6 2l3.5 3.5"/></svg></a>
         </div>
       </div>
@@ -175,13 +145,13 @@
 
   </main>
 
-  <noscript><p class="noscript">This portfolio uses JavaScript for its interactive simulations. Please enable it to explore.</p></noscript>
+  <noscript><p>Animations are unavailable. All project links and descriptions remain accessible.</p></noscript>
 
-  <script src="data.js"></script>
+
   <script src="core.js"></script>
   <script src="visuals-hero.js"></script>
   <script src="visuals-engineering.js"></script>
-  <script src="visuals-math.js"></script>
+
   <script src="main.js"></script>
 </body>
 </html>
