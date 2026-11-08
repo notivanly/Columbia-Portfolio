@@ -73,7 +73,7 @@
      side = -1 : mirrored
      s is a base size in px; most visuals scale everything from it.           */
   function layout(w, h, side, panel) {
-    if (panel) return { compact: false, panel: true, cx: w * 0.5, cy: h * 0.54, s: Math.min(h * 0.95, w * 0.5) };
+    if (panel) return { compact: false, panel: true, cx: w * 0.5, cy: h * 0.54, s: Math.min(h * 1.0, w * 0.55) };
     var compact = w < 760 || h > w * 1.05;
     if (compact) return { compact: true, cx: w * 0.5, cy: h * 0.68, s: Math.min(w * 1.0, h * 0.62) };
     return { compact: false, cx: w * (side > 0 ? 0.69 : 0.31), cy: h * 0.54, s: Math.min(h * 0.95, w * 0.5) };

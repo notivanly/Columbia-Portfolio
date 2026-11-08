@@ -697,7 +697,7 @@
 
     function init(w, h) {
       var lay = U.layout(w, h, side, opts.panel);
-      if (lay.panel) { cx = w * 0.5; cy = h * 0.5; k = Math.min(w * 0.44, h * 0.44 * 1.6) / r2; }
+      if (lay.panel) { cx = w * 0.5; cy = h * 0.5; k = Math.min(w * 0.44, h * 0.47) / r2; }
       else if (lay.compact) { cx = w * 0.5; cy = h * 0.7; k = (w * 0.46) / r2; }
       else { cx = w * (side > 0 ? 0.6 : 0.4); cy = h * 0.52; k = (side > 0 ? w * 0.96 - cx : cx - w * 0.04) / r2; }
       trail = []; lastCycle = -1;

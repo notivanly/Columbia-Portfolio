@@ -42,7 +42,6 @@
       <a href="#home">Home</a>
       <a href="#projects">Projects</a>
       <a href="#mathematics">Mathematics</a>
-      <a href="#engineering">Engineering</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -57,7 +56,6 @@
       <a href="#home">Home</a>
       <a href="#projects">Projects</a>
       <a href="#mathematics">Mathematics</a>
-      <a href="#engineering">Engineering</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -65,143 +63,89 @@
 
   <main id="main" tabindex="-1">
 
-    <!-- ===== Home ===== -->
     <section class="hero" id="home" aria-labelledby="hero-h">
       <div class="hero-stage" aria-hidden="true">
         <canvas data-visual="hero" data-side="1"></canvas>
       </div>
       <div class="hero-copy">
-        <p class="eyebrow mono">Maker portfolio</p>
         <h1 id="hero-h">Ivan Ly</h1>
         <p class="lead">I build interactive physics simulations and educational tools.</p>
-        <p class="sub">This page collects six physics and engineering simulators and three mathematics resources. Each one links to something you can open and try.</p>
-        <div class="actions">
-          <a class="btn primary" href="#projects">Explore projects</a>
-          <a class="btn" href="https://github.com/notivanly" target="_blank" rel="noopener noreferrer">GitHub profile<span class="sr-only"> (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a>
-        </div>
-        <nav class="pindex" aria-labelledby="pindex-h">
-          <h2 id="pindex-h" class="mono">Project index</h2>
-          <div class="pindex-cols">
-            <div><p class="pindex-g">Physics and engineering</p><ol><li><a href="#bridge-physics-simulator"><span class="n mono">01</span><span class="t">Bridge Physics Simulator</span></a></li><li><a href="#mini-wind-tunnel-simulator"><span class="n mono">02</span><span class="t">Mini Wind Tunnel Simulator</span></a></li><li><a href="#truss-force-analyzer"><span class="n mono">03</span><span class="t">Truss Force Analyzer</span></a></li><li><a href="#physics-sandbox"><span class="n mono">04</span><span class="t">Physics Sandbox</span></a></li><li><a href="#planetary-gravity-explorer"><span class="n mono">05</span><span class="t">Planetary Gravity Explorer</span></a></li><li><a href="#orbital-mechanics-simulator"><span class="n mono">06</span><span class="t">Orbital Mechanics Simulator</span></a></li></ol></div>
-            <div><p class="pindex-g">Mathematics</p><ol><li><a href="#sat-question-bank-tracker"><span class="n mono">07</span><span class="t">SAT Question Bank Tracker</span></a></li><li><a href="#amc-practice"><span class="n mono">08</span><span class="t">AMC Practice</span></a></li><li><a href="#calculus-iii-visualizer"><span class="n mono">09</span><span class="t">Calculus III Visualizer</span></a></li></ol></div>
-          </div>
-        </nav>
+        <div class="actions"><a class="btn primary" href="#projects">Explore projects</a></div>
+        <nav class="pindex" aria-label="Project index"><ol><li><a href="#bridge-physics-simulator"><span class="n mono">01</span><span class="t">Bridge Physics Simulator</span></a></li><li><a href="#mini-wind-tunnel-simulator"><span class="n mono">02</span><span class="t">Mini Wind Tunnel Simulator</span></a></li><li><a href="#truss-force-analyzer"><span class="n mono">03</span><span class="t">Truss Force Analyzer</span></a></li><li><a href="#physics-sandbox"><span class="n mono">04</span><span class="t">Physics Sandbox</span></a></li><li><a href="#planetary-gravity-explorer"><span class="n mono">05</span><span class="t">Planetary Gravity Explorer</span></a></li><li><a href="#orbital-mechanics-simulator"><span class="n mono">06</span><span class="t">Orbital Mechanics Simulator</span></a></li><li><a href="#sat-question-bank-tracker"><span class="n mono">07</span><span class="t">SAT Question Bank Tracker</span></a></li><li><a href="#amc-practice"><span class="n mono">08</span><span class="t">AMC Practice</span></a></li><li><a href="#calculus-iii-visualizer"><span class="n mono">09</span><span class="t">Calculus III Visualizer</span></a></li></ol></nav>
       </div>
       <p class="hero-note mono" aria-hidden="true">Decorative animation</p>
     </section>
 
-    <!-- ===== Projects ===== -->
     <section class="section" id="projects" aria-labelledby="projects-h">
-      <header class="sec-head">
-        <p class="eyebrow mono">Projects 01 to 06</p>
-        <h2 id="projects-h">Physics and engineering projects</h2>
-        <p class="sec-intro">Six simulators you can open in a browser. The animation beside each one is an illustrative preview, so open the project itself to use the real thing.</p>
-      </header>
+      <h2 class="sec-title" id="projects-h">Projects</h2>
       <article class="project" id="bridge-physics-simulator" aria-labelledby="bridge-physics-simulator-h">
-        <div class="p-text">
-          <p class="p-meta"><span class="mono">01 / 09</span><span>Physics and engineering</span><span class="kind">Simulator</span></p>
-          <h3 id="bridge-physics-simulator-h">Bridge Physics Simulator</h3>
-          <p class="p-desc">Design a bridge from wood, steel, concrete, cable or carbon fiber within a budget, then test it by sending vehicles across, from a bicycle to a 200-tonne train. The page also has bridge templates, lessons, a force diagram, and wind, earthquake and rain tests. It is titled Load Limit on the page.</p>
-          <p class="try"><span class="try-k">Try this</span>Pick the Pratt Truss template, press Test, and turn on Force Diagram while a vehicle crosses.</p>
+        <header class="p-head"><span class="p-num mono">01</span><h3 id="bridge-physics-simulator-h">Bridge Physics Simulator</h3></header>
+        <figure class="preview"><div class="pv"><canvas data-visual="bridge" data-panel="1" aria-hidden="true"></canvas></div><figcaption>Animated preview. Solid: tension. Dashed: compression.</figcaption></figure>
+        <div class="p-body">
+          <p class="p-desc">Build a bridge from wood, steel, concrete, cable or carbon fiber on a budget, then send vehicles across, from a bicycle to a train, and watch what holds.</p>
+          <p class="hint"><span class="hint-k mono">Try</span> Pick the Pratt Truss template and turn on Force Diagram.</p>
           <div class="actions"><a class="btn primary" href="https://notivanly.github.io/BridgeGame/" target="_blank" rel="noopener noreferrer">Open simulator<span class="sr-only">: Bridge Physics Simulator (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A separate 3D truss with a moving vehicle, drawn for this page. Solid lines are in tension and dashed lines are in compression. It is not the bridge game.</p><p><strong>On the page.</strong> Templates, lessons, a force diagram, and wind, earthquake and rain tests. It is titled Load Limit on the page.</p></div></details>
         </div>
-        <figure class="preview">
-          <div class="pv"><canvas data-visual="bridge" data-panel="1" aria-hidden="true"></canvas></div>
-          <figcaption><span class="tag">Illustrative preview</span> A separate animation made for this page, not the linked simulator. Solid lines are in tension. Dashed lines are in compression.</figcaption>
-        </figure>
       </article>
-      <article class="project" id="mini-wind-tunnel-simulator" aria-labelledby="mini-wind-tunnel-simulator-h">
-        <div class="p-text">
-          <p class="p-meta"><span class="mono">02 / 09</span><span>Physics and engineering</span><span class="kind">Simulator</span></p>
-          <h3 id="mini-wind-tunnel-simulator-h">Mini Wind Tunnel Simulator</h3>
-          <p class="p-desc">Change wind speed, angle of attack, air density and wing area, then watch streamlines move around a wing while lift, drag and the lift-to-drag ratio update.</p>
-          <p class="try"><span class="try-k">Try this</span>Raise the angle of attack past about 15 degrees and watch the lift coefficient fall as the wing stalls.</p>
+      <article class="project flip" id="mini-wind-tunnel-simulator" aria-labelledby="mini-wind-tunnel-simulator-h">
+        <header class="p-head"><span class="p-num mono">02</span><h3 id="mini-wind-tunnel-simulator-h">Mini Wind Tunnel Simulator</h3></header>
+        <figure class="preview"><div class="pv"><canvas data-visual="wind" data-panel="1" aria-hidden="true"></canvas></div><figcaption>Animated preview. Bluer, thicker lines: faster air.</figcaption></figure>
+        <div class="p-body">
+          <p class="p-desc">Set wind speed, angle of attack, air density and wing area, and watch streamlines flow around a wing as lift, drag and the lift-to-drag ratio update.</p>
+          <p class="hint"><span class="hint-k mono">Try</span> Push the angle past 15 degrees to see the wing stall.</p>
           <div class="actions"><a class="btn primary" href="https://notivanly.github.io/Mini-Wind-Tunnel-Simulator/" target="_blank" rel="noopener noreferrer">Open simulator<span class="sr-only">: Mini Wind Tunnel Simulator (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a><a class="btn" href="https://github.com/notivanly/Mini-Wind-Tunnel-Simulator" target="_blank" rel="noopener noreferrer">Source code<span class="sr-only">: Mini Wind Tunnel Simulator on GitHub (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          <details class="tech"><summary>Technical details</summary><div class="tech-body"><p><strong>Model.</strong> Lift and drag use L = &frac12;&rho;V&sup2;S&middot;C<sub>L</sub> and D = &frac12;&rho;V&sup2;S&middot;C<sub>D</sub>. C<sub>L</sub> rises by 2&pi; per radian up to 15 degrees. Past that, a simple stall rule removes 5.5 percent of the stall value per degree, down to a floor of 35 percent. Drag is C<sub>D</sub> = 0.02 + 0.05&middot;C<sub>L</sub>&sup2;.</p><p><strong>Streamlines.</strong> They come from potential flow around a Joukowski airfoil, with the circulation set to match the lift coefficient.</p><p><strong>Limits.</strong> The constants are assumed values for teaching, not measured data. It is not CFD, so there is no viscosity or flow separation.</p></div></details>
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A separate drawing of airflow around a wing, not output from the simulator.</p><p><strong>Model.</strong> L = &frac12;&rho;V&sup2;S&middot;C<sub>L</sub> and D = &frac12;&rho;V&sup2;S&middot;C<sub>D</sub>. C<sub>L</sub> rises by 2&pi; per radian up to 15 degrees. Past that, a simple stall rule removes 5.5 percent of the stall value per degree, down to a floor of 35 percent. Drag is C<sub>D</sub> = 0.02 + 0.05&middot;C<sub>L</sub>&sup2;.</p><p><strong>Streamlines.</strong> They come from potential flow around a Joukowski airfoil, with the circulation set to match the lift coefficient.</p><p><strong>Limits.</strong> The constants are assumed values for teaching, not measured data. It is not CFD, so there is no viscosity or flow separation.</p></div></details>
         </div>
-        <figure class="preview">
-          <div class="pv"><canvas data-visual="wind" data-panel="1" aria-hidden="true"></canvas></div>
-          <figcaption><span class="tag">Illustrative preview</span> A separate animation made for this page, not the linked simulator. Faster air is drawn bluer and thicker.</figcaption>
-        </figure>
       </article>
       <article class="project" id="truss-force-analyzer" aria-labelledby="truss-force-analyzer-h">
-        <div class="p-text">
-          <p class="p-meta"><span class="mono">03 / 09</span><span>Physics and engineering</span><span class="kind">Simulator</span></p>
-          <h3 id="truss-force-analyzer-h">Truss Force Analyzer</h3>
-          <p class="p-desc">Draw a 2D truss, place supports and loads, and see the force in every member as tension or compression, along with how the structure deforms.</p>
-          <p class="try"><span class="try-k">Try this</span>Load an example, press Analyze, and compare which members are in tension and which are in compression.</p>
+        <header class="p-head"><span class="p-num mono">03</span><h3 id="truss-force-analyzer-h">Truss Force Analyzer</h3></header>
+        <figure class="preview"><div class="pv"><canvas data-visual="truss" data-panel="1" aria-hidden="true"></canvas></div><figcaption>Animated preview. Solid: tension. Dashed: compression.</figcaption></figure>
+        <div class="p-body">
+          <p class="p-desc">Draw a 2D truss, add supports and loads, and see the force in every member as tension or compression, plus how the structure deforms.</p>
+          <p class="hint"><span class="hint-k mono">Try</span> Load an example, then press Analyze.</p>
           <div class="actions"><a class="btn primary" href="https://notivanly.github.io/Truss-Force-Analyzer/" target="_blank" rel="noopener noreferrer">Open simulator<span class="sr-only">: Truss Force Analyzer (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a><a class="btn" href="https://github.com/notivanly/Truss-Force-Analyzer" target="_blank" rel="noopener noreferrer">Source code<span class="sr-only">: Truss Force Analyzer on GitHub (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          <details class="tech"><summary>Technical details</summary><div class="tech-body"><p><strong>Model.</strong> The solver builds a stiffness matrix for a pin-jointed 2D truss, solves K u = F by Gaussian elimination, and gets each member&rsquo;s axial force from its change in length. It handles determinate and indeterminate trusses.</p><p><strong>Checks.</strong> It compares members plus reactions against twice the number of joints and reports an unstable truss, instead of returning numbers. A singular stiffness matrix is flagged the same way. Member results can be exported as CSV.</p><p><strong>Assumptions.</strong> Members are linear elastic and share one axial stiffness, EA. Displacements are small, and the deformed shape is drawn magnified.</p><p><strong>Limits.</strong> It does not check member strength or buckling.</p></div></details>
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A separate truss with a moving load, drawn for this page. It is not the analyzer.</p><p><strong>Model.</strong> K u = F. The solver builds a stiffness matrix for a pin-jointed 2D truss, solves it by Gaussian elimination for how far each joint moves, then turns each member&rsquo;s change in length into an axial force. Tension is positive and compression negative. It handles determinate and indeterminate trusses.</p><p><strong>Checks.</strong> It compares members plus reactions against twice the number of joints and reports an unstable truss instead of returning numbers. A singular stiffness matrix is flagged the same way. Results can be exported as CSV.</p><p><strong>Limits.</strong> Members are linear elastic and share one axial stiffness, EA, and displacements are small. It does not check member strength or buckling.</p></div></details>
         </div>
-        <figure class="preview">
-          <div class="pv"><canvas data-visual="truss" data-panel="1" aria-hidden="true"></canvas></div>
-          <figcaption><span class="tag">Illustrative preview</span> A separate animation made for this page, not the linked simulator. Solid lines are in tension (T). Dashed lines are in compression (C).</figcaption>
-        </figure>
       </article>
-      <article class="project" id="physics-sandbox" aria-labelledby="physics-sandbox-h">
-        <div class="p-text">
-          <p class="p-meta"><span class="mono">04 / 09</span><span>Physics and engineering</span><span class="kind">Simulator</span></p>
-          <h3 id="physics-sandbox-h">Physics Sandbox</h3>
-          <p class="p-desc">Drop, throw and connect shapes in a 2D physics playground with gravity, collisions, friction, springs and pendulums.</p>
-          <p class="try"><span class="try-k">Try this</span>Open the Newton&rsquo;s cradle scene, then switch gravity to the Moon or Jupiter and compare.</p>
+      <article class="project flip" id="physics-sandbox" aria-labelledby="physics-sandbox-h">
+        <header class="p-head"><span class="p-num mono">04</span><h3 id="physics-sandbox-h">Physics Sandbox</h3></header>
+        <figure class="preview"><div class="pv"><canvas data-visual="sandbox" data-panel="1" aria-hidden="true"></canvas></div><figcaption>Animated preview.</figcaption></figure>
+        <div class="p-body">
+          <p class="p-desc">Drop, throw and connect shapes in a 2D playground, with gravity, collisions, friction, springs and pendulums that you can change as it runs.</p>
+          <p class="hint"><span class="hint-k mono">Try</span> Open Newton&rsquo;s cradle, then change gravity.</p>
           <div class="actions"><a class="btn primary" href="https://notivanly.github.io/PhysicsSandbox/" target="_blank" rel="noopener noreferrer">Open simulator<span class="sr-only">: Physics Sandbox (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a><a class="btn" href="https://github.com/notivanly/PhysicsSandbox" target="_blank" rel="noopener noreferrer">Source code<span class="sr-only">: Physics Sandbox on GitHub (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          <details class="tech"><summary>Technical details</summary><div class="tech-body"><p><strong>Implementation.</strong> A rigid-body engine for circles and convex polygons. Collisions are found with the separating axis test, and contacts are solved with sequential impulses that include friction and warm starting. Each step is split into substeps.</p><p><strong>Joints.</strong> Hinge, rod, rope and spring.</p><p><strong>Limits.</strong> It is 2D only and has no continuous collision detection, so very fast objects can pass through thin ones.</p></div></details>
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> The bodies are a separate animation, not scenes from the simulator.</p><p><strong>Implementation.</strong> A rigid-body engine for circles and convex polygons. Collisions are found with the separating axis test. When two shapes touch, an impulse j along the contact changes their velocities, v&prime; = v + j/m, so they stop moving into each other. Contacts are solved with sequential impulses that include friction and warm starting, and each step is split into substeps.</p><p><strong>Joints.</strong> Hinge, rod, rope and spring.</p><p><strong>Limits.</strong> It is 2D only and has no continuous collision detection, so very fast objects can pass through thin ones.</p></div></details>
         </div>
-        <figure class="preview">
-          <div class="pv"><canvas data-visual="sandbox" data-panel="1" aria-hidden="true"></canvas></div>
-          <figcaption><span class="tag">Illustrative preview</span> A separate animation made for this page, not the linked simulator. The bodies here are not scenes from the simulator.</figcaption>
-        </figure>
       </article>
       <article class="project" id="planetary-gravity-explorer" aria-labelledby="planetary-gravity-explorer-h">
-        <div class="p-text">
-          <p class="p-meta"><span class="mono">05 / 09</span><span>Physics and engineering</span><span class="kind">Simulator</span></p>
-          <h3 id="planetary-gravity-explorer-h">Planetary Gravity Explorer</h3>
+        <header class="p-head"><span class="p-num mono">05</span><h3 id="planetary-gravity-explorer-h">Planetary Gravity Explorer</h3></header>
+        <figure class="preview"><div class="pv"><canvas data-visual="gravity" data-panel="1" aria-hidden="true"></canvas></div><figcaption>Animated preview.</figcaption></figure>
+        <div class="p-body">
           <p class="p-desc">Compare surface gravity, escape velocity and weight across the eight planets, then drop or jump on each one to see how the same motion changes.</p>
-          <p class="try"><span class="try-k">Try this</span>Open the gravity lab, drop an object on Mars, then try Jupiter and compare the fall times.</p>
+          <p class="hint"><span class="hint-k mono">Try</span> Drop an object on Mars, then on Jupiter.</p>
           <div class="actions"><a class="btn primary" href="https://notivanly.github.io/Planetary-Gravity-Explorer/" target="_blank" rel="noopener noreferrer">Open simulator<span class="sr-only">: Planetary Gravity Explorer (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a><a class="btn" href="https://github.com/notivanly/Planetary-Gravity-Explorer" target="_blank" rel="noopener noreferrer">Source code<span class="sr-only">: Planetary Gravity Explorer on GitHub (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          <details class="tech"><summary>Technical details</summary><div class="tech-body"><p><strong>Model.</strong> Each planet is defined by its gravitational parameter GM and its radius. Surface gravity is g = GM/R&sup2;, escape speed is v = &radic;(2GM/R), and weight is mg.</p><p><strong>Drops and jumps.</strong> They use constant-acceleration motion with no air resistance.</p><p><strong>Limits.</strong> Reference values are approximate. For the gas and ice giants the radius is the 1-bar level, which is what the usual reference gravities assume.</p></div></details>
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A grid bends around masses as an analogy. Sizes and spacing are not to scale, and nothing in it is simulator output.</p><p><strong>Model.</strong> Each planet is defined by its gravitational parameter GM and radius. Surface gravity is g = GM/R&sup2;, escape speed is v = &radic;(2GM/R), and weight is W = mg. Drops and jumps use constant acceleration with no air resistance.</p><p><strong>Limits.</strong> Reference values are approximate. For the gas and ice giants the radius is the 1-bar level, which is what the usual reference gravities assume.</p></div></details>
         </div>
-        <figure class="preview">
-          <div class="pv"><canvas data-visual="gravity" data-panel="1" aria-hidden="true"></canvas></div>
-          <figcaption><span class="tag">Illustrative preview</span> A separate animation made for this page, not the linked simulator. Masses bend a grid here as an analogy. Sizes and spacing are not to scale.</figcaption>
-        </figure>
       </article>
-      <article class="project" id="orbital-mechanics-simulator" aria-labelledby="orbital-mechanics-simulator-h">
-        <div class="p-text">
-          <p class="p-meta"><span class="mono">06 / 09</span><span>Physics and engineering</span><span class="kind">Simulator</span></p>
-          <h3 id="orbital-mechanics-simulator-h">Orbital Mechanics Simulator</h3>
-          <p class="p-desc">Choose Earth, Mars or the Moon, set an altitude and a starting speed, launch, and then fly the orbit with prograde and retrograde burns.</p>
-          <p class="try"><span class="try-k">Try this</span>Pick the Circular preset, launch, then add a prograde burn and watch the orbit stretch into an ellipse.</p>
+      <article class="project flip" id="orbital-mechanics-simulator" aria-labelledby="orbital-mechanics-simulator-h">
+        <header class="p-head"><span class="p-num mono">06</span><h3 id="orbital-mechanics-simulator-h">Orbital Mechanics Simulator</h3></header>
+        <figure class="preview"><div class="pv"><canvas data-visual="orbital" data-panel="1" aria-hidden="true"></canvas></div><figcaption>Animated preview.</figcaption></figure>
+        <div class="p-body">
+          <p class="p-desc">Pick Earth, Mars or the Moon, set an altitude and a starting speed, launch a spacecraft, and fly the orbit with prograde and retrograde burns.</p>
+          <p class="hint"><span class="hint-k mono">Try</span> Start with the Circular preset, then burn prograde.</p>
           <div class="actions"><a class="btn primary" href="https://notivanly.github.io/Orbital-Mechanics-Simulator/" target="_blank" rel="noopener noreferrer">Open simulator<span class="sr-only">: Orbital Mechanics Simulator (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a><a class="btn" href="https://github.com/notivanly/Orbital-Mechanics-Simulator" target="_blank" rel="noopener noreferrer">Source code<span class="sr-only">: Orbital Mechanics Simulator on GitHub (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          <details class="tech"><summary>Technical details</summary><div class="tech-body"><p><strong>Model.</strong> Two-body gravity between the spacecraft and one planet or moon. Motion is advanced with a fourth-order Runge-Kutta integrator. The dashed path is the exact conic orbit for the current state, found with the vis-viva equation.</p><p><strong>Burns.</strong> Prograde and retrograde burns change the speed along the direction of travel.</p><p><strong>Limits.</strong> No atmosphere, no other bodies, and the spacecraft is a point mass. It is not for mission planning.</p></div></details>
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> It shows a transfer between two circular orbits. In the simulator you set the altitude and speed yourself.</p><p><strong>Model.</strong> Two-body gravity, a = &minus;GM r / |r|&sup3;, advanced with a fourth-order Runge-Kutta integrator. The dashed path is the exact conic orbit for the current state, found with the vis-viva equation. Burns change the speed along the direction of travel.</p><p><strong>Limits.</strong> No atmosphere, no other bodies, and the spacecraft is a point mass. It is not for mission planning.</p></div></details>
         </div>
-        <figure class="preview">
-          <div class="pv"><canvas data-visual="orbital" data-panel="1" aria-hidden="true"></canvas></div>
-          <figcaption><span class="tag">Illustrative preview</span> A separate animation made for this page, not the linked simulator. It shows a transfer between two circular orbits. In the simulator you set the altitude and speed yourself.</figcaption>
-        </figure>
       </article>
     </section>
 
-    <!-- ===== Mathematics ===== -->
     <section class="section" id="mathematics" aria-labelledby="math-h">
-      <header class="sec-head">
-        <p class="eyebrow mono">Projects 07 to 09</p>
-        <h2 id="math-h">Mathematics and educational tools</h2>
-        <p class="sec-intro">Resources for test practice and for learning multivariable calculus. Choose one to see what it does and where to open it.</p>
-      </header>
+      <h2 class="sec-title" id="math-h">Mathematics</h2>
       <div class="tablist" role="tablist" aria-label="Mathematics resources"><button type="button" role="tab" id="tab-sat-question-bank-tracker" aria-controls="sat-question-bank-tracker" aria-selected="true" tabindex="0" data-math-tab="sat-question-bank-tracker"><span class="mono">07</span>SAT Question Bank Tracker</button><button type="button" role="tab" id="tab-amc-practice" aria-controls="amc-practice" aria-selected="false" tabindex="-1" data-math-tab="amc-practice"><span class="mono">08</span>AMC Practice</button><button type="button" role="tab" id="tab-calculus-iii-visualizer" aria-controls="calculus-iii-visualizer" aria-selected="false" tabindex="-1" data-math-tab="calculus-iii-visualizer"><span class="mono">09</span>Calculus III Visualizer</button></div>
       <article class="project math-panel" id="sat-question-bank-tracker" aria-labelledby="sat-question-bank-tracker-h" role="tabpanel" data-math-panel="sat-question-bank-tracker">
-        <div class="p-text">
-          <p class="p-meta"><span class="mono">07 / 09</span><span>Mathematics</span><span class="kind">Chrome extension</span></p>
-          <h3 id="sat-question-bank-tracker-h">SAT Question Bank Tracker</h3>
-          <p class="p-desc">A Chrome extension that adds progress tracking to the College Board Educator Question Bank. Mark a question Correct, Incorrect or Flagged, and a badge appears next to its ID in the results grid.</p>
-          <p class="try"><span class="try-k">Try this</span>While reviewing a question, mark it Correct, Incorrect or Flag for Review, then find its badge in the results grid.</p>
-          <div class="actions"><a class="btn primary" href="https://chromewebstore.google.com/detail/sat-question-bank-tracker/eeinjoeegjkhiddemncmbbgianhliopi" target="_blank" rel="noopener noreferrer">View extension<span class="sr-only">: SAT Question Bank Tracker (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          <details class="tech"><summary>Technical details</summary><div class="tech-body"><p><strong>From the store listing.</strong> A summary popup shows your totals. All data stays on your device. It is an independent tool, not affiliated with or endorsed by College Board.</p></div></details>
-        </div>
-        <figure class="preview">
-          <div class="pv pv-static" data-static="1"><svg viewBox="0 0 640 400" role="img" aria-labelledby="svg-sat-t" class="diagram" focusable="false">
+        <header class="p-head"><span class="p-num mono">07</span><h3 id="sat-question-bank-tracker-h">SAT Question Bank Tracker</h3></header>
+        <figure class="preview"><div class="pv pv-static"><svg viewBox="0 0 640 400" role="img" aria-labelledby="svg-sat-t" class="diagram" focusable="false">
 <title id="svg-sat-t">Illustration of a results grid. Each question row has a gray bar in place of the ID and a labeled badge: Correct, Incorrect, Flagged for review, or Not marked yet.</title>
 <text x="40" y="52" class="d-h">Results grid</text>
 <text x="40" y="76" class="d-s">Illustration, not a screenshot</text>
@@ -221,21 +165,17 @@
 <rect x="60" y="312" width="150" height="12" rx="6" class="d-skel"/>
 <circle cx="300" cy="318" r="14" class="d-empty"/>
 <text x="330" y="323" class="d-t">Not marked yet</text>
-</svg></div>
-          <figcaption><span class="tag">Illustrative diagram</span> A drawing of the idea, not a screenshot of the tool.</figcaption>
-        </figure>
+</svg></div><figcaption>Static diagram.</figcaption></figure>
+        <div class="p-body">
+          <p class="p-desc">A Chrome extension for the College Board Educator Question Bank. Mark each question Correct, Incorrect or Flagged and see a badge beside its ID in the results grid.</p>
+          <p class="hint"><span class="hint-k mono">Try</span> Mark a question while reviewing it, then find its badge.</p>
+          <div class="actions"><a class="btn primary" href="https://chromewebstore.google.com/detail/sat-question-bank-tracker/eeinjoeegjkhiddemncmbbgianhliopi" target="_blank" rel="noopener noreferrer">View extension<span class="sr-only">: SAT Question Bank Tracker (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A drawing of the idea, not a screenshot of the extension.</p><p><strong>From the store listing.</strong> A summary popup shows your totals. All data stays on your device. It is an independent tool, not affiliated with or endorsed by College Board.</p></div></details>
+        </div>
       </article>
       <article class="project math-panel" id="amc-practice" aria-labelledby="amc-practice-h" role="tabpanel" data-math-panel="amc-practice">
-        <div class="p-text">
-          <p class="p-meta"><span class="mono">08 / 09</span><span>Mathematics</span><span class="kind">Web tool</span></p>
-          <h3 id="amc-practice-h">AMC Practice</h3>
-          <p class="p-desc">Practice for the AMC 8, 10 and 12 with timed mock tests, problems by topic and difficulty, endless drills with worked solutions, and progress tracking. It is titled AMC Arena on the page.</p>
-          <p class="try"><span class="try-k">Try this</span>Start a mock test, mark your answers on the answer sheet, flag a question, then review every question afterward.</p>
-          <div class="actions"><a class="btn primary" href="https://notivanly.github.io/AMCPRactice/" target="_blank" rel="noopener noreferrer">Explore tool<span class="sr-only">: AMC Practice (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a><a class="btn" href="https://github.com/notivanly/AMCPRactice" target="_blank" rel="noopener noreferrer">Source code<span class="sr-only">: AMC Practice on GitHub (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          <details class="tech"><summary>Technical details</summary><div class="tech-body"><p><strong>Content.</strong> 133 AMC-style problems across algebra, geometry, number theory, and counting and probability, plus generated drills.</p><p><strong>Scoring.</strong> The AMC 8 scores 1 point per correct answer. The AMC 10 and 12 score 6 for a correct answer, 1.5 for a blank and 0 for a wrong answer.</p><p><strong>Implementation.</strong> A static site with no server. Progress is saved in your browser&rsquo;s local storage, and math is drawn with KaTeX. The problem bank is written in Python and built into problems.js by a script that checks each problem has five choices and a valid answer.</p><p><strong>Note.</strong> It is an unofficial practice site, not affiliated with or endorsed by the Mathematical Association of America.</p></div></details>
-        </div>
-        <figure class="preview">
-          <div class="pv pv-static" data-static="1"><svg viewBox="0 0 640 400" role="img" aria-labelledby="svg-amc-t" class="diagram" focusable="false">
+        <header class="p-head"><span class="p-num mono">08</span><h3 id="amc-practice-h">AMC Practice</h3></header>
+        <figure class="preview"><div class="pv pv-static"><svg viewBox="0 0 640 400" role="img" aria-labelledby="svg-amc-t" class="diagram" focusable="false">
 <title id="svg-amc-t">Illustration of a bubble-style answer sheet with rows of lettered bubbles A to E, one filled in each row, and one row marked with a flag.</title>
 <text x="40" y="52" class="d-h">Answer sheet</text>
 <text x="40" y="76" class="d-s">Illustration, not a screenshot</text>
@@ -270,21 +210,17 @@
 <circle cx="288" cy="314" r="17" class="d-empty"/><text x="288" y="319" text-anchor="middle" class="d-letter">C</text>
 <circle cx="362" cy="314" r="17" class="d-badge-fill"/><text x="362" y="319" text-anchor="middle" class="d-letter-dark">D</text>
 <circle cx="436" cy="314" r="17" class="d-empty"/><text x="436" y="319" text-anchor="middle" class="d-letter">E</text>
-<text x="48" y="384" class="d-s">One bubble per question. Flags mark ones to revisit.</text></svg></div>
-          <figcaption><span class="tag">Illustrative diagram</span> A drawing of the idea, not a screenshot of the tool.</figcaption>
-        </figure>
+<text x="48" y="384" class="d-s">Flags mark questions to revisit.</text></svg></div><figcaption>Static diagram.</figcaption></figure>
+        <div class="p-body">
+          <p class="p-desc">Practice for the AMC 8, 10 and 12 with timed mock tests, problems by topic, drills with worked solutions, and progress tracking. Titled AMC Arena on the page.</p>
+          <p class="hint"><span class="hint-k mono">Try</span> Start a mock test and review every question afterward.</p>
+          <div class="actions"><a class="btn primary" href="https://notivanly.github.io/AMCPRactice/" target="_blank" rel="noopener noreferrer">Explore tool<span class="sr-only">: AMC Practice (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a><a class="btn" href="https://github.com/notivanly/AMCPRactice" target="_blank" rel="noopener noreferrer">Source code<span class="sr-only">: AMC Practice on GitHub (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A drawing of an answer sheet, not a screenshot of the site.</p><p><strong>Content.</strong> 133 AMC-style problems across algebra, geometry, number theory, and counting and probability, plus generated drills.</p><p><strong>Scoring.</strong> The AMC 8 scores 1 point per correct answer. The AMC 10 and 12 score 6 for a correct answer, 1.5 for a blank and 0 for a wrong answer.</p><p><strong>Implementation.</strong> A static site with no server. Progress is saved in your browser&rsquo;s local storage, and math is drawn with KaTeX. The problem bank is written in Python and built into problems.js by a script that checks each problem has five choices and a valid answer.</p><p><strong>Note.</strong> It is an unofficial practice site, not affiliated with or endorsed by the Mathematical Association of America.</p></div></details>
+        </div>
       </article>
       <article class="project math-panel" id="calculus-iii-visualizer" aria-labelledby="calculus-iii-visualizer-h" role="tabpanel" data-math-panel="calculus-iii-visualizer">
-        <div class="p-text">
-          <p class="p-meta"><span class="mono">09 / 09</span><span>Mathematics</span><span class="kind">Web tool</span></p>
-          <h3 id="calculus-iii-visualizer-h">Calculus III Visualizer</h3>
-          <p class="p-desc">Graph a function of two variables as a 3D surface and explore its tangent plane, partial-derivative slices, gradient and level curves. A second tab draws 3D vector fields with animated flow and covers divergence and curl.</p>
-          <p class="try"><span class="try-k">Try this</span>Type your own function of x and y, then click the surface to move the point and watch the tangent plane and gradient follow.</p>
-          <div class="actions"><a class="btn primary" href="https://notivanly.github.io/Calculus-III-Visualizer/" target="_blank" rel="noopener noreferrer">Explore tool<span class="sr-only">: Calculus III Visualizer (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a><a class="btn" href="https://github.com/notivanly/Calculus-III-Visualizer" target="_blank" rel="noopener noreferrer">Source code<span class="sr-only">: Calculus III Visualizer on GitHub (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          <details class="tech"><summary>Technical details</summary><div class="tech-body"><p><strong>Implementation.</strong> Built with Three.js, loaded from a CDN. The functions you type are read by a small expression parser, and the surface is sampled on a 120 by 120 grid. The page notes that derivatives are computed numerically.</p><p><strong>Vector fields.</strong> You enter the components P, Q and R of a field, which is drawn as arrows with animated flow and a probe point. The page also covers divergence and curl.</p><p><strong>Limits.</strong> It needs an internet connection to load Three.js.</p></div></details>
-        </div>
-        <figure class="preview">
-          <div class="pv pv-static" data-static="1"><svg viewBox="0 0 640 400" role="img" aria-labelledby="svg-calc-t" class="diagram" focusable="false">
+        <header class="p-head"><span class="p-num mono">09</span><h3 id="calculus-iii-visualizer-h">Calculus III Visualizer</h3></header>
+        <figure class="preview"><div class="pv pv-static"><svg viewBox="0 0 640 400" role="img" aria-labelledby="svg-calc-t" class="diagram" focusable="false">
 <title id="svg-calc-t">Illustration of a saddle-shaped surface drawn as a mesh, with a flat tangent plane touching it at one point and an arrow on the floor marking the gradient direction.</title>
 <text x="40" y="52" class="d-h">Surface and tangent plane</text>
 <text x="40" y="82" class="d-s">Illustration, not a screenshot</text>
@@ -317,63 +253,30 @@
 <circle cx="367.7" cy="217.0" r="5.5" class="d-dot"/>
 <text x="384.1" y="182.4" text-anchor="start" class="d-t">tangent plane</text>
 <text x="391.0" y="358.8" text-anchor="start" class="d-t">gradient</text>
-</svg></div>
-          <figcaption><span class="tag">Illustrative diagram</span> A drawing of the idea, not a screenshot of the tool.</figcaption>
-        </figure>
+</svg></div><figcaption>Static diagram.</figcaption></figure>
+        <div class="p-body">
+          <p class="p-desc">Graph a function of x and y as a 3D surface, then explore its tangent plane, gradient and level curves. A second tab covers vector fields.</p>
+          <p class="hint"><span class="hint-k mono">Try</span> Type your own function, then click the surface.</p>
+          <div class="actions"><a class="btn primary" href="https://notivanly.github.io/Calculus-III-Visualizer/" target="_blank" rel="noopener noreferrer">Explore tool<span class="sr-only">: Calculus III Visualizer (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a><a class="btn" href="https://github.com/notivanly/Calculus-III-Visualizer" target="_blank" rel="noopener noreferrer">Source code<span class="sr-only">: Calculus III Visualizer on GitHub (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A drawing of a surface with its tangent plane and gradient, not a screenshot of the tool.</p><p><strong>Implementation.</strong> Built with Three.js, loaded from a CDN. The functions you type are read by a small expression parser, and the surface is sampled on a 120 by 120 grid. The page notes that derivatives are computed numerically.</p><p><strong>Gradient.</strong> The gradient is the pair of partial derivatives, (f<sub>x</sub>, f<sub>y</sub>), drawn as an arrow on the function you typed. Moving the point shows how the arrow and the tangent plane change.</p><p><strong>Vector fields.</strong> You enter the components P, Q and R of a field, which is drawn as arrows with animated flow and a probe point. The page also covers divergence and curl.</p><p><strong>Limits.</strong> It needs an internet connection to load Three.js.</p></div></details>
+        </div>
       </article>
     </section>
 
-    <!-- ===== Engineering ===== -->
-    <section class="section" id="engineering" aria-labelledby="eng-h">
-      <div class="eng">
-        <div class="eng-copy">
-          <p class="eyebrow mono">Engineering</p>
-          <h2 id="eng-h">From equations to working programs</h2>
-          <p class="sec-intro">Each project turns a rule from physics or mathematics into something you can change with a slider or a click. These examples show how that looks in the tools above. Every project is different, so this is not a fixed recipe.</p>
-          <figure class="preview eng-fig">
-            <div class="pv pv-sm"><canvas data-visual="nozzle" data-panel="1" aria-hidden="true"></canvas></div>
-            <figcaption><span class="tag">Decoration</span> A rocket nozzle wireframe. It is not one of the projects.</figcaption>
-          </figure>
-        </div>
-        <ol class="eng-list"><li><div class="eq mono">K u = F</div><div><h3><a href="#truss-force-analyzer">Truss Force Analyzer</a></h3><p>The analyzer assembles a stiffness matrix from the joints and members, solves for how far each joint moves, then turns each member&rsquo;s change in length into an axial force. Tension comes out positive and compression negative.</p></div></li><li><div class="eq mono">a = &minus;GM r / |r|&sup3;</div><div><h3><a href="#orbital-mechanics-simulator">Orbital Mechanics Simulator</a></h3><p>Every step, the simulator computes the pull of gravity on the spacecraft and advances position and velocity with a fourth-order Runge-Kutta integrator. A burn simply changes the velocity, and the orbit that follows is the program&rsquo;s answer.</p></div></li><li><div class="eq mono">g = GM / R&sup2;</div><div><h3><a href="#planetary-gravity-explorer">Planetary Gravity Explorer</a></h3><p>One formula gives each planet&rsquo;s surface gravity, and a second gives escape speed. The drop and jump demonstrations then apply constant acceleration, which is why the same jump goes so much higher on Mars.</p></div></li><li><div class="eq mono">L = &frac12;&rho;V&sup2;S&middot;C<sub>L</sub></div><div><h3><a href="#mini-wind-tunnel-simulator">Mini Wind Tunnel Simulator</a></h3><p>Sliders set speed, density, area and angle, and the lift equation turns them into a force. The lift coefficient follows a simple rule that rises with angle and then falls at stall, so the stall is a modeling choice, not a measurement.</p></div></li><li><div class="eq mono">v&prime; = v + j / m</div><div><h3><a href="#physics-sandbox">Physics Sandbox</a></h3><p>When two shapes touch, the engine applies an impulse along the contact so they stop moving into each other. Friction, springs and joints are more of the same idea, repeated over many small steps.</p></div></li><li><div class="eq mono">&nabla;f = (f<sub>x</sub>, f<sub>y</sub>)</div><div><h3><a href="#calculus-iii-visualizer">Calculus III Visualizer</a></h3><p>The gradient is a pair of partial derivatives, and the tool draws it as an arrow on the function you typed. Moving the point shows how the arrow and the tangent plane change from place to place.</p></div></li></ol>
+    <section class="section narrow" id="about" aria-labelledby="about-h">
+      <h2 class="sec-title" id="about-h">About</h2>
+      <div class="prose">
+        <p>I&rsquo;m Ivan Ly, a student at Huntington Beach High School (class of 2027), based in Midway City, California. I&rsquo;m interested in physics, engineering and mathematics.</p>
+        <p>I usually start by learning about a topic that interests me, often from YouTube and other resources, and then build a project around it.</p>
       </div>
     </section>
 
-    <!-- ===== About ===== -->
-    <section class="section" id="about" aria-labelledby="about-h">
-      <div class="two">
-        <div>
-          <p class="eyebrow mono">About</p>
-          <h2 id="about-h">Hi, I&rsquo;m Ivan</h2>
-        </div>
-        <div class="prose">
-          <p>I&rsquo;m a student at Huntington Beach High School, graduating in 2027. I&rsquo;m interested in physics, engineering and mathematics, and in how programming can make those ideas something you can try.</p>
-          <p>I usually start with a topic that interests me, learn about it from resources such as YouTube, and then build a project around it.</p>
-          <dl class="facts">
-            <div><dt>School</dt><dd>Huntington Beach High School</dd></div>
-            <div><dt>Graduation</dt><dd>Class of 2027</dd></div>
-            <div><dt>Location</dt><dd>Midway City, California</dd></div>
-            <div><dt>GitHub</dt><dd><a href="https://github.com/notivanly" target="_blank" rel="noopener noreferrer">github.com/notivanly<span class="sr-only"> (opens in a new tab)</span></a></dd></div>
-          </dl>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== Contact ===== -->
-    <section class="section" id="contact" aria-labelledby="contact-h">
-      <div class="two">
-        <div>
-          <p class="eyebrow mono">Contact</p>
-          <h2 id="contact-h">Get in touch</h2>
-        </div>
-        <div class="prose">
-          <p>Questions about a project, or feedback on one, are welcome. Email is the best way to reach me.</p>
-          <ul class="contact-list">
-            <li><a href="mailto:notivanly@gmail.com"><span class="k">Email</span><span class="v">notivanly@gmail.com</span></a></li>
-            <li><a href="https://github.com/notivanly" target="_blank" rel="noopener noreferrer"><span class="k">GitHub</span><span class="v">github.com/notivanly</span><span class="sr-only"> (opens in a new tab)</span></a></li>
-          </ul>
-        </div>
-      </div>
+    <section class="section narrow" id="contact" aria-labelledby="contact-h">
+      <h2 class="sec-title" id="contact-h">Contact</h2>
+      <ul class="contact-list">
+        <li><a href="mailto:notivanly@gmail.com"><span class="k">Email</span><span class="v">notivanly@gmail.com</span></a></li>
+        <li><a href="https://github.com/notivanly" target="_blank" rel="noopener noreferrer"><span class="k">GitHub</span><span class="v">github.com/notivanly</span><span class="sr-only"> (opens in a new tab)</span></a></li>
+      </ul>
     </section>
 
   </main>

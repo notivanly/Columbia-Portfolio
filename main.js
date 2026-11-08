@@ -36,14 +36,20 @@
       if (a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
     });
   }
+  // The last section is short, so the page can end before it reaches the top of the screen.
+  function atBottom() { return window.innerHeight + window.scrollY >= d.documentElement.scrollHeight - 4; }
+  var lastId = ids[ids.length - 1];
   if ('IntersectionObserver' in window) {
     var seen = {};
     var navIO = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+      if (atBottom()) { setActive(lastId); return; }
       for (var i = 0; i < ids.length; i++) if (seen[ids[i]]) { setActive(ids[i]); return; }
     }, { rootMargin: '-45% 0px -50% 0px' });
     ids.forEach(function (id) { var s = d.getElementById(id); if (s) navIO.observe(s); });
   }
+  window.addEventListener('scroll', function () { if (atBottom()) setActive(lastId); }, { passive: true });
+  navLinks.forEach(function (a) { a.addEventListener('click', function () { setActive(a.getAttribute('href').slice(1)); }); });
   setActive('home');
 
   /* ---------- pause control for the animations ---------- */
