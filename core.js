@@ -45,10 +45,12 @@
 
   /* ---------- colour + type helpers ---------- */
   function W(a) { return 'rgba(255,255,255,' + a + ')'; }
-  function A(a) { return 'rgba(255,79,46,' + a + ')'; }
+  function A(a) { return 'rgba(142,201,255,' + a + ')'; }          // light-blue accent
+  function R(a) { return 'rgba(255,138,92,' + a + ')'; }          // warm tone, used for compression and Mars
   var MONO = '"Martian Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace';
 
   function text(ctx, str, x, y, size, color, align) {
+    if (PF.hideNumbers && /[0-9]/.test(str)) return;        // previews are illustrations: never show invented readings
     ctx.font = '500 ' + size + 'px ' + MONO;
     ctx.fillStyle = color;
     ctx.textAlign = align || 'left';
@@ -70,7 +72,8 @@
      side = +1 : subject on the right, copy on the left (default)
      side = -1 : mirrored
      s is a base size in px; most visuals scale everything from it.           */
-  function layout(w, h, side) {
+  function layout(w, h, side, panel) {
+    if (panel) return { compact: false, panel: true, cx: w * 0.5, cy: h * 0.54, s: Math.min(h * 0.95, w * 0.5) };
     var compact = w < 760 || h > w * 1.05;
     if (compact) return { compact: true, cx: w * 0.5, cy: h * 0.68, s: Math.min(w * 1.0, h * 0.62) };
     return { compact: false, cx: w * (side > 0 ? 0.69 : 0.31), cy: h * 0.54, s: Math.min(h * 0.95, w * 0.5) };
@@ -166,11 +169,13 @@
 
   PF.util = {
     TAU: TAU, clamp: clamp, lerp: lerp, smooth: smooth, rng: rng, noise3: noise3,
-    W: W, A: A, MONO: MONO, text: text, arrow: arrow, layout: layout, camera: camera,
+    W: W, A: A, R: R, MONO: MONO, text: text, arrow: arrow, layout: layout, camera: camera,
     solveTruss: solveTruss, warren: warren, pratt: pratt
   };
   PF.visuals = PF.visuals || {};
   PF.reduced = !!(global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  PF.paused = PF.reduced;           // reduced motion starts paused; the visitor can opt in
+  PF.hideNumbers = true;
   PF.pointer = { x: -1, y: -1, has: false };
 
   if (typeof global.addEventListener === 'function') {
@@ -199,7 +204,7 @@
       new IntersectionObserver(function (en) {
         self.visible = en[0].isIntersecting;
         self.last = 0;
-        if (self.visible && !PF.reduced) PF.start();
+        if (self.visible && !PF.paused) PF.start();
       }, { rootMargin: '8% 0px' }).observe(canvas);
     } else { this.visible = true; }
     hosts.push(this);
@@ -210,7 +215,7 @@
     this.name = name;
     this.visual = f(this.opts);
     if (this.w) { this.visual.init && this.visual.init(this.w, this.h); this.hudHTML = ''; }
-    if (PF.reduced && this.w) this.still();
+    if (PF.paused && this.w) this.still();
   };
 
   VisualHost.prototype.resize = function () {
@@ -224,7 +229,7 @@
     this.canvas.style.width = w + 'px';
     this.canvas.style.height = h + 'px';
     this.visual.init && this.visual.init(w, h);
-    if (PF.reduced) this.still(); else this.render(0);
+    if (PF.paused) this.still(); else this.render(0);
   };
 
   VisualHost.prototype.render = function (dt) {
@@ -234,9 +239,10 @@
     this.visual.draw(ctx, this.w, this.h, this.t, dt, this.m);
   };
 
-  // Reduced motion: advance the simulation silently, then paint one frame.
+  // Paused or reduced motion: advance the simulation silently once, then paint one frame.
   VisualHost.prototype.still = function () {
-    for (var i = 0; i < 90; i++) { this.t += 1 / 30; this.render(1 / 30); }
+    if (!this.stilled) { for (var i = 0; i < 170; i++) { this.t += 1 / 30; this.render(1 / 30); } this.stilled = true; }
+    else this.render(0);
     this.updateHud(true);
   };
 
@@ -265,10 +271,20 @@
   };
 
   function tick(now) {
+    if (PF.paused || (typeof document !== 'undefined' && document.hidden)) { rafId = 0; return; }   // nothing drawn while paused or in a hidden tab
     rafId = requestAnimationFrame(tick);
     for (var i = 0; i < hosts.length; i++) if (hosts[i].visible) hosts[i].frame(now);
   }
-  PF.start = function () { if (!rafId && global.requestAnimationFrame) rafId = requestAnimationFrame(tick); };
+  PF.start = function () { if (!rafId && !PF.paused && global.requestAnimationFrame) rafId = requestAnimationFrame(tick); };
+  PF.setPaused = function (p) {
+    PF.paused = !!p;
+    for (var i = 0; i < hosts.length; i++) { hosts[i].last = 0; if (PF.paused) hosts[i].still(); }
+    if (!PF.paused) PF.start();
+  };
+  if (typeof document !== 'undefined') document.addEventListener('visibilitychange', function () {
+    for (var i = 0; i < hosts.length; i++) hosts[i].last = 0;
+    if (!document.hidden) PF.start();
+  });
   PF.VisualHost = VisualHost;
 
 })(typeof window !== 'undefined' ? window : globalThis);

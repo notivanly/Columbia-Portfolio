@@ -11,7 +11,7 @@
    ========================================================================== */
 (function (global) {
   'use strict';
-  var PF = global.PF, U = PF.util, W = U.W, A = U.A, TAU = U.TAU, clamp = U.clamp, lerp = U.lerp, smooth = U.smooth;
+  var PF = global.PF, U = PF.util, W = U.W, A = U.A, R = U.R, TAU = U.TAU, clamp = U.clamp, lerp = U.lerp, smooth = U.smooth;
   var V = PF.visuals;
 
   /* ======================================================================
@@ -45,7 +45,7 @@
     }
 
     function draw(ctx, w, h, t, dt, m) {
-      var lay = U.layout(w, h, side), cx = lay.cx - (lay.compact ? 0 : w * 0.015), cy = lay.cy + h * 0.05;
+      var lay = U.layout(w, h, side, opts.panel), cx = lay.cx - (lay.compact || lay.panel ? 0 : w * 0.015), cy = lay.cy + h * 0.05;
       var pxm = lay.compact ? w * 1.15 / L : lay.s * 1.44 / L;
       var yaw = (side > 0 ? -0.62 : 0.62) + Math.sin(t * 0.21) * 0.05 + m.nx * 0.12, pitch = 0.2 + m.ny * 0.04;
       var cam = U.camera(yaw, pitch, 46);
@@ -110,10 +110,11 @@
       segs.sort(function (s1, s2) { return s1.z - s2.z; });
 
       segs.forEach(function (s) {
+        ctx.setLineDash([]);
         if (s.t === 'm') {
           var f = st.forces[s.k] / Fref, af = Math.min(1, Math.abs(f));
-          if (f > 0.015) ctx.strokeStyle = W(0.42 + 0.5 * af);
-          else if (f < -0.015) ctx.strokeStyle = A(0.5 + 0.45 * af);
+          if (f > 0.015) ctx.strokeStyle = W(0.5 + 0.5 * af);
+          else if (f < -0.015) { ctx.strokeStyle = R(0.6 + 0.4 * af); ctx.setLineDash([7, 4]); }   // compression: warm and dashed
           else ctx.strokeStyle = W(0.2);
           ctx.lineWidth = 1 + 4.4 * af;
         } else if (s.t === 'c') { ctx.strokeStyle = W(0.22); ctx.lineWidth = 1; }
@@ -121,6 +122,7 @@
         else { ctx.strokeStyle = W(0.16); ctx.lineWidth = 1; }
         ctx.beginPath(); ctx.moveTo(s.p0.x, s.p0.y); ctx.lineTo(s.p1.x, s.p1.y); ctx.stroke();
       });
+      ctx.setLineDash([]);
 
       /* joints */
       for (i = 0; i < nodes.length; i++) {
@@ -171,10 +173,10 @@
     var Fref = 32;
 
     function draw(ctx, w, h, t, dt, m) {
-      var lay = U.layout(w, h, side), left, right, pxm, base;
-      if (lay.compact) { left = w * 0.08; right = w * 0.92; } else { left = side > 0 ? w * 0.38 : w * 0.04; right = side > 0 ? w * 0.96 : w * 0.62; }
+      var lay = U.layout(w, h, side, opts.panel), left, right, pxm, base;
+      if (lay.compact || lay.panel) { left = w * 0.1; right = w * 0.9; } else { left = side > 0 ? w * 0.38 : w * 0.04; right = side > 0 ? w * 0.96 : w * 0.62; }
       pxm = (right - left) / L;
-      base = lay.compact ? h * 0.72 : h * 0.55 + H * pxm * 0.5;
+      base = lay.compact ? h * 0.72 : (lay.panel ? h * 0.5 + H * pxm * 0.5 : h * 0.55 + H * pxm * 0.5);
       function X(x) { return left + x * pxm; }
       function Y(y) { return base - y * pxm; }
 
@@ -204,16 +206,17 @@
       var cxm = L / 2, cym = H / 2;
       for (k = 0; k < T.members.length; k++) {
         var mb = T.members[k], p = T.nodes[mb[0]], q = T.nodes[mb[1]], fk = sol.forces[k], af = Math.min(1, Math.abs(fk) / Fref);
-        if (fk > 0.05) ctx.strokeStyle = W(0.45 + 0.5 * af); else if (fk < -0.05) ctx.strokeStyle = A(0.55 + 0.45 * af); else ctx.strokeStyle = W(0.22);
+        ctx.setLineDash([]);
+        if (fk > 0.05) ctx.strokeStyle = W(0.55 + 0.45 * af); else if (fk < -0.05) { ctx.strokeStyle = R(0.65 + 0.35 * af); ctx.setLineDash([9, 5]); } else ctx.strokeStyle = W(0.22);
         ctx.lineWidth = 1.2 + 5.2 * af;
-        ctx.beginPath(); ctx.moveTo(X(p.x), Y(p.y)); ctx.lineTo(X(q.x), Y(q.y)); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(X(p.x), Y(p.y)); ctx.lineTo(X(q.x), Y(q.y)); ctx.stroke(); ctx.setLineDash([]);
 
         // value label, offset outward from the truss centre
         var mxp = (p.x + q.x) / 2, myp = (p.y + q.y) / 2, ux = q.x - p.x, uy = q.y - p.y, ul = Math.hypot(ux, uy);
         var nx = -uy / ul, ny = ux / ul; if (nx * (mxp - cxm) + ny * (myp - cym) < 0) { nx = -nx; ny = -ny; }
         var sgn = fk > 0.05 ? '+' : (fk < -0.05 ? '\u2212' : '');
         var lx = X(mxp) + nx * (15 + 7 * af), ly = Y(myp) - ny * (15 + 7 * af);
-        U.text(ctx, sgn + Math.abs(fk).toFixed(1), lx, ly + 3, 9, fk < -0.05 ? A(0.5 + 0.5 * af) : W(0.3 + 0.5 * af), 'center');
+        U.text(ctx, fk > 0.05 ? 'T' : (fk < -0.05 ? 'C' : ''), lx, ly + 3, 10, fk < -0.05 ? R(0.9) : W(0.8), 'center');   // letter as well as line style
       }
 
       /* joints + names */
@@ -359,7 +362,7 @@
     }
 
     function init(w, h) {
-      var lay = U.layout(w, h, side);
+      var lay = U.layout(w, h, side, opts.panel);
       st.u = lay.compact ? lay.s * 0.24 : lay.s * 0.3;
       st.cx = lay.compact ? w * 0.5 : lay.cx; st.cy = lay.compact ? h * 0.7 : lay.cy;
       st.wallT = lay.compact ? h * 0.4 : h * 0.07; st.wallB = lay.compact ? h * 0.98 : h * 0.93;
@@ -395,7 +398,8 @@
       for (i = 0; i < st.parts.length; i++) {
         p = st.parts[i]; L = p.trail.length / 2; if (L < 3) continue;
         var tt = clamp((p.q - 0.95) / 0.85, 0, 1);
-        var col = 'rgba(255,' + Math.round(lerp(255, 79, tt)) + ',' + Math.round(lerp(255, 46, tt)) + ',';
+        var col = 'rgba(' + Math.round(lerp(255, 142, tt)) + ',' + Math.round(lerp(255, 201, tt)) + ',255,';
+        ctx.lineWidth = 1.1 + 1.8 * tt;                          // faster air: bluer and thicker, so speed is not colour alone
         for (seg = 0; seg < 3; seg++) {
           var a0 = Math.floor((seg / 3) * (L - 1)), a1 = Math.floor(((seg + 1) / 3) * (L - 1));
           ctx.strokeStyle = col + (0.16 + seg * 0.2 + tt * 0.2).toFixed(3) + ')';
@@ -459,9 +463,10 @@
     var bodies = [], arena = { x0: 0, x1: 0, y0: 0, y1: 0 }, ppm = 110, g = 9.81 * 110, peak = 0, count = 0, shake = 4.5;
 
     function init(w, h) {
-      var lay = U.layout(w, h, side), r = U.rng(21), i;
+      var lay = U.layout(w, h, side, opts.panel), r = U.rng(21), i;
       ppm = Math.max(70, lay.s / 6.2); g = 9.81 * ppm;
       if (lay.compact) arena = { x0: w * 0.04, x1: w * 0.96, y0: -h * 0.4, y1: h * 0.97 };
+      else if (lay.panel) arena = { x0: w * 0.06, x1: w * 0.94, y0: -h * 0.5, y1: h * 0.94 };
       else if (side > 0) arena = { x0: w * 0.36, x1: w - 6, y0: -h * 0.5, y1: h * 0.94 };
       else arena = { x0: 6, x1: w * 0.64, y0: -h * 0.5, y1: h * 0.94 };
       count = lay.compact ? 20 : 34; bodies = [];
@@ -595,7 +600,7 @@
     }
 
     function draw(ctx, w, h, t, dt, m) {
-      var lay = U.layout(w, h, side), pxm = lay.compact ? w * 0.27 : lay.s * 0.42;
+      var lay = U.layout(w, h, side, opts.panel), pxm = lay.compact ? w * 0.27 : lay.s * 0.42;
       var cx = lay.cx, cy = lay.cy - (lay.compact ? h * 0.02 : h * 0.13);
       var yaw = 0.5 + t * 0.045 + m.nx * 0.2, pitch = 0.64 + m.ny * 0.05;
       var cam = U.camera(yaw, pitch, 6.4);
@@ -636,7 +641,7 @@
       /* the star */
       var sun = P3(0, surface(0, 0, pp) + 0.06, 0), sr = lay.s * 0.045 * sun.k;
       var sg = ctx.createRadialGradient(sun.x, sun.y, 0, sun.x, sun.y, sr * 4);
-      sg.addColorStop(0, 'rgba(255,236,224,1)'); sg.addColorStop(0.12, A(0.95)); sg.addColorStop(0.35, A(0.28)); sg.addColorStop(1, A(0));
+      sg.addColorStop(0, 'rgba(255,236,224,1)'); sg.addColorStop(0.12, R(0.95)); sg.addColorStop(0.35, R(0.28)); sg.addColorStop(1, R(0));
       ctx.fillStyle = sg; ctx.beginPath(); ctx.arc(sun.x, sun.y, sr * 4, 0, TAU); ctx.fill();
 
       /* planets, far to near */
@@ -645,7 +650,7 @@
         var p = PL[q.idx], r = Math.max(4, lay.s * p.size * q.k * 1.55), on = q.idx === active;
         ctx.fillStyle = '#121315'; ctx.beginPath(); ctx.arc(q.x, q.y, r + 0.5, 0, TAU); ctx.fill();
         var gr = ctx.createRadialGradient(q.x - r * 0.4, q.y - r * 0.45, r * 0.1, q.x, q.y, r);
-        if (p.mars) { gr.addColorStop(0, 'rgba(255,170,140,1)'); gr.addColorStop(0.55, A(0.95)); gr.addColorStop(1, 'rgba(60,16,8,1)'); }
+        if (p.mars) { gr.addColorStop(0, 'rgba(255,170,140,1)'); gr.addColorStop(0.55, R(0.95)); gr.addColorStop(1, 'rgba(60,16,8,1)'); }
         else { var v = Math.round(255 * p.tone); gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(0.5, 'rgba(' + Math.round(v * 0.62) + ',' + Math.round(v * 0.63) + ',' + Math.round(v * 0.66) + ',1)'); gr.addColorStop(1, 'rgba(14,14,16,1)'); }
         ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(q.x, q.y, r, 0, TAU); ctx.fill();
         if (p.bands) {
@@ -691,8 +696,9 @@
     function P(r, ang) { return [cx + Math.cos(phi0 + ang) * r * k, cy - Math.sin(phi0 + ang) * r * k]; }
 
     function init(w, h) {
-      var lay = U.layout(w, h, side);
-      if (lay.compact) { cx = w * 0.5; cy = h * 0.7; k = (w * 0.46) / r2; }
+      var lay = U.layout(w, h, side, opts.panel);
+      if (lay.panel) { cx = w * 0.5; cy = h * 0.5; k = Math.min(w * 0.44, h * 0.44 * 1.6) / r2; }
+      else if (lay.compact) { cx = w * 0.5; cy = h * 0.7; k = (w * 0.46) / r2; }
       else { cx = w * (side > 0 ? 0.6 : 0.4); cy = h * 0.52; k = (side > 0 ? w * 0.96 - cx : cx - w * 0.04) / r2; }
       trail = []; lastCycle = -1;
     }
@@ -809,7 +815,7 @@
     var eps = (re * re) / (rt * rt);
 
     function draw(ctx, w, h, t, dt, m) {
-      var lay = U.layout(w, h, side), pxm = lay.compact ? w * 0.24 : lay.s * 0.3;
+      var lay = U.layout(w, h, side, opts.panel), pxm = lay.compact ? w * 0.24 : lay.s * 0.3;
       var cx = lay.cx, cy = lay.cy - (lay.compact ? 0 : h * 0.08);
       var yaw = t * 0.22 + m.nx * 0.5, pitch = 0.3 + m.ny * 0.1, roll = side > 0 ? -0.34 : 0.34;
       var cam = U.camera(yaw, pitch, 9), cr = Math.cos(roll), sr = Math.sin(roll);
@@ -870,7 +876,7 @@
         p = wp(zz, pl.ph + t * 0.3, rr);
         var a_ = (1 - s) * 0.85;
         ctx.globalAlpha = a_ * (p.z < 0 ? 0.35 : 0.9);
-        ctx.fillStyle = s < 0.35 ? '#fff' : 'rgb(255,79,46)';
+        ctx.fillStyle = s < 0.35 ? '#fff' : 'rgb(255,150,100)';
         ctx.fillRect(p.x - 1, p.y - 1, 2.2, 2.2);
       }
       ctx.globalAlpha = 1;

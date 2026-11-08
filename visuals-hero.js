@@ -208,7 +208,7 @@
       for (ci = 0; ci < crafts.length; ci++) advance(crafts[ci]);
 
       function drawTrail(c) {
-        var L = c.trail.length, k8, from, to, pen3, base = c.accent ? 'rgba(255,79,46,' : 'rgba(255,255,255,';
+        var L = c.trail.length, k8, from, to, pen3, base = c.accent ? 'rgba(142,201,255,' : 'rgba(255,255,255,';
         if (L < 3) return;
         for (k8 = 0; k8 < 8; k8++) {
           from = Math.floor((k8 / 8) * (L - 1)); to = Math.floor(((k8 + 1) / 8) * (L - 1)) + 1;
