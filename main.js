@@ -71,7 +71,7 @@
   function mount(c) {
     if (c.getAttribute('data-mounted') || !PF.VisualHost) return;
     c.setAttribute('data-mounted', '1');
-    try { new PF.VisualHost(c, c.getAttribute('data-visual'), { side: +c.getAttribute('data-side') || 1, panel: c.getAttribute('data-panel') === '1' }, null); }
+    try { c._host = new PF.VisualHost(c, c.getAttribute('data-visual'), { side: +c.getAttribute('data-side') || 1, panel: c.getAttribute('data-panel') === '1' }, null); }
     catch (err) { c.parentNode.classList.add('pv-failed'); }
   }
   var canvases = $$('canvas[data-visual]');
@@ -122,5 +122,58 @@
     window.addEventListener('hashchange', function () { fromHash(true); });
     fromHash(false);
     window.addEventListener('load', function () { fromHash(true); });
+  }
+
+  /* ---------- scroll sequence: bridge to wind tunnel ----------
+     A tall block holds one pinned stage. Scrolling through it moves a camera (see visuals-transition.js)
+     from the bridge into the wind tunnel. Scroll position is the only input, so it is reversible and there
+     is no auto-scrolling. Not used on small screens or with reduced motion: those get ordinary rows. */
+  var seq = $('[data-seq]'), seqItems = seq ? $$('[data-seq-item]', seq) : [];
+  var mqWide = window.matchMedia ? window.matchMedia('(min-width: 861px)') : { matches: false };
+  var mqReduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  var SEQ = { hold: 0.35, travel: 1.2, state: -1 };                        // lengths in screens: bridge view, transition, wind view
+  var headH = function () { var h = $('.site-header'); return h ? h.offsetHeight : 72; };
+  function seqOn() { return !!seq && seqItems.length === 2 && mqWide.matches && !mqReduce.matches; }
+  function seqTop() { return seq.getBoundingClientRect().top + window.scrollY; }
+  function seqHost() { var c = $('canvas[data-visual="bridgewind"]', seq); return c && c._host; }
+  function setSeqState(i) {
+    if (SEQ.state === i) return; SEQ.state = i;
+    seqItems.forEach(function (it, k) { it.setAttribute('data-state', k === i ? 'on' : 'off'); });
+    $$('[data-for]', seq).forEach(function (cap) { cap.hidden = cap.getAttribute('data-for') !== seqItems[i].id; });
+  }
+  function seqUpdate() {
+    if (!seqOn() || !PF.seq) return;
+    var y = window.scrollY - (seqTop() - headH());                         // 0 when the stage pins
+    var tp = Math.min(1, Math.max(0, (y - SEQ.hold * window.innerHeight) / (SEQ.travel * window.innerHeight)));
+    PF.seq.target = tp; setSeqState(tp < 0.5 ? 0 : 1);
+    var host = seqHost(); if (host) host.refresh();
+  }
+  function seqApply() {
+    var on = seqOn(); d.documentElement.classList.toggle('seq-on', on);
+    if (!seq) return;
+    if (!on) { if (PF.seq) PF.seq.target = 0; seq.style.height = ''; seqItems.forEach(function (it) { it.removeAttribute('data-state'); }); SEQ.state = -1; return; }
+    var vh = window.innerHeight; seq.style.height = Math.round(vh - headH() + (SEQ.hold * 2 + SEQ.travel) * vh) + 'px';
+    SEQ.state = -1; setSeqState(0); seqUpdate();
+  }
+  function seqJump(id) {                                                  // anchors keep working: land where that project is settled
+    var base = seqTop() - headH();
+    window.scrollTo(0, Math.round(id === seqItems[1].id ? base + (SEQ.hold + SEQ.travel) * window.innerHeight + 2 : base));
+  }
+  if (seq && PF.util) {
+    PF.seq = { target: 0 };
+    var ticking = false;
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; window.requestAnimationFrame(function () { ticking = false; seqUpdate(); }); } }, { passive: true });
+    window.addEventListener('resize', seqApply);
+    if (mqWide.addEventListener) { mqWide.addEventListener('change', seqApply); mqReduce.addEventListener('change', seqApply); }
+    d.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a || !seqOn()) return;
+      var id = a.getAttribute('href').slice(1);
+      if (seqItems.some(function (it) { return it.id === id; })) { e.preventDefault(); seqJump(id); if (window.history && history.replaceState) history.replaceState(null, '', '#' + id); }
+    });
+    // Tabbing to a link in the project that is not showing brings that project into view.
+    seqItems.forEach(function (it) { it.addEventListener('focusin', function () { if (seqOn() && it.getAttribute('data-state') === 'off') seqJump(it.id); }); });
+    window.addEventListener('hashchange', function () { var id = decodeURIComponent(location.hash.slice(1)); if (seqOn() && seqItems.some(function (it) { return it.id === id; })) seqJump(id); });
+    window.addEventListener('load', function () { seqApply(); var id = decodeURIComponent(location.hash.slice(1)); if (seqOn() && seqItems.some(function (it) { return it.id === id; })) seqJump(id); });
+    seqApply();
   }
 })();

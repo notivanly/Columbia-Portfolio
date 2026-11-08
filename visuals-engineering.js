@@ -109,6 +109,14 @@
       }
       segs.sort(function (s1, s2) { return s1.z - s2.z; });
 
+      /* hook for the scroll transition: screen position of the middle bottom-chord member on the near truss */
+      var fk = n / 2 - 1, fs = null;
+      segs.forEach(function (s) { if (s.t === 'm' && s.k === fk && (!fs || s.z > fs.z)) fs = s; });
+      if (fs) {
+        var fang = Math.atan2(fs.p1.y - fs.p0.y, fs.p1.x - fs.p0.x); if (fang > Math.PI / 2) fang -= Math.PI; if (fang < -Math.PI / 2) fang += Math.PI;
+        st.focus = { x: (fs.p0.x + fs.p1.x) / 2, y: (fs.p0.y + fs.p1.y) / 2, ang: fang, lw: 1 + 4.4 * Math.min(1, Math.abs(st.forces[fk]) / Fref) };
+      }
+
       segs.forEach(function (s) {
         ctx.setLineDash([]);
         if (s.t === 'm') {
@@ -158,7 +166,7 @@
         ['Peak compression', '\u2212' + Math.abs(st.maxC).toFixed(1) + ' kN']
       ];
     }
-    return { draw: draw, hud: hud };
+    return { draw: draw, hud: hud, focus: function () { return st.focus; } };
   };
 
   /* ======================================================================
@@ -414,13 +422,17 @@
       var ca = Math.cos(alpha), sa = Math.sin(alpha);
       function toScreen(zx, zy) { var X = zx * ca + zy * sa, Y = -zx * sa + zy * ca; return [cx + X * u, cy - Y * u]; }
       ctx.beginPath();
-      var k;
+      var k, outl = [], topK = 0;
       for (k = 0; k <= 160; k++) {
         var th = (k / 160) * TAU, zx = z0x + ra * Math.cos(th), zy = z0y + ra * Math.sin(th), d2 = zx * zx + zy * zy;
         var s = toScreen(zx + c * c * zx / d2, zy - c * c * zy / d2);
+        outl.push(s); if (s[1] < outl[topK][1]) topK = k;
         if (k === 0) ctx.moveTo(s[0], s[1]); else ctx.lineTo(s[0], s[1]);
       }
       ctx.closePath();
+      /* hook for the scroll transition: the highest point of the upper surface and its tangent direction */
+      var ta = outl[Math.max(0, topK - 3)], tb = outl[Math.min(160, topK + 3)], wang = Math.atan2(tb[1] - ta[1], tb[0] - ta[0]); if (wang > Math.PI / 2) wang -= Math.PI; if (wang < -Math.PI / 2) wang += Math.PI;
+      st.focus = { x: outl[topK][0], y: outl[topK][1], ang: wang };
       var fill = ctx.createLinearGradient(cx, cy - u, cx, cy + u);
       fill.addColorStop(0, 'rgba(30,31,34,0.97)'); fill.addColorStop(1, 'rgba(10,10,12,0.98)');
       ctx.fillStyle = fill; ctx.fill();
@@ -452,7 +464,7 @@
         ['Lift coefficient', st.cl.toFixed(2)]
       ];
     }
-    return { init: init, draw: draw, hud: hud };
+    return { init: init, draw: draw, hud: hud, focus: function () { return st.focus; } };
   };
 
   /* ======================================================================

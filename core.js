@@ -246,6 +246,9 @@
     this.updateHud(true);
   };
 
+  // Repaint once (used when the scroll-linked camera moves while animation is paused).
+  VisualHost.prototype.refresh = function () { if (this.w && PF.paused) this.render(0); };
+
   VisualHost.prototype.updateHud = function () {
     if (!this.hudEl || !this.visual.hud) return;
     var rows = this.visual.hud(), html = '', i;
