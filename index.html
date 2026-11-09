@@ -17,7 +17,7 @@
   <meta property="og:image" content="https://notivanly.github.io/Columbia-Portfolio/social-preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="The name Ivan Ly and the line: I build interactive physics simulations and educational tools, beside an animated globe with orbiting satellites.">
+  <meta property="og:image:alt" content="The name Ivan Ly and the line: I build interactive physics simulations and educational tools, beside a bridge shown with its parts pulled apart.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Ivan Ly | Interactive physics simulations and educational tools">
   <meta name="twitter:description" content="I build interactive physics simulations and educational tools.">
@@ -59,232 +59,145 @@
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
+    <nav class="menu-projects" aria-label="All projects"><ol><li><a href="#bridge-physics-simulator"><span class="n mono">01</span>Bridge Physics Simulator</a></li><li><a href="#mini-wind-tunnel-simulator"><span class="n mono">02</span>Mini Wind Tunnel Simulator</a></li><li><a href="#truss-force-analyzer"><span class="n mono">03</span>Truss Force Analyzer</a></li><li><a href="#physics-sandbox"><span class="n mono">04</span>Physics Sandbox</a></li><li><a href="#planetary-gravity-explorer"><span class="n mono">05</span>Planetary Gravity Explorer</a></li><li><a href="#orbital-mechanics-simulator"><span class="n mono">06</span>Orbital Mechanics Simulator</a></li><li><a href="#sat-question-bank-tracker"><span class="n mono">07</span>SAT Question Bank Tracker</a></li><li><a href="#amc-practice"><span class="n mono">08</span>AMC Practice</a></li><li><a href="#calculus-iii-visualizer"><span class="n mono">09</span>Calculus III Visualizer</a></li></ol></nav>
   </div>
 
   <main id="main" tabindex="-1">
+    <div class="film" id="film" data-film>
+      <div class="film-stage">
+        <canvas class="film-canvas" id="filmCanvas" data-film-canvas aria-hidden="true"></canvas>
+        <div class="scenes">
 
-    <section class="hero" id="home" aria-labelledby="hero-h">
-      <div class="hero-stage" aria-hidden="true">
-        <canvas data-visual="hero" data-side="1"></canvas>
-      </div>
-      <div class="hero-copy">
-        <h1 id="hero-h">Ivan Ly</h1>
-        <p class="lead">I build interactive physics simulations and educational tools.</p>
-        <div class="actions"><a class="btn primary" href="#projects">Explore projects</a></div>
-        <nav class="pindex" aria-label="Project index"><ol><li><a href="#bridge-physics-simulator"><span class="n mono">01</span><span class="t">Bridge Physics Simulator</span></a></li><li><a href="#mini-wind-tunnel-simulator"><span class="n mono">02</span><span class="t">Mini Wind Tunnel Simulator</span></a></li><li><a href="#truss-force-analyzer"><span class="n mono">03</span><span class="t">Truss Force Analyzer</span></a></li><li><a href="#physics-sandbox"><span class="n mono">04</span><span class="t">Physics Sandbox</span></a></li><li><a href="#planetary-gravity-explorer"><span class="n mono">05</span><span class="t">Planetary Gravity Explorer</span></a></li><li><a href="#orbital-mechanics-simulator"><span class="n mono">06</span><span class="t">Orbital Mechanics Simulator</span></a></li><li><a href="#sat-question-bank-tracker"><span class="n mono">07</span><span class="t">SAT Question Bank Tracker</span></a></li><li><a href="#amc-practice"><span class="n mono">08</span><span class="t">AMC Practice</span></a></li><li><a href="#calculus-iii-visualizer"><span class="n mono">09</span><span class="t">Calculus III Visualizer</span></a></li></ol></nav>
-      </div>
-      <p class="hero-note mono" aria-hidden="true">Decorative animation</p>
-    </section>
+      <section class="scene hero" id="home" data-scene="0" data-key="home" data-text="left" aria-labelledby="hero-h">
+        <div class="copy">
+          <h1 id="hero-h">Ivan Ly</h1>
+          <p class="lead">I build interactive physics simulations and educational tools.</p>
+          <div class="actions"><a class="btn primary" href="#projects">Explore projects</a></div>
+          <nav class="pindex" aria-label="Project index"><ol><li><a href="#bridge-physics-simulator"><span class="n mono">01</span><span class="t">Bridge Physics Simulator</span></a></li><li><a href="#mini-wind-tunnel-simulator"><span class="n mono">02</span><span class="t">Mini Wind Tunnel Simulator</span></a></li><li><a href="#truss-force-analyzer"><span class="n mono">03</span><span class="t">Truss Force Analyzer</span></a></li><li><a href="#physics-sandbox"><span class="n mono">04</span><span class="t">Physics Sandbox</span></a></li><li><a href="#planetary-gravity-explorer"><span class="n mono">05</span><span class="t">Planetary Gravity Explorer</span></a></li><li><a href="#orbital-mechanics-simulator"><span class="n mono">06</span><span class="t">Orbital Mechanics Simulator</span></a></li><li><a href="#sat-question-bank-tracker"><span class="n mono">07</span><span class="t">SAT Question Bank Tracker</span></a></li><li><a href="#amc-practice"><span class="n mono">08</span><span class="t">AMC Practice</span></a></li><li><a href="#calculus-iii-visualizer"><span class="n mono">09</span><span class="t">Calculus III Visualizer</span></a></li></ol></nav>
+        </div>
+        <figure class="preview hero-preview"><div class="pv"><canvas data-still="home" aria-hidden="true"></canvas></div><figcaption>Decorative animation.</figcaption></figure>
+      </section>
 
-    <section class="section" id="projects" aria-labelledby="projects-h">
-      <h2 class="sec-title" id="projects-h">Projects</h2>
-      <div class="seq" id="seq-bridge-wind" data-seq>
-        <div class="seq-stage">
-          <figure class="preview seq-viz"><div class="pv"><canvas data-visual="bridgewind" data-panel="1" aria-hidden="true"></canvas></div>
-            <figcaption data-for="bridge-physics-simulator">Animated preview. Solid: tension. Dashed: compression.</figcaption><figcaption data-for="mini-wind-tunnel-simulator" hidden>Animated preview. Bluer, thicker lines: faster air.</figcaption></figure>
-      <article data-seq-item class="project" id="bridge-physics-simulator" aria-labelledby="bridge-physics-simulator-h">
-        <header class="p-head"><span class="p-num mono">01</span><h3 id="bridge-physics-simulator-h">Bridge Physics Simulator</h3></header>
-        <figure class="preview"><div class="pv"><canvas data-visual="bridge" data-panel="1" aria-hidden="true"></canvas></div><figcaption>Animated preview. Solid: tension. Dashed: compression.</figcaption></figure>
-        <div class="p-body">
+      <div class="anchor" id="projects"></div>
+      <article class="scene project" id="bridge-physics-simulator" data-scene="1" data-key="bridge" data-text="right" aria-labelledby="bridge-physics-simulator-h">
+        <div class="copy">
+          <header class="p-head"><span class="p-num mono">01</span><h3 id="bridge-physics-simulator-h">Bridge Physics Simulator</h3></header>
           <p class="p-desc">Build a bridge from wood, steel, concrete, cable or carbon fiber, then send vehicles across it and see what holds.</p>
           <p class="hint"><span class="hint-k mono">Try</span> Pick the Pratt Truss template and turn on Force Diagram.</p>
           <div class="actions"><a class="btn primary" href="https://notivanly.github.io/BridgeGame/" target="_blank" rel="noopener noreferrer">Open simulator<span class="sr-only">: Bridge Physics Simulator (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A separate 3D truss with a moving vehicle, drawn for this page. Solid lines are in tension and dashed lines are in compression. It is not the bridge game.</p><p><strong>On the page.</strong> You choose from five materials on a budget and send vehicles from a bicycle to a train. It also has templates, lessons, a force diagram, and wind, earthquake and rain tests. It is titled Load Limit on the page.</p></div></details>
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A separate 3D truss bridge with a moving vehicle, drawn for this page. Each bar is shaded by the force in it: plain bars are in tension and bars drawn as broken segments are in compression. It is not the bridge game. The exploded view on the home screen is decorative.</p><p><strong>On the page.</strong> You choose from five materials on a budget and send vehicles from a bicycle to a train. It also has templates, lessons, a force diagram, and wind, earthquake and rain tests. It is titled Load Limit on the page.</p></div></details>
         </div>
+        <figure class="preview"><div class="pv"><canvas data-still="bridge" aria-hidden="true"></canvas></div><figcaption>Animated preview. Solid: tension. Dashed: compression.</figcaption></figure>
       </article>
-      <article data-seq-item class="project flip" id="mini-wind-tunnel-simulator" aria-labelledby="mini-wind-tunnel-simulator-h">
-        <header class="p-head"><span class="p-num mono">02</span><h3 id="mini-wind-tunnel-simulator-h">Mini Wind Tunnel Simulator</h3></header>
-        <figure class="preview"><div class="pv"><canvas data-visual="wind" data-panel="1" aria-hidden="true"></canvas></div><figcaption>Animated preview. Bluer, thicker lines: faster air.</figcaption></figure>
-        <div class="p-body">
+      <article class="scene project" id="mini-wind-tunnel-simulator" data-scene="2" data-key="wind" data-text="left" aria-labelledby="mini-wind-tunnel-simulator-h">
+        <div class="copy">
+          <header class="p-head"><span class="p-num mono">02</span><h3 id="mini-wind-tunnel-simulator-h">Mini Wind Tunnel Simulator</h3></header>
           <p class="p-desc">Adjust speed, angle, air density and wing area and watch streamlines flow around the wing as lift and drag update.</p>
           <p class="hint"><span class="hint-k mono">Try</span> Push the angle past 15 degrees to see the wing stall.</p>
           <div class="actions"><a class="btn primary" href="https://notivanly.github.io/Mini-Wind-Tunnel-Simulator/" target="_blank" rel="noopener noreferrer">Open simulator<span class="sr-only">: Mini Wind Tunnel Simulator (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a><a class="btn" href="https://github.com/notivanly/Mini-Wind-Tunnel-Simulator" target="_blank" rel="noopener noreferrer">Source code<span class="sr-only">: Mini Wind Tunnel Simulator on GitHub (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A separate drawing of airflow around a wing, not output from the simulator.</p><p><strong>On the page.</strong> Controls for wind speed, angle of attack, air density and wing area, with readouts for lift, drag and the lift-to-drag ratio.</p><p><strong>Model.</strong> L = &frac12;&rho;V&sup2;S&middot;C<sub>L</sub> and D = &frac12;&rho;V&sup2;S&middot;C<sub>D</sub>. C<sub>L</sub> rises by 2&pi; per radian up to 15 degrees. Past that, a simple stall rule removes 5.5 percent of the stall value per degree, down to a floor of 35 percent. Drag is C<sub>D</sub> = 0.02 + 0.05&middot;C<sub>L</sub>&sup2;.</p><p><strong>Streamlines.</strong> They come from potential flow around a Joukowski airfoil, with the circulation set to match the lift coefficient.</p><p><strong>Limits.</strong> The constants are assumed values for teaching, not measured data. It is not CFD, so there is no viscosity or flow separation.</p></div></details>
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A separate drawing of airflow around a wing, not output from the simulator. The wing is given depth and a glass tunnel for effect; the flow is in one plane.</p><p><strong>On the page.</strong> Controls for wind speed, angle of attack, air density and wing area, with readouts for lift, drag and the lift-to-drag ratio.</p><p><strong>Model.</strong> L = &frac12;&rho;V&sup2;S&middot;C<sub>L</sub> and D = &frac12;&rho;V&sup2;S&middot;C<sub>D</sub>. C<sub>L</sub> rises by 2&pi; per radian up to 15 degrees. Past that, a simple stall rule removes 5.5 percent of the stall value per degree, down to a floor of 35 percent. Drag is C<sub>D</sub> = 0.02 + 0.05&middot;C<sub>L</sub>&sup2;.</p><p><strong>Streamlines.</strong> They come from potential flow around a Joukowski airfoil, with the circulation set to match the lift coefficient.</p><p><strong>Limits.</strong> The constants are assumed values for teaching, not measured data. It is not CFD, so there is no viscosity or flow separation.</p></div></details>
         </div>
+        <figure class="preview"><div class="pv"><canvas data-still="wind" aria-hidden="true"></canvas></div><figcaption>Animated preview. Bluer, thicker lines: faster air.</figcaption></figure>
       </article>
-        </div>
-      </div>
-      <article class="project" id="truss-force-analyzer" aria-labelledby="truss-force-analyzer-h">
-        <header class="p-head"><span class="p-num mono">03</span><h3 id="truss-force-analyzer-h">Truss Force Analyzer</h3></header>
-        <figure class="preview"><div class="pv"><canvas data-visual="truss" data-panel="1" aria-hidden="true"></canvas></div><figcaption>Animated preview. Solid: tension. Dashed: compression.</figcaption></figure>
-        <div class="p-body">
+      <article class="scene project" id="truss-force-analyzer" data-scene="3" data-key="truss" data-text="right" aria-labelledby="truss-force-analyzer-h">
+        <div class="copy">
+          <header class="p-head"><span class="p-num mono">03</span><h3 id="truss-force-analyzer-h">Truss Force Analyzer</h3></header>
           <p class="p-desc">Draw a 2D truss, add supports and loads, and see each member&rsquo;s force as tension or compression.</p>
           <p class="hint"><span class="hint-k mono">Try</span> Load an example, then press Analyze.</p>
           <div class="actions"><a class="btn primary" href="https://notivanly.github.io/Truss-Force-Analyzer/" target="_blank" rel="noopener noreferrer">Open simulator<span class="sr-only">: Truss Force Analyzer (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a><a class="btn" href="https://github.com/notivanly/Truss-Force-Analyzer" target="_blank" rel="noopener noreferrer">Source code<span class="sr-only">: Truss Force Analyzer on GitHub (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A separate truss with a moving load, drawn for this page. It is not the analyzer.</p><p><strong>On the page.</strong> The deformed shape is drawn magnified so you can see how the structure moves.</p><p><strong>Model.</strong> K u = F. The solver builds a stiffness matrix for a pin-jointed 2D truss, solves it by Gaussian elimination for how far each joint moves, then turns each member&rsquo;s change in length into an axial force. Tension is positive and compression negative. It handles determinate and indeterminate trusses.</p><p><strong>Checks.</strong> It compares members plus reactions against twice the number of joints and reports an unstable truss instead of returning numbers. A singular stiffness matrix is flagged the same way. Results can be exported as CSV.</p><p><strong>Limits.</strong> Members are linear elastic and share one axial stiffness, EA, and displacements are small. It does not check member strength or buckling.</p></div></details>
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A separate truss with a moving load, drawn for this page. Plain bars are in tension and hatched bars are in compression. It is not the analyzer.</p><p><strong>On the page.</strong> The deformed shape is drawn magnified so you can see how the structure moves.</p><p><strong>Model.</strong> K u = F. The solver builds a stiffness matrix for a pin-jointed 2D truss, solves it by Gaussian elimination for how far each joint moves, then turns each member&rsquo;s change in length into an axial force. Tension is positive and compression negative. It handles determinate and indeterminate trusses.</p><p><strong>Checks.</strong> It compares members plus reactions against twice the number of joints and reports an unstable truss instead of returning numbers. A singular stiffness matrix is flagged the same way. Results can be exported as CSV.</p><p><strong>Limits.</strong> Members are linear elastic and share one axial stiffness, EA, and displacements are small. It does not check member strength or buckling.</p></div></details>
         </div>
+        <figure class="preview"><div class="pv"><canvas data-still="truss" aria-hidden="true"></canvas></div><figcaption>Animated preview. Plain bars: tension. Hatched bars: compression.</figcaption></figure>
       </article>
-      <article class="project flip" id="physics-sandbox" aria-labelledby="physics-sandbox-h">
-        <header class="p-head"><span class="p-num mono">04</span><h3 id="physics-sandbox-h">Physics Sandbox</h3></header>
-        <figure class="preview"><div class="pv"><canvas data-visual="sandbox" data-panel="1" aria-hidden="true"></canvas></div><figcaption>Animated preview.</figcaption></figure>
-        <div class="p-body">
+      <article class="scene project" id="physics-sandbox" data-scene="4" data-key="sandbox" data-text="left" aria-labelledby="physics-sandbox-h">
+        <div class="copy">
+          <header class="p-head"><span class="p-num mono">04</span><h3 id="physics-sandbox-h">Physics Sandbox</h3></header>
           <p class="p-desc">Drop, throw and connect shapes in a 2D playground with gravity, collisions, friction, springs and pendulums.</p>
           <p class="hint"><span class="hint-k mono">Try</span> Open Newton&rsquo;s cradle, then change gravity.</p>
           <div class="actions"><a class="btn primary" href="https://notivanly.github.io/PhysicsSandbox/" target="_blank" rel="noopener noreferrer">Open simulator<span class="sr-only">: Physics Sandbox (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a><a class="btn" href="https://github.com/notivanly/PhysicsSandbox" target="_blank" rel="noopener noreferrer">Source code<span class="sr-only">: Physics Sandbox on GitHub (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> The bodies are a separate animation, not scenes from the simulator.</p><p><strong>Implementation.</strong> A rigid-body engine for circles and convex polygons. Collisions are found with the separating axis test. When two shapes touch, an impulse j along the contact changes their velocities, v&prime; = v + j/m, so they stop moving into each other. Contacts are solved with sequential impulses that include friction and warm starting, and each step is split into substeps.</p><p><strong>Joints.</strong> Hinge, rod, rope and spring.</p><p><strong>Limits.</strong> It is 2D only and has no continuous collision detection, so very fast objects can pass through thin ones.</p></div></details>
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> Circles, a pendulum, rods and a spring in a separate animation, not scenes from the simulator.</p><p><strong>Implementation.</strong> A rigid-body engine for circles and convex polygons. Collisions are found with the separating axis test. When two shapes touch, an impulse j along the contact changes their velocities, v&prime; = v + j/m, so they stop moving into each other. Contacts are solved with sequential impulses that include friction and warm starting, and each step is split into substeps.</p><p><strong>Joints.</strong> Hinge, rod, rope and spring.</p><p><strong>Limits.</strong> It is 2D only and has no continuous collision detection, so very fast objects can pass through thin ones.</p></div></details>
         </div>
+        <figure class="preview"><div class="pv"><canvas data-still="sandbox" aria-hidden="true"></canvas></div><figcaption>Animated preview.</figcaption></figure>
       </article>
-      <article class="project" id="planetary-gravity-explorer" aria-labelledby="planetary-gravity-explorer-h">
-        <header class="p-head"><span class="p-num mono">05</span><h3 id="planetary-gravity-explorer-h">Planetary Gravity Explorer</h3></header>
-        <figure class="preview"><div class="pv"><canvas data-visual="gravity" data-panel="1" aria-hidden="true"></canvas></div><figcaption>Animated preview.</figcaption></figure>
-        <div class="p-body">
+      <article class="scene project" id="planetary-gravity-explorer" data-scene="5" data-key="gravity" data-text="right" aria-labelledby="planetary-gravity-explorer-h">
+        <div class="copy">
+          <header class="p-head"><span class="p-num mono">05</span><h3 id="planetary-gravity-explorer-h">Planetary Gravity Explorer</h3></header>
           <p class="p-desc">Compare gravity and escape velocity across the eight planets, then drop or jump on each one.</p>
           <p class="hint"><span class="hint-k mono">Try</span> Drop an object on Mars, then on Jupiter.</p>
           <div class="actions"><a class="btn primary" href="https://notivanly.github.io/Planetary-Gravity-Explorer/" target="_blank" rel="noopener noreferrer">Open simulator<span class="sr-only">: Planetary Gravity Explorer (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a><a class="btn" href="https://github.com/notivanly/Planetary-Gravity-Explorer" target="_blank" rel="noopener noreferrer">Source code<span class="sr-only">: Planetary Gravity Explorer on GitHub (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A grid bends around masses as an analogy. Sizes and spacing are not to scale, and nothing in it is simulator output.</p><p><strong>On the page.</strong> Surface gravity, escape velocity and weight for each of the eight planets, plus a gravity lab for drops and jumps.</p><p><strong>Model.</strong> Each planet is defined by its gravitational parameter GM and radius. Surface gravity is g = GM/R&sup2;, escape speed is v = &radic;(2GM/R), and weight is W = mg. Drops and jumps use constant acceleration with no air resistance.</p><p><strong>Limits.</strong> Reference values are approximate. For the gas and ice giants the radius is the 1-bar level, which is what the usual reference gravities assume.</p></div></details>
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A sheet bends around masses as an analogy. Sizes and spacing are not to scale, and nothing in it is simulator output.</p><p><strong>On the page.</strong> Surface gravity, escape velocity and weight for each of the eight planets, plus a gravity lab for drops and jumps.</p><p><strong>Model.</strong> Each planet is defined by its gravitational parameter GM and radius. Surface gravity is g = GM/R&sup2;, escape speed is v = &radic;(2GM/R), and weight is W = mg. Drops and jumps use constant acceleration with no air resistance.</p><p><strong>Limits.</strong> Reference values are approximate. For the gas and ice giants the radius is the 1-bar level, which is what the usual reference gravities assume.</p></div></details>
         </div>
+        <figure class="preview"><div class="pv"><canvas data-still="gravity" aria-hidden="true"></canvas></div><figcaption>Animated preview. Not to scale.</figcaption></figure>
       </article>
-      <article class="project flip" id="orbital-mechanics-simulator" aria-labelledby="orbital-mechanics-simulator-h">
-        <header class="p-head"><span class="p-num mono">06</span><h3 id="orbital-mechanics-simulator-h">Orbital Mechanics Simulator</h3></header>
-        <figure class="preview"><div class="pv"><canvas data-visual="orbital" data-panel="1" aria-hidden="true"></canvas></div><figcaption>Animated preview.</figcaption></figure>
-        <div class="p-body">
+      <article class="scene project" id="orbital-mechanics-simulator" data-scene="6" data-key="orbital" data-text="left" aria-labelledby="orbital-mechanics-simulator-h">
+        <div class="copy">
+          <header class="p-head"><span class="p-num mono">06</span><h3 id="orbital-mechanics-simulator-h">Orbital Mechanics Simulator</h3></header>
           <p class="p-desc">Pick a world, set an altitude and speed, launch a spacecraft, and fly the orbit with prograde and retrograde burns.</p>
           <p class="hint"><span class="hint-k mono">Try</span> Start with the Circular preset, then burn prograde.</p>
           <div class="actions"><a class="btn primary" href="https://notivanly.github.io/Orbital-Mechanics-Simulator/" target="_blank" rel="noopener noreferrer">Open simulator<span class="sr-only">: Orbital Mechanics Simulator (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a><a class="btn" href="https://github.com/notivanly/Orbital-Mechanics-Simulator" target="_blank" rel="noopener noreferrer">Source code<span class="sr-only">: Orbital Mechanics Simulator on GitHub (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
           <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> It shows a transfer between two circular orbits. In the simulator you set the altitude and speed yourself.</p><p><strong>On the page.</strong> Choose Earth, Mars or the Moon, then set an altitude and a starting tangential speed.</p><p><strong>Model.</strong> Two-body gravity, a = &minus;GM r / |r|&sup3;, advanced with a fourth-order Runge-Kutta integrator. The dashed path is the exact conic orbit for the current state, found with the vis-viva equation. Burns change the speed along the direction of travel.</p><p><strong>Limits.</strong> No atmosphere, no other bodies, and the spacecraft is a point mass. It is not for mission planning.</p></div></details>
         </div>
+        <figure class="preview"><div class="pv"><canvas data-still="orbital" aria-hidden="true"></canvas></div><figcaption>Animated preview.</figcaption></figure>
       </article>
-    </section>
-
-    <section class="section" id="mathematics" aria-labelledby="math-h">
-      <h2 class="sec-title" id="math-h">Mathematics</h2>
-      <div class="tablist" role="tablist" aria-label="Mathematics resources"><button type="button" role="tab" id="tab-sat-question-bank-tracker" aria-controls="sat-question-bank-tracker" aria-selected="true" tabindex="0" data-math-tab="sat-question-bank-tracker"><span class="mono">07</span>SAT Question Bank Tracker</button><button type="button" role="tab" id="tab-amc-practice" aria-controls="amc-practice" aria-selected="false" tabindex="-1" data-math-tab="amc-practice"><span class="mono">08</span>AMC Practice</button><button type="button" role="tab" id="tab-calculus-iii-visualizer" aria-controls="calculus-iii-visualizer" aria-selected="false" tabindex="-1" data-math-tab="calculus-iii-visualizer"><span class="mono">09</span>Calculus III Visualizer</button></div>
-      <article class="project math-panel" id="sat-question-bank-tracker" aria-labelledby="sat-question-bank-tracker-h" role="tabpanel" data-math-panel="sat-question-bank-tracker">
-        <header class="p-head"><span class="p-num mono">07</span><h3 id="sat-question-bank-tracker-h">SAT Question Bank Tracker</h3></header>
-        <figure class="preview"><div class="pv pv-static"><svg viewBox="0 0 640 400" role="img" aria-labelledby="svg-sat-t" class="diagram" focusable="false">
-<title id="svg-sat-t">Illustration of a results grid. Each question row has a gray bar in place of the ID and a labeled badge: Correct, Incorrect, Flagged for review, or Not marked yet.</title>
-<text x="40" y="52" class="d-h">Results grid</text>
-<text x="40" y="76" class="d-s">Illustration, not a screenshot</text>
-<rect x="40" y="100" width="560" height="52" rx="10" class="d-row"/>
-<rect x="60" y="120" width="150" height="12" rx="6" class="d-skel"/>
-<circle cx="300" cy="126" r="14" class="d-badge-fill"/><path d="M294 126 l4.5 5 l8 -10" class="d-glyph-dark"/>
-<text x="330" y="131" class="d-t">Correct</text>
-<rect x="40" y="164" width="560" height="52" rx="10" class="d-row"/>
-<rect x="60" y="184" width="150" height="12" rx="6" class="d-skel"/>
-<rect x="286" y="176" width="28" height="28" rx="6" class="d-badge"/><path d="M294 184 l12 12 M306 184 l-12 12" class="d-glyph"/>
-<text x="330" y="195" class="d-t">Incorrect</text>
-<rect x="40" y="228" width="560" height="52" rx="10" class="d-row"/>
-<rect x="60" y="248" width="150" height="12" rx="6" class="d-skel"/>
-<path d="M292 268 V240 H312 l-5 7 l5 7 H292" class="d-badge"/>
-<text x="330" y="259" class="d-t">Flagged for review</text>
-<rect x="40" y="292" width="560" height="52" rx="10" class="d-row"/>
-<rect x="60" y="312" width="150" height="12" rx="6" class="d-skel"/>
-<circle cx="300" cy="318" r="14" class="d-empty"/>
-<text x="330" y="323" class="d-t">Not marked yet</text>
-</svg></div><figcaption>Static diagram.</figcaption></figure>
-        <div class="p-body">
+      <div class="anchor" id="mathematics"></div>
+      <article class="scene project" id="sat-question-bank-tracker" data-scene="7" data-key="sat" data-text="right" aria-labelledby="sat-question-bank-tracker-h">
+        <div class="copy">
+          <header class="p-head"><span class="p-num mono">07</span><h3 id="sat-question-bank-tracker-h">SAT Question Bank Tracker</h3></header>
           <p class="p-desc">A Chrome extension that adds Correct, Incorrect and Flagged badges to questions in the College Board Educator Question Bank.</p>
           <p class="hint"><span class="hint-k mono">Try</span> Mark a question while reviewing it, then find its badge.</p>
           <div class="actions"><a class="btn primary" href="https://chromewebstore.google.com/detail/sat-question-bank-tracker/eeinjoeegjkhiddemncmbbgianhliopi" target="_blank" rel="noopener noreferrer">View extension<span class="sr-only">: SAT Question Bank Tracker (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A drawing of the idea, not a screenshot of the extension.</p><p><strong>From the store listing.</strong> A summary popup shows your totals. All data stays on your device. It is an independent tool, not affiliated with or endorsed by College Board.</p></div></details>
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A drawing of the idea, a grid of questions with Correct, Incorrect, Flagged and unmarked badges. It is not a screenshot of the extension.</p><p><strong>From the store listing.</strong> A summary popup shows your totals. All data stays on your device. It is an independent tool, not affiliated with or endorsed by College Board.</p></div></details>
         </div>
+        <figure class="preview"><div class="pv"><canvas data-still="sat" aria-hidden="true"></canvas></div><figcaption>Animated illustration, not a screenshot.</figcaption></figure>
       </article>
-      <article class="project math-panel" id="amc-practice" aria-labelledby="amc-practice-h" role="tabpanel" data-math-panel="amc-practice">
-        <header class="p-head"><span class="p-num mono">08</span><h3 id="amc-practice-h">AMC Practice</h3></header>
-        <figure class="preview"><div class="pv pv-static"><svg viewBox="0 0 640 400" role="img" aria-labelledby="svg-amc-t" class="diagram" focusable="false">
-<title id="svg-amc-t">Illustration of a bubble-style answer sheet with rows of lettered bubbles A to E, one filled in each row, and one row marked with a flag.</title>
-<text x="40" y="52" class="d-h">Answer sheet</text>
-<text x="40" y="76" class="d-s">Illustration, not a screenshot</text>
-<text x="48" y="112" class="d-t">1</text>
-<circle cx="140" cy="106" r="17" class="d-empty"/><text x="140" y="111" text-anchor="middle" class="d-letter">A</text>
-<circle cx="214" cy="106" r="17" class="d-empty"/><text x="214" y="111" text-anchor="middle" class="d-letter">B</text>
-<circle cx="288" cy="106" r="17" class="d-badge-fill"/><text x="288" y="111" text-anchor="middle" class="d-letter-dark">C</text>
-<circle cx="362" cy="106" r="17" class="d-empty"/><text x="362" y="111" text-anchor="middle" class="d-letter">D</text>
-<circle cx="436" cy="106" r="17" class="d-empty"/><text x="436" y="111" text-anchor="middle" class="d-letter">E</text>
-<text x="48" y="164" class="d-t">2</text>
-<circle cx="140" cy="158" r="17" class="d-badge-fill"/><text x="140" y="163" text-anchor="middle" class="d-letter-dark">A</text>
-<circle cx="214" cy="158" r="17" class="d-empty"/><text x="214" y="163" text-anchor="middle" class="d-letter">B</text>
-<circle cx="288" cy="158" r="17" class="d-empty"/><text x="288" y="163" text-anchor="middle" class="d-letter">C</text>
-<circle cx="362" cy="158" r="17" class="d-empty"/><text x="362" y="163" text-anchor="middle" class="d-letter">D</text>
-<circle cx="436" cy="158" r="17" class="d-empty"/><text x="436" y="163" text-anchor="middle" class="d-letter">E</text>
-<text x="48" y="216" class="d-t">3</text>
-<circle cx="140" cy="210" r="17" class="d-empty"/><text x="140" y="215" text-anchor="middle" class="d-letter">A</text>
-<circle cx="214" cy="210" r="17" class="d-empty"/><text x="214" y="215" text-anchor="middle" class="d-letter">B</text>
-<circle cx="288" cy="210" r="17" class="d-empty"/><text x="288" y="215" text-anchor="middle" class="d-letter">C</text>
-<circle cx="362" cy="210" r="17" class="d-empty"/><text x="362" y="215" text-anchor="middle" class="d-letter">D</text>
-<circle cx="436" cy="210" r="17" class="d-badge-fill"/><text x="436" y="215" text-anchor="middle" class="d-letter-dark">E</text>
-<path d="M484 224 V196 H506 l-5 7 l5 7 H484" class="d-badge"/><text x="518" y="217" class="d-t">Flagged</text>
-<text x="48" y="268" class="d-t">4</text>
-<circle cx="140" cy="262" r="17" class="d-empty"/><text x="140" y="267" text-anchor="middle" class="d-letter">A</text>
-<circle cx="214" cy="262" r="17" class="d-badge-fill"/><text x="214" y="267" text-anchor="middle" class="d-letter-dark">B</text>
-<circle cx="288" cy="262" r="17" class="d-empty"/><text x="288" y="267" text-anchor="middle" class="d-letter">C</text>
-<circle cx="362" cy="262" r="17" class="d-empty"/><text x="362" y="267" text-anchor="middle" class="d-letter">D</text>
-<circle cx="436" cy="262" r="17" class="d-empty"/><text x="436" y="267" text-anchor="middle" class="d-letter">E</text>
-<text x="48" y="320" class="d-t">5</text>
-<circle cx="140" cy="314" r="17" class="d-empty"/><text x="140" y="319" text-anchor="middle" class="d-letter">A</text>
-<circle cx="214" cy="314" r="17" class="d-empty"/><text x="214" y="319" text-anchor="middle" class="d-letter">B</text>
-<circle cx="288" cy="314" r="17" class="d-empty"/><text x="288" y="319" text-anchor="middle" class="d-letter">C</text>
-<circle cx="362" cy="314" r="17" class="d-badge-fill"/><text x="362" y="319" text-anchor="middle" class="d-letter-dark">D</text>
-<circle cx="436" cy="314" r="17" class="d-empty"/><text x="436" y="319" text-anchor="middle" class="d-letter">E</text>
-<text x="48" y="384" class="d-s">Flags mark questions to revisit.</text></svg></div><figcaption>Static diagram.</figcaption></figure>
-        <div class="p-body">
+      <article class="scene project" id="amc-practice" data-scene="8" data-key="amc" data-text="left" aria-labelledby="amc-practice-h">
+        <div class="copy">
+          <header class="p-head"><span class="p-num mono">08</span><h3 id="amc-practice-h">AMC Practice</h3></header>
           <p class="p-desc">Timed AMC 8, 10 and 12 mock tests, problems by topic, drills with worked solutions, and progress tracking.</p>
           <p class="hint"><span class="hint-k mono">Try</span> Start a mock test and review every question afterward.</p>
           <div class="actions"><a class="btn primary" href="https://notivanly.github.io/AMCPRactice/" target="_blank" rel="noopener noreferrer">Explore tool<span class="sr-only">: AMC Practice (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a><a class="btn" href="https://github.com/notivanly/AMCPRactice" target="_blank" rel="noopener noreferrer">Source code<span class="sr-only">: AMC Practice on GitHub (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A drawing of an answer sheet, not a screenshot of the site.</p><p><strong>Title.</strong> It is titled AMC Arena on the page.</p><p><strong>Content.</strong> 133 AMC-style problems across algebra, geometry, number theory, and counting and probability, plus generated drills.</p><p><strong>Scoring.</strong> The AMC 8 scores 1 point per correct answer. The AMC 10 and 12 score 6 for a correct answer, 1.5 for a blank and 0 for a wrong answer.</p><p><strong>Implementation.</strong> A static site with no server. Progress is saved in your browser&rsquo;s local storage, and math is drawn with KaTeX. The problem bank is written in Python and built into problems.js by a script that checks each problem has five choices and a valid answer.</p><p><strong>Note.</strong> It is an unofficial practice site, not affiliated with or endorsed by the Mathematical Association of America.</p></div></details>
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A drawing of a geometry construction with an answer strip. It is not a screenshot of the site and not a real AMC problem.</p><p><strong>Title.</strong> It is titled AMC Arena on the page.</p><p><strong>Content.</strong> 133 AMC-style problems across algebra, geometry, number theory, and counting and probability, plus generated drills.</p><p><strong>Scoring.</strong> The AMC 8 scores 1 point per correct answer. The AMC 10 and 12 score 6 for a correct answer, 1.5 for a blank and 0 for a wrong answer.</p><p><strong>Implementation.</strong> A static site with no server. Progress is saved in your browser&rsquo;s local storage, and math is drawn with KaTeX. The problem bank is written in Python and built into problems.js by a script that checks each problem has five choices and a valid answer.</p><p><strong>Note.</strong> It is an unofficial practice site, not affiliated with or endorsed by the Mathematical Association of America.</p></div></details>
         </div>
+        <figure class="preview"><div class="pv"><canvas data-still="amc" aria-hidden="true"></canvas></div><figcaption>Animated illustration, not a screenshot or a real problem.</figcaption></figure>
       </article>
-      <article class="project math-panel" id="calculus-iii-visualizer" aria-labelledby="calculus-iii-visualizer-h" role="tabpanel" data-math-panel="calculus-iii-visualizer">
-        <header class="p-head"><span class="p-num mono">09</span><h3 id="calculus-iii-visualizer-h">Calculus III Visualizer</h3></header>
-        <figure class="preview"><div class="pv pv-static"><svg viewBox="0 0 640 400" role="img" aria-labelledby="svg-calc-t" class="diagram" focusable="false">
-<title id="svg-calc-t">Illustration of a saddle-shaped surface drawn as a mesh, with a flat tangent plane touching it at one point and an arrow on the floor marking the gradient direction.</title>
-<text x="40" y="52" class="d-h">Surface and tangent plane</text>
-<text x="40" y="82" class="d-s">Illustration, not a screenshot</text>
-<polygon points="197.8,326.2 335.0,376.5 442.2,312.1 305.0,261.8" class="d-floor"/>
-<polyline points="197.8,233.9 201.2,242.7 204.7,251.1 208.1,259.0 211.5,266.6 215.0,273.9 218.4,280.7 221.8,287.1 225.2,293.2 228.7,298.9 232.1,304.2 235.5,309.1 239.0,313.6 242.4,317.7 245.8,321.5 249.3,324.9 252.7,327.9 256.1,330.5 259.5,332.7 263.0,334.5 266.4,336.0 269.8,337.0 273.3,337.7 276.7,338.0 280.1,337.9 283.6,337.5 287.0,336.6 290.4,335.4 293.8,333.7 297.3,331.7 300.7,329.3 304.1,326.6 307.6,323.4 311.0,319.8 314.4,315.9 317.9,311.6 321.3,306.9 324.7,301.8 328.1,296.3 331.6,290.5 335.0,284.3" class="d-mesh"/>
-<polyline points="208.5,199.8 212.0,208.6 215.4,216.9 218.8,224.9 222.2,232.5 225.7,239.7 229.1,246.6 232.5,253.0 236.0,259.1 239.4,264.8 242.8,270.1 246.3,275.0 249.7,279.5 253.1,283.6 256.5,287.4 260.0,290.8 263.4,293.7 266.8,296.3 270.3,298.6 273.7,300.4 277.1,301.9 280.6,302.9 284.0,303.6 287.4,303.9 290.8,303.8 294.3,303.3 297.7,302.5 301.1,301.2 304.6,299.6 308.0,297.6 311.4,295.2 314.9,292.4 318.3,289.3 321.7,285.7 325.1,281.8 328.6,277.5 332.0,272.8 335.4,267.7 338.9,262.2 342.3,256.4 345.7,250.1" class="d-mesh"/>
-<polyline points="219.2,171.9 222.7,180.6 226.1,189.0 229.5,197.0 233.0,204.6 236.4,211.8 239.8,218.6 243.3,225.1 246.7,231.1 250.1,236.8 253.5,242.1 257.0,247.0 260.4,251.5 263.8,255.7 267.3,259.4 270.7,262.8 274.1,265.8 277.6,268.4 281.0,270.6 284.4,272.4 287.8,273.9 291.3,275.0 294.7,275.6 298.1,275.9 301.6,275.8 305.0,275.4 308.4,274.5 311.9,273.3 315.3,271.7 318.7,269.6 322.1,267.3 325.6,264.5 329.0,261.3 332.4,257.8 335.9,253.8 339.3,249.5 342.7,244.8 346.2,239.7 349.6,234.3 353.0,228.4 356.4,222.2" class="d-mesh"/>
-<polyline points="230.0,150.0 233.4,158.8 236.8,167.2 240.3,175.2 243.7,182.8 247.1,190.0 250.5,196.8 254.0,203.2 257.4,209.3 260.8,215.0 264.3,220.3 267.7,225.2 271.1,229.7 274.6,233.9 278.0,237.6 281.4,241.0 284.8,244.0 288.3,246.6 291.7,248.8 295.1,250.6 298.6,252.1 302.0,253.1 305.4,253.8 308.9,254.1 312.3,254.0 315.7,253.6 319.1,252.7 322.6,251.5 326.0,249.8 329.4,247.8 332.9,245.4 336.3,242.7 339.7,239.5 343.2,236.0 346.6,232.0 350.0,227.7 353.4,223.0 356.9,217.9 360.3,212.5 363.7,206.6 367.2,200.4" class="d-mesh"/>
-<polyline points="240.7,134.4 244.1,143.1 247.5,151.5 251.0,159.5 254.4,167.1 257.8,174.3 261.3,181.1 264.7,187.6 268.1,193.6 271.6,199.3 275.0,204.6 278.4,209.5 281.8,214.0 285.3,218.2 288.7,221.9 292.1,225.3 295.6,228.3 299.0,230.9 302.4,233.1 305.9,235.0 309.3,236.4 312.7,237.5 316.1,238.2 319.6,238.5 323.0,238.4 326.4,237.9 329.9,237.0 333.3,235.8 336.7,234.2 340.2,232.2 343.6,229.8 347.0,227.0 350.4,223.8 353.9,220.3 357.3,216.4 360.7,212.0 364.2,207.3 367.6,202.3 371.0,196.8 374.5,190.9 377.9,184.7" class="d-mesh"/>
-<polyline points="251.4,124.9 254.8,133.6 258.3,142.0 261.7,150.0 265.1,157.6 268.5,164.8 272.0,171.6 275.4,178.1 278.8,184.1 282.3,189.8 285.7,195.1 289.1,200.0 292.6,204.5 296.0,208.7 299.4,212.4 302.8,215.8 306.3,218.8 309.7,221.4 313.1,223.6 316.6,225.4 320.0,226.9 323.4,228.0 326.9,228.6 330.3,228.9 333.7,228.9 337.2,228.4 340.6,227.5 344.0,226.3 347.4,224.7 350.9,222.7 354.3,220.3 357.7,217.5 361.2,214.3 364.6,210.8 368.0,206.8 371.5,202.5 374.9,197.8 378.3,192.7 381.7,187.3 385.2,181.4 388.6,175.2" class="d-mesh"/>
-<polyline points="262.1,121.5 265.5,130.3 269.0,138.6 272.4,146.6 275.8,154.2 279.3,161.4 282.7,168.2 286.1,174.7 289.6,180.8 293.0,186.4 296.4,191.7 299.8,196.6 303.3,201.2 306.7,205.3 310.1,209.1 313.6,212.4 317.0,215.4 320.4,218.0 323.9,220.2 327.3,222.1 330.7,223.5 334.1,224.6 337.6,225.3 341.0,225.6 344.4,225.5 347.9,225.0 351.3,224.2 354.7,222.9 358.2,221.3 361.6,219.3 365.0,216.9 368.4,214.1 371.9,211.0 375.3,207.4 378.7,203.5 382.2,199.2 385.6,194.5 389.0,189.4 392.5,183.9 395.9,178.1 399.3,171.8" class="d-mesh"/>
-<polyline points="272.8,124.3 276.3,133.0 279.7,141.4 283.1,149.4 286.6,157.0 290.0,164.2 293.4,171.0 296.8,177.5 300.3,183.5 303.7,189.2 307.1,194.5 310.6,199.4 314.0,203.9 317.4,208.1 320.9,211.8 324.3,215.2 327.7,218.2 331.1,220.8 334.6,223.0 338.0,224.9 341.4,226.3 344.9,227.4 348.3,228.1 351.7,228.4 355.2,228.3 358.6,227.8 362.0,226.9 365.4,225.7 368.9,224.1 372.3,222.1 375.7,219.7 379.2,216.9 382.6,213.7 386.0,210.2 389.5,206.3 392.9,201.9 396.3,197.2 399.7,192.2 403.2,186.7 406.6,180.8 410.0,174.6" class="d-mesh"/>
-<polyline points="283.6,133.2 287.0,142.0 290.4,150.3 293.8,158.3 297.3,165.9 300.7,173.1 304.1,180.0 307.6,186.4 311.0,192.5 314.4,198.2 317.9,203.4 321.3,208.4 324.7,212.9 328.1,217.0 331.6,220.8 335.0,224.1 338.4,227.1 341.9,229.7 345.3,232.0 348.7,233.8 352.2,235.2 355.6,236.3 359.0,237.0 362.4,237.3 365.9,237.2 369.3,236.7 372.7,235.9 376.2,234.6 379.6,233.0 383.0,231.0 386.5,228.6 389.9,225.8 393.3,222.7 396.7,219.1 400.2,215.2 403.6,210.9 407.0,206.2 410.5,201.1 413.9,195.6 417.3,189.8 420.8,183.5" class="d-mesh"/>
-<polyline points="294.3,148.3 297.7,157.0 301.1,165.4 304.6,173.4 308.0,181.0 311.4,188.2 314.9,195.0 318.3,201.5 321.7,207.6 325.1,213.2 328.6,218.5 332.0,223.4 335.4,228.0 338.9,232.1 342.3,235.9 345.7,239.2 349.2,242.2 352.6,244.8 356.0,247.0 359.4,248.9 362.9,250.3 366.3,251.4 369.7,252.1 373.2,252.4 376.6,252.3 380.0,251.8 383.5,251.0 386.9,249.7 390.3,248.1 393.7,246.1 397.2,243.7 400.6,240.9 404.0,237.7 407.5,234.2 410.9,230.3 414.3,226.0 417.8,221.3 421.2,216.2 424.6,210.7 428.0,204.9 431.5,198.6" class="d-mesh"/>
-<polyline points="305.0,169.5 308.4,178.3 311.9,186.6 315.3,194.6 318.7,202.2 322.1,209.4 325.6,216.3 329.0,222.7 332.4,228.8 335.9,234.5 339.3,239.8 342.7,244.7 346.2,249.2 349.6,253.3 353.0,257.1 356.4,260.5 359.9,263.4 363.3,266.0 366.7,268.3 370.2,270.1 373.6,271.6 377.0,272.6 380.5,273.3 383.9,273.6 387.3,273.5 390.7,273.0 394.2,272.2 397.6,270.9 401.0,269.3 404.5,267.3 407.9,264.9 411.3,262.1 414.8,259.0 418.2,255.4 421.6,251.5 425.0,247.2 428.5,242.5 431.9,237.4 435.3,231.9 438.8,226.1 442.2,219.8" class="d-mesh"/>
-<polyline points="197.8,233.9 200.5,224.8 203.2,216.1 205.8,207.8 208.5,199.8 211.2,192.3 213.9,185.1 216.6,178.3 219.2,171.9 221.9,165.8 224.6,160.2 227.3,154.9 230.0,150.0 232.6,145.6 235.3,141.4 238.0,137.7 240.7,134.4 243.4,131.4 246.0,128.9 248.7,126.7 251.4,124.9 254.1,123.4 256.8,122.4 259.4,121.8 262.1,121.5 264.8,121.6 267.5,122.1 270.2,123.0 272.8,124.3 275.5,125.9 278.2,128.0 280.9,130.4 283.6,133.2 286.2,136.4 288.9,140.0 291.6,143.9 294.3,148.3 297.0,153.0 299.6,158.1 302.3,163.6 305.0,169.5" class="d-mesh"/>
-<polyline points="211.5,266.6 214.2,257.5 216.9,248.8 219.6,240.5 222.2,232.5 224.9,225.0 227.6,217.8 230.3,211.0 233.0,204.6 235.6,198.5 238.3,192.9 241.0,187.6 243.7,182.8 246.4,178.3 249.0,174.2 251.7,170.4 254.4,167.1 257.1,164.1 259.8,161.6 262.4,159.4 265.1,157.6 267.8,156.2 270.5,155.1 273.2,154.5 275.8,154.2 278.5,154.3 281.2,154.8 283.9,155.7 286.6,157.0 289.2,158.6 291.9,160.7 294.6,163.1 297.3,165.9 300.0,169.1 302.6,172.7 305.3,176.7 308.0,181.0 310.7,185.7 313.4,190.8 316.0,196.3 318.7,202.2" class="d-mesh"/>
-<polyline points="225.2,293.2 227.9,284.1 230.6,275.4 233.3,267.0 236.0,259.1 238.6,251.5 241.3,244.3 244.0,237.5 246.7,231.1 249.4,225.1 252.0,219.4 254.7,214.2 257.4,209.3 260.1,204.8 262.8,200.7 265.4,197.0 268.1,193.6 270.8,190.7 273.5,188.1 276.2,185.9 278.8,184.1 281.5,182.7 284.2,181.7 286.9,181.0 289.6,180.8 292.2,180.9 294.9,181.4 297.6,182.3 300.3,183.5 303.0,185.2 305.6,187.2 308.3,189.7 311.0,192.5 313.7,195.7 316.4,199.2 319.0,203.2 321.7,207.6 324.4,212.3 327.1,217.4 329.8,222.9 332.4,228.8" class="d-mesh"/>
-<polyline points="239.0,313.6 241.6,304.5 244.3,295.8 247.0,287.4 249.7,279.5 252.4,271.9 255.0,264.7 257.7,257.9 260.4,251.5 263.1,245.5 265.8,239.8 268.4,234.6 271.1,229.7 273.8,225.2 276.5,221.1 279.2,217.4 281.8,214.0 284.5,211.1 287.2,208.5 289.9,206.3 292.6,204.5 295.2,203.1 297.9,202.1 300.6,201.4 303.3,201.2 306.0,201.3 308.6,201.8 311.3,202.7 314.0,203.9 316.7,205.6 319.4,207.6 322.0,210.1 324.7,212.9 327.4,216.1 330.1,219.7 332.8,223.6 335.4,228.0 338.1,232.7 340.8,237.8 343.5,243.3 346.2,249.2" class="d-mesh"/>
-<polyline points="252.7,327.9 255.4,318.8 258.0,310.0 260.7,301.7 263.4,293.7 266.1,286.2 268.8,279.0 271.4,272.2 274.1,265.8 276.8,259.8 279.5,254.1 282.2,248.8 284.8,244.0 287.5,239.5 290.2,235.4 292.9,231.6 295.6,228.3 298.2,225.3 300.9,222.8 303.6,220.6 306.3,218.8 309.0,217.4 311.6,216.3 314.3,215.7 317.0,215.4 319.7,215.5 322.4,216.0 325.0,216.9 327.7,218.2 330.4,219.9 333.1,221.9 335.8,224.3 338.4,227.1 341.1,230.3 343.8,233.9 346.5,237.9 349.2,242.2 351.8,246.9 354.5,252.1 357.2,257.6 359.9,263.4" class="d-mesh"/>
-<polyline points="266.4,336.0 269.1,326.9 271.8,318.1 274.4,309.8 277.1,301.9 279.8,294.3 282.5,287.1 285.2,280.3 287.8,273.9 290.5,267.9 293.2,262.2 295.9,257.0 298.6,252.1 301.2,247.6 303.9,243.5 306.6,239.7 309.3,236.4 312.0,233.5 314.6,230.9 317.3,228.7 320.0,226.9 322.7,225.5 325.4,224.4 328.0,223.8 330.7,223.5 333.4,223.6 336.1,224.1 338.8,225.0 341.4,226.3 344.1,228.0 346.8,230.0 349.5,232.4 352.2,235.2 354.8,238.4 357.5,242.0 360.2,246.0 362.9,250.3 365.6,255.1 368.2,260.2 370.9,265.7 373.6,271.6" class="d-mesh"/>
-<polyline points="280.1,337.9 282.8,328.8 285.5,320.1 288.2,311.8 290.8,303.8 293.5,296.2 296.2,289.1 298.9,282.3 301.6,275.8 304.2,269.8 306.9,264.2 309.6,258.9 312.3,254.0 315.0,249.5 317.6,245.4 320.3,241.7 323.0,238.4 325.7,235.4 328.4,232.8 331.0,230.7 333.7,228.9 336.4,227.4 339.1,226.4 341.8,225.8 344.4,225.5 347.1,225.6 349.8,226.1 352.5,227.0 355.2,228.3 357.8,229.9 360.5,232.0 363.2,234.4 365.9,237.2 368.6,240.4 371.2,244.0 373.9,247.9 376.6,252.3 379.3,257.0 382.0,262.1 384.6,267.6 387.3,273.5" class="d-mesh"/>
-<polyline points="293.8,333.7 296.5,324.6 299.2,315.9 301.9,307.6 304.6,299.6 307.2,292.1 309.9,284.9 312.6,278.1 315.3,271.7 318.0,265.6 320.6,260.0 323.3,254.7 326.0,249.8 328.7,245.3 331.4,241.2 334.0,237.5 336.7,234.2 339.4,231.2 342.1,228.6 344.8,226.5 347.4,224.7 350.1,223.2 352.8,222.2 355.5,221.6 358.2,221.3 360.8,221.4 363.5,221.9 366.2,222.8 368.9,224.1 371.6,225.7 374.2,227.8 376.9,230.2 379.6,233.0 382.3,236.2 385.0,239.8 387.6,243.7 390.3,248.1 393.0,252.8 395.7,257.9 398.4,263.4 401.0,269.3" class="d-mesh"/>
-<polyline points="307.6,323.4 310.2,314.3 312.9,305.6 315.6,297.2 318.3,289.3 321.0,281.7 323.6,274.5 326.3,267.7 329.0,261.3 331.7,255.3 334.4,249.6 337.0,244.4 339.7,239.5 342.4,235.0 345.1,230.9 347.8,227.2 350.4,223.8 353.1,220.9 355.8,218.3 358.5,216.1 361.2,214.3 363.8,212.9 366.5,211.9 369.2,211.2 371.9,211.0 374.6,211.1 377.2,211.6 379.9,212.5 382.6,213.7 385.3,215.4 388.0,217.4 390.6,219.9 393.3,222.7 396.0,225.9 398.7,229.4 401.4,233.4 404.0,237.7 406.7,242.5 409.4,247.6 412.1,253.1 414.8,259.0" class="d-mesh"/>
-<polyline points="321.3,306.9 324.0,297.8 326.6,289.1 329.3,280.7 332.0,272.8 334.7,265.2 337.4,258.0 340.0,251.2 342.7,244.8 345.4,238.8 348.1,233.1 350.8,227.9 353.4,223.0 356.1,218.5 358.8,214.4 361.5,210.7 364.2,207.3 366.8,204.4 369.5,201.8 372.2,199.6 374.9,197.8 377.6,196.4 380.2,195.4 382.9,194.7 385.6,194.5 388.3,194.6 391.0,195.1 393.6,196.0 396.3,197.2 399.0,198.9 401.7,200.9 404.4,203.4 407.0,206.2 409.7,209.4 412.4,212.9 415.1,216.9 417.8,221.3 420.4,226.0 423.1,231.1 425.8,236.6 428.5,242.5" class="d-mesh"/>
-<polyline points="335.0,284.3 337.7,275.2 340.4,266.4 343.0,258.1 345.7,250.1 348.4,242.6 351.1,235.4 353.8,228.6 356.4,222.2 359.1,216.2 361.8,210.5 364.5,205.2 367.2,200.4 369.8,195.9 372.5,191.8 375.2,188.0 377.9,184.7 380.6,181.8 383.2,179.2 385.9,177.0 388.6,175.2 391.3,173.8 394.0,172.7 396.6,172.1 399.3,171.8 402.0,171.9 404.7,172.4 407.4,173.3 410.0,174.6 412.7,176.3 415.4,178.3 418.1,180.7 420.8,183.5 423.4,186.7 426.1,190.3 428.8,194.3 431.5,198.6 434.2,203.4 436.8,208.5 439.5,214.0 442.2,219.8" class="d-mesh"/>
-<polygon points="315.8,236.3 374.1,192.4 419.6,197.7 361.3,241.6" class="d-plane"/>
-<path d="M367.7 217.0 L367.7 323.7" class="d-drop"/>
-<path d="M367.7 323.7 L379.0 334.8" class="d-arrow"/><path d="M379.0 334.8 L367.6 330.9 L375.0 323.5 Z" class="d-arrowhead"/>
-<circle cx="367.7" cy="217.0" r="5.5" class="d-dot"/>
-<text x="384.1" y="182.4" text-anchor="start" class="d-t">tangent plane</text>
-<text x="391.0" y="358.8" text-anchor="start" class="d-t">gradient</text>
-</svg></div><figcaption>Static diagram.</figcaption></figure>
-        <div class="p-body">
+      <article class="scene project" id="calculus-iii-visualizer" data-scene="9" data-key="calc" data-text="right" aria-labelledby="calculus-iii-visualizer-h">
+        <div class="copy">
+          <header class="p-head"><span class="p-num mono">09</span><h3 id="calculus-iii-visualizer-h">Calculus III Visualizer</h3></header>
           <p class="p-desc">Graph a function of x and y as a 3D surface and explore its tangent plane, gradient and level curves.</p>
           <p class="hint"><span class="hint-k mono">Try</span> Type your own function, then click the surface.</p>
           <div class="actions"><a class="btn primary" href="https://notivanly.github.io/Calculus-III-Visualizer/" target="_blank" rel="noopener noreferrer">Explore tool<span class="sr-only">: Calculus III Visualizer (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a><a class="btn" href="https://github.com/notivanly/Calculus-III-Visualizer" target="_blank" rel="noopener noreferrer">Source code<span class="sr-only">: Calculus III Visualizer on GitHub (opens in a new tab)</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9l6-6M4 3h5v5"/></svg></a></div>
-          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A drawing of a surface with its tangent plane and gradient, not a screenshot of the tool.</p><p><strong>Implementation.</strong> Built with Three.js, loaded from a CDN. The functions you type are read by a small expression parser, and the surface is sampled on a 120 by 120 grid. The page notes that derivatives are computed numerically.</p><p><strong>Gradient.</strong> The gradient is the pair of partial derivatives, (f<sub>x</sub>, f<sub>y</sub>), drawn as an arrow on the function you typed. Moving the point shows how the arrow and the tangent plane change.</p><p><strong>Vector fields.</strong> You enter the components P, Q and R of a field, which is drawn as arrows with animated flow and a probe point. The page also covers divergence and curl.</p><p><strong>Limits.</strong> It needs an internet connection to load Three.js.</p></div></details>
+          <details class="tech"><summary>How it works</summary><div class="tech-body"><p><strong>Preview.</strong> A drawing of a surface with its level curves, tangent plane and gradient, not a screenshot of the tool.</p><p><strong>Implementation.</strong> Built with Three.js, loaded from a CDN. The functions you type are read by a small expression parser, and the surface is sampled on a 120 by 120 grid. The page notes that derivatives are computed numerically.</p><p><strong>Gradient.</strong> The gradient is the pair of partial derivatives, (f<sub>x</sub>, f<sub>y</sub>), drawn as an arrow on the function you typed. Moving the point shows how the arrow and the tangent plane change.</p><p><strong>Vector fields.</strong> You enter the components P, Q and R of a field, which is drawn as arrows with animated flow and a probe point. The page also covers divergence and curl.</p><p><strong>Limits.</strong> It needs an internet connection to load Three.js.</p></div></details>
         </div>
+        <figure class="preview"><div class="pv"><canvas data-still="calc" aria-hidden="true"></canvas></div><figcaption>Animated illustration, not a screenshot.</figcaption></figure>
       </article>
-    </section>
 
-    <section class="section narrow" id="about" aria-labelledby="about-h">
-      <h2 class="sec-title" id="about-h">About</h2>
-      <div class="prose">
-        <p>I&rsquo;m Ivan Ly, a student at Huntington Beach High School (class of 2027), based in Midway City, California. I&rsquo;m interested in physics, engineering and mathematics.</p>
-        <p>I usually start by learning about a topic that interests me, often from YouTube and other resources, and then build a project around it.</p>
+      <section class="scene finale-part" id="about" data-scene="10" data-key="finale" data-text="about" aria-labelledby="about-h">
+        <div class="copy">
+          <h2 class="sec-title" id="about-h">About</h2>
+          <div class="prose">
+            <p>I&rsquo;m Ivan Ly, a student at Huntington Beach High School (class of 2027), based in Midway City, California. I&rsquo;m interested in physics, engineering and mathematics.</p>
+            <p>I usually start by learning about a topic that interests me, often from YouTube and other resources, and then build a project around it.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene finale-part" id="contact" data-scene="10" data-key="finale" data-text="contact" aria-labelledby="contact-h">
+        <div class="copy">
+          <h2 class="sec-title" id="contact-h">Contact</h2>
+          <ul class="contact-list">
+            <li><a href="mailto:notivanly@gmail.com"><span class="k">Email</span><span class="v">notivanly@gmail.com</span></a></li>
+            <li><a href="https://github.com/notivanly" target="_blank" rel="noopener noreferrer"><span class="k">GitHub</span><span class="v">github.com/notivanly</span><span class="sr-only"> (opens in a new tab)</span></a></li>
+          </ul>
+        </div>
+      </section>
+
+        </div>
+        <div class="film-bar">
+          <p class="film-cap" id="filmCap"></p>
+          <nav class="film-ticks" aria-label="Jump to a project"><a href="#bridge-physics-simulator" data-tick="1" aria-label="01 Bridge Physics Simulator"><span>01</span></a><a href="#mini-wind-tunnel-simulator" data-tick="2" aria-label="02 Mini Wind Tunnel Simulator"><span>02</span></a><a href="#truss-force-analyzer" data-tick="3" aria-label="03 Truss Force Analyzer"><span>03</span></a><a href="#physics-sandbox" data-tick="4" aria-label="04 Physics Sandbox"><span>04</span></a><a href="#planetary-gravity-explorer" data-tick="5" aria-label="05 Planetary Gravity Explorer"><span>05</span></a><a href="#orbital-mechanics-simulator" data-tick="6" aria-label="06 Orbital Mechanics Simulator"><span>06</span></a><a href="#sat-question-bank-tracker" data-tick="7" aria-label="07 SAT Question Bank Tracker"><span>07</span></a><a href="#amc-practice" data-tick="8" aria-label="08 AMC Practice"><span>08</span></a><a href="#calculus-iii-visualizer" data-tick="9" aria-label="09 Calculus III Visualizer"><span>09</span></a></nav>
+        </div>
       </div>
-    </section>
-
-    <section class="section narrow" id="contact" aria-labelledby="contact-h">
-      <h2 class="sec-title" id="contact-h">Contact</h2>
-      <ul class="contact-list">
-        <li><a href="mailto:notivanly@gmail.com"><span class="k">Email</span><span class="v">notivanly@gmail.com</span></a></li>
-        <li><a href="https://github.com/notivanly" target="_blank" rel="noopener noreferrer"><span class="k">GitHub</span><span class="v">github.com/notivanly</span><span class="sr-only"> (opens in a new tab)</span></a></li>
-      </ul>
-    </section>
-
+    </div>
   </main>
 
   <footer class="site-footer">
@@ -295,9 +208,12 @@
   <noscript><p class="noscript">The animations need JavaScript. All of the content and links on this page work without it.</p></noscript>
 
   <script src="core.js"></script>
-  <script src="visuals-hero.js"></script>
-  <script src="visuals-engineering.js"></script>
-  <script src="visuals-transition.js"></script>
+  <script src="g3d.js"></script>
+  <script src="scenes-structures.js"></script>
+  <script src="scenes-motion.js"></script>
+  <script src="scenes-math.js"></script>
+  <script src="film.js"></script>
+  <script src="transitions.js"></script>
   <script src="main.js"></script>
 </body>
 </html>

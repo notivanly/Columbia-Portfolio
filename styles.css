@@ -1,8 +1,13 @@
 /* ==========================================================================
    Ivan Ly portfolio
    Charcoal background, bone-white type, one restrained light-blue accent for
-   primary buttons, the active navigation item, keyboard focus and selected
-   controls. Text always sits in its own column; animations live in panels.
+   primary buttons, the active navigation item and keyboard focus.
+
+   One DOM, two layouts:
+     html.film-on   one pinned stage. The canvas fills it and each scene's text
+                    sits in a narrow column over the picture (scroll-linked).
+     otherwise      ordinary rows: text beside its own still preview. Used with
+                    reduced motion, without JavaScript, and if the film fails.
    ========================================================================== */
 :root {
   --bg: #0e0f10; --panel: #17191b; --line: rgba(255,255,255,.16); --line-2: rgba(255,255,255,.34);
@@ -25,7 +30,6 @@ a { color: inherit; }
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .skip { position: fixed; left: 12px; top: -80px; z-index: 100; background: var(--accent); color: var(--accent-ink); padding: .75rem 1.1rem; border-radius: 999px; font-weight: 600; text-decoration: none; }
 .skip:focus { top: 12px; }
-[id] { scroll-margin-top: calc(var(--head) + 16px); }
 main:focus { outline: none; }
 
 /* ---------- header ---------- */
@@ -59,39 +63,16 @@ main:focus { outline: none; }
 .btn.primary:focus-visible { outline-color: #fff; }
 .ico { width: .8em; height: .8em; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; flex: none; }
 
-/* ---------- hero ---------- */
-.hero { position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: center; min-height: min(60svh, 540px); padding: calc(var(--head) + 28px) var(--pad) 40px; border-bottom: 1px solid var(--line); }
-.hero-stage { position: absolute; inset: 0 0 0 54%; z-index: -1; }
-.hero-stage canvas { position: absolute; inset: 0; }
-.hero-stage::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(14,15,16,1) 0%, rgba(14,15,16,0) 26%); }
-.hero-copy { width: 100%; max-width: 700px; }
-.hero h1 { font-size: clamp(3rem, 7.5vw, 5.2rem); line-height: 1; font-weight: 500; letter-spacing: -.01em; color: #fff; }
-.lead { margin-top: 1rem; font-size: clamp(1.2rem, 2.2vw, 1.55rem); line-height: 1.35; color: #fff; max-width: 26ch; }
-.hero .actions { margin-top: 1.5rem; }
-.hero-note { position: absolute; right: var(--pad); bottom: 20px; font-size: .75rem; color: var(--ink-3); }
-.pindex { margin-top: 2rem; padding-top: .8rem; border-top: 1px solid var(--line); }
-.pindex ol { display: grid; grid-auto-flow: column; grid-template-rows: repeat(3, auto); grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 1.5rem; }
-.pindex a { display: flex; align-items: center; gap: .65rem; min-height: 44px; padding: .2rem 0; font-size: .9688rem; line-height: 1.3; color: #fff; text-decoration: none; }
-.pindex a:hover .t { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
-.pindex .n { font-size: .8125rem; color: var(--accent); flex: none; width: 1.6rem; }
-
-/* ---------- sections ---------- */
-.section { max-width: calc(var(--max) + 2 * var(--pad)); margin: 0 auto; padding: clamp(40px, 5vw, 72px) var(--pad) clamp(12px, 2vw, 24px); }
-.sec-title { font-size: clamp(1.5rem, 2.4vw, 2rem); line-height: 1.15; font-weight: 500; color: #fff; }
-.narrow .prose, .narrow .contact-list { max-width: 42rem; }
-
-/* ---------- projects: the visualizer is about three quarters of the row ---------- */
-.project { --ar: 16 / 9; --pv: #1b1d20; display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 1fr); grid-template-areas: "viz head" "viz body"; grid-template-rows: auto 1fr; column-gap: clamp(24px, 3.5vw, 48px); align-items: start; padding: clamp(24px, 3.5vw, 44px) 0; border-top: 1px solid var(--line); }
-.project.flip { grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); grid-template-areas: "head viz" "body viz"; }
-.sec-title + .project { margin-top: clamp(12px, 2vw, 24px); }
-.p-head { grid-area: head; display: flex; align-items: baseline; gap: .7rem; }
+/* ---------- scenes: shared copy styles ---------- */
+.anchor { display: block; height: 0; }
+.scene .copy { min-width: 0; }
+.p-head { display: flex; align-items: baseline; gap: .7rem; }
 .p-num { font-size: .8125rem; color: var(--accent); flex: none; }
-.project h3 { font-size: clamp(1.4rem, 2vw, 1.8rem); line-height: 1.15; font-weight: 500; color: #fff; overflow-wrap: break-word; min-width: 0; }
-.p-body { grid-area: body; min-width: 0; }
+.project h3, .scene h2 { font-size: clamp(1.45rem, 2.1vw, 1.9rem); line-height: 1.15; font-weight: 500; color: #fff; overflow-wrap: break-word; min-width: 0; }
 .p-desc { margin-top: .8rem; color: var(--ink-2); }
-.hint { margin-top: .8rem; font-size: .9688rem; line-height: 1.5; color: #fff; }
-.hint-k { margin-right: .35rem; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
-.p-body .actions { margin-top: 1.1rem; }
+.hint { margin-top: .75rem; font-size: .9375rem; line-height: 1.5; color: #fff; }
+.hint-k { margin-right: .4rem; font-size: .75rem; color: var(--accent); }
+.scene .actions { margin-top: 1.1rem; }
 .tech { margin-top: 1rem; border-top: 1px solid var(--line); }
 .tech summary { display: flex; align-items: center; justify-content: space-between; min-height: 48px; cursor: pointer; list-style: none; font-weight: 500; color: #fff; }
 .tech summary::-webkit-details-marker { display: none; }
@@ -101,80 +82,85 @@ main:focus { outline: none; }
 .tech-body p { margin-top: .6rem; font-size: .9375rem; line-height: 1.6; color: var(--ink-2); }
 .tech-body strong { color: #fff; font-weight: 600; }
 .tech-body sub { font-size: .75em; line-height: 0; }
-
-/* each subject gets its own shape and ground tone */
-#bridge-physics-simulator { --ar: 16 / 9; --pv: #1b1d20; }
-#mini-wind-tunnel-simulator { --ar: 2.2 / 1; --pv: #11171c; }
-#truss-force-analyzer { --ar: 2 / 1; --pv: #0f1822; }
-#physics-sandbox { --ar: 3 / 2; --pv: #212326; }
-#planetary-gravity-explorer { --ar: 16 / 9; --pv: #0b0c10; }
-#orbital-mechanics-simulator { --ar: 4 / 3; --pv: #08090b; }
-.math-panel { --ar: 16 / 10; --pv: #1d1f21; }
-
-/* ---------- visualizer panels ---------- */
-.preview { grid-area: viz; min-width: 0; }
-.pv { position: relative; width: 100%; aspect-ratio: var(--ar); overflow: hidden; border-radius: 14px; border: 1px solid var(--line); background: var(--pv); }
-.pv canvas { position: absolute; inset: 0; filter: brightness(1.3) contrast(1.05); }
-.pv-static { background: var(--pv); }
-.diagram { width: 100%; height: 100%; }
-.preview figcaption { margin-top: .55rem; font-size: .875rem; line-height: 1.45; color: var(--ink-3); }
-.d-h { fill: #fff; font: 600 20px var(--sans); } .d-s { fill: rgba(245,245,242,.78); font: 500 15px var(--sans); } .d-t { fill: #fff; font: 500 17px var(--sans); }
-.d-h, .d-s, .d-t { paint-order: stroke; stroke: #1d1f21; stroke-width: 5px; stroke-linejoin: round; }
-.d-row { fill: rgba(255,255,255,.05); stroke: rgba(255,255,255,.22); } .d-skel { fill: rgba(255,255,255,.24); }
-.d-badge { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linejoin: round; } .d-badge-fill { fill: var(--accent); }
-.d-glyph { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linecap: round; } .d-glyph-dark { fill: none; stroke: #06121d; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
-.d-empty { fill: none; stroke: rgba(255,255,255,.45); stroke-width: 2; stroke-dasharray: 3 4; }
-.d-letter { fill: #fff; font: 500 16px var(--mono); text-anchor: middle; } .d-letter-dark { fill: #06121d; font: 600 16px var(--mono); }
-.d-mesh { fill: none; stroke: rgba(255,255,255,.42); stroke-width: 1; } .d-floor { fill: rgba(255,255,255,.04); stroke: rgba(255,255,255,.28); }
-.d-plane { fill: rgba(142,201,255,.24); stroke: var(--accent); stroke-width: 2.2; stroke-linejoin: round; }
-.d-drop { fill: none; stroke: rgba(255,255,255,.55); stroke-width: 1.6; stroke-dasharray: 4 4; }
-.d-arrow { fill: none; stroke: var(--accent); stroke-width: 3.2; stroke-linecap: round; } .d-arrowhead { fill: var(--accent); }
-.d-dot { fill: #fff; stroke: var(--accent); stroke-width: 2.4; }
-
-/* ---------- mathematics tabs (enhancement; all three show without JavaScript) ---------- */
-.tablist { display: none; }
-.js .tablist { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
-.tablist button { display: inline-flex; align-items: center; gap: .6rem; min-height: 48px; padding: .6rem 1.1rem; font-size: 1rem; font-weight: 500; color: #fff; border: 1px solid var(--line-2); border-radius: 999px; transition: background .2s ease, border-color .2s ease; text-align: left; }
-.tablist button .mono { font-size: .8125rem; color: var(--accent); }
-.tablist button:hover { border-color: var(--accent); }
-.tablist button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
-.tablist button[aria-selected="true"] .mono { color: var(--accent-ink); }
-.tablist button[aria-selected="true"]::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--accent-ink); }
-.js .math-panel[hidden] { display: none; }
-.js .math-panel { border-top: 0; padding-top: clamp(20px, 3vw, 32px); }
-#mathematics .project:first-of-type { margin-top: 0; }
-
-/* ---------- about + contact ---------- */
 .prose p + p { margin-top: .8rem; }
 .prose { margin-top: .8rem; color: var(--ink-2); }
 .contact-list { margin-top: .8rem; border-top: 1px solid var(--line); }
 .contact-list a { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .2rem 1.2rem; min-height: 56px; padding: .9rem 0; border-bottom: 1px solid var(--line); text-decoration: none; color: #fff; }
 .contact-list a:hover .v { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
 .contact-list .k { font-size: .875rem; color: var(--ink-3); } .contact-list .v { font-size: 1.15rem; overflow-wrap: anywhere; }
-.site-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 2rem; max-width: calc(var(--max) + 2 * var(--pad)); margin: 0 auto; padding: 20px var(--pad) 40px; font-size: .9375rem; color: var(--ink-3); }
+.hero h1 { font-size: clamp(3rem, 6.4vw, 5.2rem); line-height: 1; font-weight: 500; letter-spacing: -.01em; color: #fff; }
+.lead { margin-top: 1rem; font-size: clamp(1.2rem, 2.1vw, 1.55rem); line-height: 1.35; color: #fff; max-width: 26ch; }
+.hero .actions { margin-top: 1.5rem; }
+.pindex { margin-top: 2rem; padding-top: .8rem; border-top: 1px solid var(--line); }
+.pindex ol { display: grid; grid-auto-flow: column; grid-template-rows: repeat(3, auto); grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 1.5rem; }
+.pindex a { display: flex; align-items: center; gap: .65rem; min-height: 44px; padding: .2rem 0; font-size: .9375rem; line-height: 1.3; color: #fff; text-decoration: none; }
+.pindex a:hover .t { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.pindex .n { font-size: .8125rem; color: var(--accent); flex: none; width: 1.6rem; }
+.menu-projects { margin-top: 1.25rem; }
+.menu-projects a { min-height: 48px; font-size: 1.0625rem; gap: .8rem; }
+.menu-projects .n { font-size: .8125rem; color: var(--accent); width: 1.6rem; }
+
+/* ---------- visual panels (rows layout only; the film hides them) ---------- */
+.preview { min-width: 0; }
+.pv { position: relative; width: 100%; aspect-ratio: var(--ar, 16 / 9); overflow: hidden; border-radius: 14px; border: 1px solid var(--line); background: var(--pv, #15171a); }
+.pv canvas { position: absolute; inset: 0; }
+.preview figcaption { margin-top: .55rem; font-size: .875rem; line-height: 1.45; color: var(--ink-3); }
+#bridge-physics-simulator { --ar: 16 / 9; } #mini-wind-tunnel-simulator { --ar: 2 / 1; } #truss-force-analyzer { --ar: 2 / 1; } #physics-sandbox { --ar: 3 / 2; }
+#planetary-gravity-explorer { --ar: 16 / 9; } #orbital-mechanics-simulator { --ar: 4 / 3; } #sat-question-bank-tracker, #amc-practice, #calculus-iii-visualizer { --ar: 16 / 10; }
+.hero-preview { --ar: 16 / 10; }
+
+/* ---------- rows layout (default) ---------- */
+.film-canvas, .film-bar { display: none; }
+.scenes { max-width: calc(var(--max) + 2 * var(--pad)); margin: 0 auto; padding: calc(var(--head) + 24px) var(--pad) 0; }
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; padding-bottom: clamp(32px, 4vw, 56px); border-bottom: 1px solid var(--line); }
+.project { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 1fr); grid-template-areas: "viz copy"; column-gap: clamp(24px, 3.5vw, 48px); align-items: start; padding: clamp(28px, 3.5vw, 48px) 0; border-bottom: 1px solid var(--line); }
+.project[data-text="left"] { grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); grid-template-areas: "copy viz"; }
+.project .copy { grid-area: copy; } .project .preview { grid-area: viz; }
+.finale-part { padding: clamp(32px, 4vw, 56px) 0 0; max-width: 42rem; }
+.finale-part + .finale-part { padding-top: clamp(20px, 3vw, 32px); }
+.site-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 2rem; max-width: calc(var(--max) + 2 * var(--pad)); margin: 0 auto; padding: 36px var(--pad) 40px; font-size: .9375rem; color: var(--ink-3); }
 .site-footer a { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; color: #fff; text-decoration: none; }
 .site-footer a:hover { color: var(--accent); }
 .noscript { padding: 1rem var(--pad); font-size: .9375rem; color: var(--ink-3); }
+@media (min-width: 861px) { .project .preview { position: sticky; top: calc(var(--head) + 20px); align-self: start; } }
 
-/* ---------- scroll sequence: bridge to wind tunnel ----------
-   Only active (html.seq-on, set by main.js) on wide screens when the visitor has not asked for reduced motion.
-   Otherwise the two projects are ordinary rows, exactly like the others. */
-.seq-viz { display: none; }
-html.seq-on .seq { position: relative; height: var(--seq-h, 250svh); margin-top: clamp(12px, 2vw, 24px); }
-html.seq-on .seq-stage { position: sticky; top: var(--head); height: calc(100svh - var(--head)); display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 1fr); grid-template-areas: "viz text"; column-gap: clamp(24px, 3.5vw, 48px); align-items: center; }
-html.seq-on .seq-viz { display: block; grid-area: viz; position: static; align-self: center; }
-html.seq-on .seq-viz .pv { --pv: #12171c; aspect-ratio: auto; height: calc(100svh - var(--head) - 5rem); min-height: 340px; }
-html.seq-on .seq-stage article { grid-area: text; display: block; padding: 0; border: 0; max-height: calc(100svh - var(--head) - 2rem); overflow-y: auto; transition: opacity .18s ease; }
-html.seq-on .seq-stage article .preview { display: none; }
-html.seq-on .seq-stage article[data-state="off"] { opacity: 0; pointer-events: none; }
-/* between phone and wide desktop the index is a single column so it stays clear of the globe */
-@media (min-width: 861px) and (max-width: 1199px) {
-  .hero-stage { left: 50%; }
-  .pindex ol { grid-auto-flow: row; grid-template-rows: none; grid-template-columns: minmax(0, 1fr); max-width: 17rem; }
-}
+/* ==========================================================================
+   FILM LAYOUT (html.film-on, set by main.js when the film is running)
+   ========================================================================== */
+html.film-on .film { position: relative; padding-top: var(--head); }
+html.film-on .film-stage { position: sticky; top: var(--head); height: calc(100vh - var(--head)); height: calc(100svh - var(--head)); overflow: hidden; background: var(--bg); }
+html.film-on .film-canvas { display: block; position: absolute; inset: 0; width: 100%; height: 100%; }
+html.film-on .scenes { position: absolute; inset: 0; max-width: none; margin: 0; padding: 0; pointer-events: none; }
+html.film-on .preview { display: none; }
+html.film-on .scene { --tw: clamp(300px, 27vw, 400px); position: absolute; inset: 0; display: flex; align-items: center; padding: 0 var(--pad) 3.5rem; border: 0; opacity: 0; pointer-events: none; }
+html.film-on .scene.hero { --tw: min(46vw, 660px); }
+/* a quiet scrim keeps the copy legible where the picture runs beneath it */
+html.film-on .scene::before { content: ""; position: absolute; top: 0; bottom: 0; width: calc(var(--tw) + var(--pad) + 6rem); pointer-events: none; }
+html.film-on .scene[data-text="left"] { justify-content: flex-start; }
+html.film-on .scene[data-text="left"]::before { left: 0; background: linear-gradient(90deg, rgba(14,15,16,.78) 0%, rgba(14,15,16,.62) 55%, rgba(14,15,16,0) 100%); }
+html.film-on .scene[data-text="right"] { justify-content: flex-end; }
+html.film-on .scene[data-text="right"]::before { right: 0; background: linear-gradient(270deg, rgba(14,15,16,.78) 0%, rgba(14,15,16,.62) 55%, rgba(14,15,16,0) 100%); }
+html.film-on .scene .copy { position: relative; width: var(--tw); max-height: calc(100% - 4.5rem); overflow-y: auto; padding: 4px 6px 4px 0; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.25) transparent; }
+html.film-on .scene[data-on="1"] .copy, html.film-on .scene[data-on="1"] .copy * { pointer-events: auto; }
+html.film-on .scene[data-on="1"] { pointer-events: none; }
+/* About and Contact share the last scene, side by side */
+html.film-on .finale-part { max-width: none; padding-bottom: 0; align-items: flex-end; }
+html.film-on .finale-part::before { display: none; }
+html.film-on #about { justify-content: flex-start; padding-bottom: clamp(4.5rem, 14vh, 9rem); }
+html.film-on #contact { justify-content: flex-end; padding-bottom: clamp(4.5rem, 14vh, 9rem); }
+html.film-on #about .copy { --tw: min(34rem, 42vw); } html.film-on #contact .copy { --tw: min(26rem, 40vw); }
+html.film-on .scene.hero h1 { font-size: clamp(3rem, 6.6vw, 5.6rem); }
 
-/* the visualizer stays in view while its "How it works" text is read (wide screens only) */
-@media (min-width: 861px) { .preview { position: sticky; top: calc(var(--head) + 20px); align-self: start; } }
+/* the bar along the bottom of the stage: what the picture is, and a direct jump to any project */
+html.film-on .film-bar { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 1rem 2rem; padding: 2.2rem var(--pad) .7rem; background: linear-gradient(0deg, rgba(14,15,16,.9) 0%, rgba(14,15,16,0) 100%); pointer-events: none; }
+.film-cap { font-size: .8125rem; line-height: 1.4; color: var(--ink-3); min-width: 0; }
+.film-ticks { display: flex; gap: 2px; flex: none; pointer-events: auto; }
+.film-ticks a { position: relative; display: inline-flex; align-items: center; justify-content: center; min-width: 40px; min-height: 40px; font: 500 .75rem/1 var(--mono); color: var(--ink-3); text-decoration: none; }
+.film-ticks a::after { content: ""; position: absolute; left: 25%; right: 25%; bottom: 7px; height: 2px; border-radius: 2px; background: rgba(255,255,255,.2); transition: background .2s ease; }
+.film-ticks a:hover { color: #fff; }
+.film-ticks a[aria-current="step"] { color: var(--accent); }
+.film-ticks a[aria-current="step"]::after { background: var(--accent); }
+.film-ticks a[data-seen="1"]::after { background: rgba(142,201,255,.45); }
 
 /* ---------- narrower screens ---------- */
 @media (max-width: 1040px) {
@@ -185,23 +171,60 @@ html.seq-on .seq-stage article[data-state="off"] { opacity: 0; pointer-events: n
 @media (max-width: 860px) {
   :root { --head: 64px; }
   .brand-sub { display: none; }
-  .hero { display: flex; flex-direction: column; align-items: stretch; min-height: 0; padding: calc(var(--head) + 28px) var(--pad) 0; }
-  .hero-copy { order: 1; }
-  .hero-stage { order: 2; position: relative; inset: auto; left: auto; z-index: 0; height: min(72vw, 340px); margin: 20px calc(-1 * var(--pad)) 0; }
-  .hero-stage::after { background: linear-gradient(180deg, rgba(14,15,16,1) 0%, rgba(14,15,16,0) 22%); }
-  .hero-note { order: 3; position: static; padding: .5rem 0 1.2rem; }
+  .hero, .project, .project[data-text="left"] { grid-template-columns: minmax(0, 1fr); grid-template-areas: none; row-gap: 14px; }
+  .hero .copy, .hero .preview, .project .copy, .project .preview { grid-area: auto; }
+  .hero .preview { position: static; order: 2; }
+  .project .preview { position: static; order: 1; } .project .copy { order: 2; }
   .pindex ol { grid-auto-flow: row; grid-template-rows: none; grid-template-columns: minmax(0, 1fr); }
-  .project, .project.flip { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "viz" "body"; grid-template-rows: auto; row-gap: 12px; }
-  .p-body { margin-top: 4px; }
-  .d-h { font-size: 26px; } .d-s { font-size: 19px; } .d-t { font-size: 22px; } .d-letter, .d-letter-dark { font-size: 19px; }
-  .tablist button { flex: 1 1 100%; }
-}
-@media (max-width: 520px) {
-  .d-h { font-size: 36px; } .d-s { font-size: 26px; } .d-t { font-size: 30px; }
+  .finale-part { max-width: none; }
+  html.film-on .scene.hero .pindex { display: none; }
   .pause .pause-t { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .pause { padding: 0; width: 44px; justify-content: center; }
-  .p-body .actions .btn { flex: 1 1 100%; }
 }
+/* film on a phone held upright: the picture takes the top part of the stage, the copy sits below it.
+   (Held sideways, the film keeps the side-column layout, like a small desktop.) */
+@media (max-width: 860px) and (orientation: portrait) {
+  html.film-on .scene, html.film-on .scene.hero { --tw: 100%; align-items: flex-end; padding: 0 var(--pad) 6.6rem; }
+  html.film-on .scene::before { display: none; }
+  html.film-on .scene .copy { width: 100%; max-height: 43%; padding-right: 2px; }
+  html.film-on .scene:has(details[open]) .copy { max-height: calc(100% - 6.6rem); background: rgba(14,15,16,.96); padding: 10px 12px 10px; border-radius: 10px; }
+  html.film-on .scene.hero h1 { font-size: 2.6rem; }
+  html.film-on .scene.hero .lead { margin-top: .5rem; font-size: 1.1rem; }
+  html.film-on .scene .p-desc { margin-top: .5rem; font-size: .96rem; line-height: 1.5; }
+  html.film-on .scene .hint { display: none; }
+  html.film-on .scene .actions { margin-top: .8rem; gap: .5rem; flex-wrap: nowrap; }
+  html.film-on .scene .actions .btn { flex: 1 1 0; min-width: 0; min-height: 44px; padding: .5rem .7rem; font-size: .95rem; }
+  html.film-on .scene .tech { margin-top: .5rem; } html.film-on .scene .tech summary { min-height: 44px; }
+  html.film-on #about, html.film-on #contact { padding: 0 var(--pad); justify-content: flex-start; }
+  html.film-on #about { align-items: flex-start; padding-top: 1.5rem; } html.film-on #contact { align-items: flex-end; padding-bottom: 6.6rem; }
+  html.film-on #about .copy, html.film-on #contact .copy { --tw: 100%; max-height: none; }
+  html.film-on .film-bar { flex-direction: column; align-items: stretch; gap: .1rem; padding: 1.6rem var(--pad) .4rem; }
+  .film-ticks { justify-content: space-between; } .film-ticks a { flex: 1 1 0; min-width: 0; min-height: 36px; }
+  .film-cap { font-size: .75rem; }
+}
+@media (max-width: 860px) and (orientation: portrait) and (max-height: 700px) {
+  html.film-on .scene, html.film-on .scene.hero { padding-bottom: 6.2rem; }
+  html.film-on .scene .copy { max-height: 52%; }
+  html.film-on .scene h3 { font-size: 1.25rem; }
+  html.film-on .scene .p-desc { margin-top: .35rem; font-size: .9rem; line-height: 1.38; }
+  html.film-on .scene .actions { margin-top: .55rem; }
+  html.film-on .scene .tech { margin-top: .3rem; }
+  html.film-on .scene.hero h1 { font-size: 2.2rem; }
+}
+/* a phone held sideways: little height, so the copy is trimmed and the picture keeps most of the width */
+@media (max-height: 520px) and (orientation: landscape) {
+  html.film-on .scene { --tw: min(47vw, 440px); padding-bottom: 3.2rem; }
+  html.film-on .scene .copy { max-height: calc(100% - 3rem); }
+  html.film-on .scene h3 { font-size: 1.2rem; } html.film-on .scene .p-desc { margin-top: .3rem; font-size: .88rem; line-height: 1.38; }
+  html.film-on .scene .hint { display: none; }
+  html.film-on .scene .actions { margin-top: .5rem; gap: .5rem; } html.film-on .scene .actions .btn { min-height: 44px; padding: .4rem 1rem; font-size: .92rem; }
+  html.film-on .scene .tech { margin-top: .2rem; } html.film-on .scene .tech summary { min-height: 44px; }
+  html.film-on .scene.hero h1 { font-size: 2.4rem; } html.film-on .scene.hero .lead { font-size: 1.05rem; margin-top: .4rem; } html.film-on .scene.hero .actions { margin-top: .6rem; }
+  html.film-on .film-bar { padding-top: 1.2rem; }
+  html.film-on #about, html.film-on #contact { padding-bottom: 3.4rem; } html.film-on #about .copy { --tw: min(34rem, 48vw); } html.film-on #contact .copy { --tw: min(24rem, 38vw); }
+  html.film-on .finale-part .prose { font-size: .9rem; line-height: 1.42; } html.film-on .finale-part .prose p + p { margin-top: .4rem; } html.film-on .finale-part h2 { font-size: 1.25rem; } html.film-on .contact-list a { min-height: 44px; padding: .4rem 0; }
+}
+@media (max-width: 520px) { html:not(.film-on) .scene .actions .btn { flex: 1 1 100%; } }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }

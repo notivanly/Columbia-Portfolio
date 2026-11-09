@@ -14,6 +14,10 @@
   function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
   function lerp(a, b, t) { return a + (b - a) * t; }
   function smooth(t) { t = clamp(t, 0, 1); return t * t * (3 - 2 * t); }
+  function inOut(t) { t = clamp(t, 0, 1); return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }   // slow, fast, slow
+  function out3(t) { t = clamp(t, 0, 1); return 1 - Math.pow(1 - t, 3); }                                     // fast, then settles
+  function in3(t) { t = clamp(t, 0, 1); return t * t * t; }
+  function seg(t, a, b) { return clamp((t - a) / (b - a), 0, 1); }                                              // progress of t inside [a, b]
 
   // Seeded random number generator (mulberry32) so layouts are repeatable.
   function rng(seed) {
@@ -23,23 +27,6 @@
       var t = Math.imul(a ^ (a >>> 15), 1 | a);
       t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
       return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-    };
-  }
-
-  // 3D value noise, used to draw continents on the hero globe.
-  function noise3(seed) {
-    var r = rng(seed), p = new Uint8Array(512), g = new Float32Array(256), i, j, tmp;
-    for (i = 0; i < 256; i++) { p[i] = i; g[i] = r(); }
-    for (i = 255; i > 0; i--) { j = Math.floor(r() * (i + 1)); tmp = p[i]; p[i] = p[j]; p[j] = tmp; }
-    for (i = 0; i < 256; i++) p[i + 256] = p[i];
-    function h(x, y, z) { return g[p[p[p[x & 255] + (y & 255)] + (z & 255)]]; }
-    function s(t) { return t * t * (3 - 2 * t); }
-    return function (x, y, z) {
-      var xi = Math.floor(x), yi = Math.floor(y), zi = Math.floor(z);
-      var xf = s(x - xi), yf = s(y - yi), zf = s(z - zi);
-      var a = lerp(lerp(h(xi, yi, zi), h(xi + 1, yi, zi), xf), lerp(h(xi, yi + 1, zi), h(xi + 1, yi + 1, zi), xf), yf);
-      var b = lerp(lerp(h(xi, yi, zi + 1), h(xi + 1, yi, zi + 1), xf), lerp(h(xi, yi + 1, zi + 1), h(xi + 1, yi + 1, zi + 1), xf), yf);
-      return lerp(a, b, zf);
     };
   }
 
@@ -66,30 +53,6 @@
     ctx.lineTo(x2 - head * Math.cos(a - 0.42), y2 - head * Math.sin(a - 0.42));
     ctx.lineTo(x2 - head * Math.cos(a + 0.42), y2 - head * Math.sin(a + 0.42));
     ctx.closePath(); ctx.fill();
-  }
-
-  /* Where the "subject" of a visual sits on its canvas.
-     side = +1 : subject on the right, copy on the left (default)
-     side = -1 : mirrored
-     s is a base size in px; most visuals scale everything from it.           */
-  function layout(w, h, side, panel) {
-    if (panel) return { compact: false, panel: true, cx: w * 0.5, cy: h * 0.54, s: Math.min(h * 1.0, w * 0.55) };
-    var compact = w < 760 || h > w * 1.05;
-    if (compact) return { compact: true, cx: w * 0.5, cy: h * 0.68, s: Math.min(w * 1.0, h * 0.62) };
-    return { compact: false, cx: w * (side > 0 ? 0.69 : 0.31), cy: h * 0.54, s: Math.min(h * 0.95, w * 0.5) };
-  }
-
-  /* Tiny 3D camera: yaw around Y, pitch around X, optional perspective. */
-  function camera(yaw, pitch, dist) {
-    var cyw = Math.cos(yaw), syw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
-    return function (x, y, z) {
-      var x1 = x * cyw + z * syw;
-      var z1 = -x * syw + z * cyw;
-      var y2 = y * cp - z1 * sp;
-      var z2 = y * sp + z1 * cp;
-      var k = dist ? dist / (dist - z2) : 1;
-      return { x: x1 * k, y: y2 * k, z: z2, k: k };
-    };
   }
 
   /* ---------- Statics: method of joints for 2D pin-jointed trusses ----------
@@ -168,10 +131,32 @@
   }
 
   PF.util = {
-    TAU: TAU, clamp: clamp, lerp: lerp, smooth: smooth, rng: rng, noise3: noise3,
-    W: W, A: A, R: R, MONO: MONO, text: text, arrow: arrow, layout: layout, camera: camera,
+    TAU: TAU, clamp: clamp, lerp: lerp, smooth: smooth, inOut: inOut, out3: out3, in3: in3, seg: seg, rng: rng,
+    W: W, A: A, R: R, MONO: MONO, text: text, arrow: arrow,
     solveTruss: solveTruss, warren: warren, pratt: pratt
   };
+  /* ---------- views ----------
+     Every scene is drawn into a view V = { w, h, free, compact, lod, side }.
+     V.free is the part of the canvas not covered by the text column, which is
+     where the scene composes its main object.
+       side +1: object on the right, text on the left.   side -1: the opposite.
+       mode 'still': an ordinary row; the object may use the whole canvas.
+       Narrow, upright canvases (860px and under, as in the stylesheet) put the object in the top part and the text below it. */
+  PF.scenes = PF.scenes || {};
+  PF.makeView = function (w, h, side, mode, textFrac) {
+    var compact = w <= 860 && h + 64 >= w, fr;           // the stylesheet's stacked layout: 860px and under, held upright (orientation: portrait)
+    if (mode === 'still') fr = { x0: 0, y0: 0, x1: w, y1: h };
+    else if (compact) fr = { x0: 0, y0: h * 0.015, x1: w, y1: h * 0.55 };
+    else {
+      var tw = (h <= 458 ? Math.min(w * 0.47, 440) : Math.min(textFrac ? w * textFrac : 400, w * (textFrac || 0.29))) + 36;   // short landscape: the stylesheet widens the column
+      if (side > 0) fr = { x0: tw, y0: h * 0.05, x1: w - 10, y1: h * 0.93 };
+      else if (side < 0) fr = { x0: 10, y0: h * 0.05, x1: w - tw, y1: h * 0.93 };
+      else fr = { x0: 0, y0: 0, x1: w, y1: h };
+    }
+    fr.w = fr.x1 - fr.x0; fr.h = fr.y1 - fr.y0; fr.cx = (fr.x0 + fr.x1) / 2; fr.cy = (fr.y0 + fr.y1) / 2;
+    return { w: w, h: h, free: fr, compact: compact, lod: w < 760 ? 1 : 0, side: side, mode: mode || 'film', t: 0 };
+  };
+
   PF.visuals = PF.visuals || {};
   PF.reduced = !!(global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches);
   PF.paused = PF.reduced;           // reduced motion starts paused; the visitor can opt in
@@ -241,8 +226,12 @@
 
   // Paused or reduced motion: advance the simulation silently once, then paint one frame.
   VisualHost.prototype.still = function () {
-    if (!this.stilled) { for (var i = 0; i < 170; i++) { this.t += 1 / 30; this.render(1 / 30); } this.stilled = true; }
-    else this.render(0);
+    if (!this.stilled) {
+      var i;
+      if (this.visual.advance) { for (i = 0; i < 170; i++) { this.t += 1 / 30; this.visual.advance(1 / 30, this.m); } this.render(0); }
+      else { for (i = 0; i < 170; i++) { this.t += 1 / 30; this.render(1 / 30); } }
+      this.stilled = true;
+    } else this.render(0);
     this.updateHud(true);
   };
 
@@ -269,14 +258,18 @@
     m.px = m.x * this.w; m.py = m.y * this.h;
     m.rx = inside ? (p.x - r.left) * (this.w / r.width) : -9999;
     m.ry = inside ? (p.y - r.top) * (this.h / r.height) : -9999;
+    if (this.visual.advance) this.visual.advance(dt, m);
     this.render(dt);
     if (now - this.hudAt > 140) { this.hudAt = now; this.updateHud(); }
   };
 
   function tick(now) {
     if (PF.paused || (typeof document !== 'undefined' && document.hidden)) { rafId = 0; return; }   // nothing drawn while paused or in a hidden tab
+    var i, any = false;
+    for (i = 0; i < hosts.length; i++) if (hosts[i].visible) { any = true; break; }
+    if (!any) { rafId = 0; return; }                          // nothing on screen: stop the loop; an observer restarts it when something appears
     rafId = requestAnimationFrame(tick);
-    for (var i = 0; i < hosts.length; i++) if (hosts[i].visible) hosts[i].frame(now);
+    for (i = 0; i < hosts.length; i++) if (hosts[i].visible) hosts[i].frame(now);
   }
   PF.start = function () { if (!rafId && !PF.paused && global.requestAnimationFrame) rafId = requestAnimationFrame(tick); };
   PF.setPaused = function (p) {
