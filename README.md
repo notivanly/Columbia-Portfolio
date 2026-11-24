@@ -77,6 +77,14 @@ Carried over from the original previews, unchanged: the method-of-joints solver 
 - At about 320 by 568 px, "How it works" sits below the fold of the text panel and needs a scroll inside it. The links stay visible.
 - Tested in headless Chromium (desktop and phone emulation). Not tested on Safari, Firefox or physical devices.
 
+## Contributing
+
+Contributions are welcome, especially cross-browser testing, new transitions or scenes, accessibility and tests. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to run the site locally and open a pull request, and look for issues labelled `good first issue`.
+
+## License
+
+[MIT](LICENSE). The personal content on the page (project write-ups, About and Contact text) is not covered by contribution requests; please open an issue rather than a pull request for changes to it.
+
 ## Contact details on the page
 
 Email `notivanly@gmail.com`, GitHub `github.com/notivanly`, Midway City, California. No phone number and no LinkedIn.
