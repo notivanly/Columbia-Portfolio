@@ -2,7 +2,9 @@
    main.js
    Page behaviour. Every piece of content and every link works without this
    file; it adds the scroll-driven film, direct jumps to any project, the
-   mobile menu, the active navigation item and the pause control.
+   mobile menu, the active navigation item, the pause control, and the plumbing
+   that lets a visitor operate the experiments: the control panels (labs.js)
+   and pointer input on the picture (input.js).
 
    Two modes share one DOM:
      film   one pinned stage drawn by film.js; scroll position is the only
@@ -54,8 +56,11 @@
   var filmEl = $('#film'), stage = $('.film-stage'), canvas = $('#filmCanvas'), scenes = $$('.scene[data-scene]');
   var sceneOf = {};                                           // element id -> scene index
   scenes.forEach(function (el) { sceneOf[el.id] = +el.getAttribute('data-scene'); });
-  sceneOf.projects = 1; sceneOf.mathematics = 7;
-  var NAV = ['home', 'projects', 'mathematics', 'about', 'contact'];
+  sceneOf.projects = 1; sceneOf.mathematics = 7; sceneOf['planetary-gravity-explorer'] = 5;
+  var TOOL_OF = { 'sat-question-bank-tracker': 'sat', 'amc-practice': 'amc', 'calculus-iii-visualizer': 'calc', 'ap-atlas': 'atlas' };   // older links to a single tool land on the showcase with that tool chosen
+  Object.keys(TOOL_OF).forEach(function (k) { sceneOf[k] = 7; });
+  var NAV = ['home', 'projects', 'learning-tools', 'about', 'contact'];
+  function chooseTool(id) { if (TOOL_OF[id] && PF.learn) { PF.learn.set(TOOL_OF[id]); if (PF.labs) PF.labs.touch(); } }
   function headH() { var h = $('.site-header'); return h ? h.offsetHeight : 72; }
 
   /* ---------- the film ---------- */
@@ -110,7 +115,7 @@
         a.setAttribute('data-seen', idx < active ? '1' : '0');
       });
     }
-    var navId = active === 0 ? 'home' : active <= 6 ? 'projects' : active <= 9 ? 'mathematics' : (F.cur > F.TL.total - 0.22 ? 'contact' : 'about');
+    var navId = active === 0 ? 'home' : active <= 6 ? 'projects' : active === 7 ? 'learning-tools' : (F.cur > F.TL.total - 0.3 ? 'contact' : 'about');
     if (navId !== last.nav) { last.nav = navId; setActive(navId); }
     if (capEl) {
       var txt = loc.u > 0.04 && loc.u < 0.96 ? 'Decorative transition. Not a simulation.' : captionOf(active);
@@ -143,6 +148,7 @@
     var id = decodeURIComponent(a.getAttribute('href').slice(1)), i = targetScene(id);
     if (i < 0) return;
     e.preventDefault();
+    chooseTool(id);
     if (id === 'contact') { F.target = F.TL.total - 0.1; F.snap(); scrollToS(F.target); readScroll(); }
     else jumpToScene(i);
     if (window.history && history.replaceState) history.replaceState(null, '', '#' + id);
@@ -150,7 +156,7 @@
   window.addEventListener('hashchange', function () {
     if (!filmOn) return;
     var id = decodeURIComponent(location.hash.slice(1)), i = targetScene(id);
-    if (i >= 0) jumpToScene(i);
+    if (i >= 0) { chooseTool(id); jumpToScene(i); }
   });
   // Tabbing to a link in a scene that is not showing brings that scene into view.
   scenes.forEach(function (el) {
@@ -164,11 +170,14 @@
   function mountStill(c) {
     if (c.getAttribute('data-mounted') || !PF.VisualHost) return;
     c.setAttribute('data-mounted', '1');
-    try { c._host = new PF.VisualHost(c, 'still', { key: c.getAttribute('data-still') }, null); }
-    catch (err) { c.parentNode.classList.add('pv-failed'); }
+    try {
+      c._host = new PF.VisualHost(c, 'still', { key: c.getAttribute('data-still') }, null);
+      if (PF.input) PF.input.attach(c, function () { return c._host && c._host.visual ? c._host.visual.scene : null; });     // in rows every scene is an ordinary row, so it is always live
+    } catch (err) { c.parentNode.classList.add('pv-failed'); }
   }
   var stills = $$('canvas[data-still]'), stillIO = null;
   function startRows() {
+    if (PF.labs) PF.labs.allLive();
     if ('IntersectionObserver' in window) {
       if (!stillIO) stillIO = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) { if (e.isIntersecting) { mountStill(e.target); stillIO.unobserve(e.target); } });
@@ -184,6 +193,7 @@
     filmOn = false; root.classList.remove('film-on'); filmEl.style.height = '';
     scenes.forEach(function (el) { el.style.opacity = ''; el.removeAttribute('data-on'); });
     last = { i: -1, u: -1, w: '', active: -1, cap: '', nav: '' };
+    if (PF.labs) PF.labs.allLive();                              // rows: every panel belongs to an ordinary row, so every panel works
   }
   function applyMode() {
     var want = wantFilm();
@@ -191,7 +201,11 @@
       try {
         filmOn = true; root.classList.add('film-on');
         layoutFilm();
-        if (!host) { host = new PF.VisualHost(canvas, 'film', {}, null); canvas._host = host; F.onUpdate = onFilmUpdate; }
+        if (!host) {
+          host = new PF.VisualHost(canvas, 'film', {}, null); canvas._host = host; F.onUpdate = onFilmUpdate;
+          if (PF.input) PF.input.attach(canvas, function () { return filmOn && F.live >= 0 ? F.scenes[F.order[F.live]] : null; });    // only a settled scene takes input
+        }
+        if (PF.labs) PF.labs.setLive(F.live);
         readScroll(); host.resize();
       } catch (err) {                                           // anything wrong with the film: fall back to ordinary rows
         failed = true; host = null; clearFilmState();
@@ -215,10 +229,12 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   if (mqReduce.addEventListener) mqReduce.addEventListener('change', applyMode);
 
+  if (PF.labs) PF.labs.init();                                   // wire the control panels to their simulations
   applyMode();
   window.addEventListener('load', function () {
     if (filmOn) layoutFilm();
     var id = decodeURIComponent(location.hash.slice(1)), i = targetScene(id);
+    chooseTool(id);
     if (filmOn && i >= 0) jumpToScene(i);
     else if (filmOn) readScroll();
     else if (id) { var el = d.getElementById(id); if (el) el.scrollIntoView(); }
