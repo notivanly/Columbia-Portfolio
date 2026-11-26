@@ -147,12 +147,16 @@
   PF.makeView = function (w, h, side, mode, textFrac) {
     var compact = w <= 860 && h + 64 >= w, fr;           // the stylesheet's stacked layout: 860px and under, held upright (orientation: portrait)
     if (mode === 'still') fr = { x0: 0, y0: 0, x1: w, y1: h };
-    else if (compact) fr = { x0: 0, y0: h * 0.015, x1: w, y1: h * 0.465 };
+    else if (compact) {                                  // the picture takes what the text panel leaves: the same numbers as the stylesheet (panel height is a share of the stage minus the bar's room)
+      var short = h + 64 <= 700, padB = short ? 99.2 : 105.6, panelTop = (h - padB) - (short ? 0.52 : 0.43) * (h - padB);
+      fr = { x0: 0, y0: h * 0.015, x1: w, y1: Math.max(h * 0.3, panelTop - 10) };
+    }
     else {
       var colW = U_clamp(w * 0.27, 300, 400), pad = U_clamp(w * 0.045, 20, 64);                  // the stylesheet's column and page padding
       var tw = h <= 458 ? Math.min(w * 0.47, 440) + 36 : textFrac ? Math.min(w * textFrac, 400) + 36 : colW + pad + 16;   // short landscape: the stylesheet widens the column
-      if (side > 0) fr = { x0: tw, y0: h * 0.05, x1: w - 10, y1: h * 0.93 };
-      else if (side < 0) fr = { x0: 10, y0: h * 0.05, x1: w - tw, y1: h * 0.93 };
+      var yb = h <= 458 ? 0.84 : 0.93;                                                            // a phone held sideways: the bar along the bottom needs more room
+      if (side > 0) fr = { x0: tw, y0: h * 0.05, x1: w - 10, y1: h * yb };
+      else if (side < 0) fr = { x0: 10, y0: h * 0.05, x1: w - tw, y1: h * yb };
       else fr = { x0: 0, y0: 0, x1: w, y1: h };
     }
     fr.w = fr.x1 - fr.x0; fr.h = fr.y1 - fr.y0; fr.cx = (fr.x0 + fr.x1) / 2; fr.cy = (fr.y0 + fr.y1) / 2;

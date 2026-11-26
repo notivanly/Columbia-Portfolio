@@ -129,7 +129,7 @@
       /* labels */
       if (!o.nolabels) {
         U.text(ctx, 'Seen from above. Dashed: predicted path. Solid: path flown.', fr.x0 + 8, fr.y1 - 4, V.lod ? 10 : 11, 'rgba(245,245,242,0.78)', 'left', true);
-        var bar = niceLen(F.range * 0.3), bw = bar * F.sc, up = V.lod ? 16 : 0;                     // on a narrow screen the scale bar rides above the caption
+        var bar = niceLen(F.range * 0.3), bw = bar * F.sc, up = V.lod || fr.w < 560 ? 16 : 0;                     // on a narrow screen the scale bar rides above the caption
         ctx.strokeStyle = 'rgba(245,245,242,0.7)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(fr.x1 - 10 - bw, fr.y1 - 14 - up); ctx.lineTo(fr.x1 - 10, fr.y1 - 14 - up); ctx.moveTo(fr.x1 - 10 - bw, fr.y1 - 18 - up); ctx.lineTo(fr.x1 - 10 - bw, fr.y1 - 10 - up); ctx.moveTo(fr.x1 - 10, fr.y1 - 18 - up); ctx.lineTo(fr.x1 - 10, fr.y1 - 10 - up); ctx.stroke();
         U.text(ctx, kmText(bar), fr.x1 - 10, fr.y1 - 22 - up, V.lod ? 10 : 11, 'rgba(245,245,242,0.85)', 'right', true);
         var msg = Orb.status === 'crashed' ? Orb.msg : Orb.status === 'escaped' ? Orb.msg : Orb.done ? Orb.msg : '';

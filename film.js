@@ -123,7 +123,9 @@
       if (w !== lastW || h !== lastH) init(w, h);
       var loc = locate(F.cur); F.info = loc;
       var i = loc.i, u = loc.u, A = scenes[i], B = scenes[i + 1], i2;
-      setLive(u <= 0 ? i : -1);
+      var C = PF.cinematic, hold = false;                                       // decorative footage, if any was supplied: kept apart from every calculation
+      if (C) { if (u > 0) C.settle(); else hold = C.start(ORDER[i], i); }
+      setLive(u <= 0 && !hold ? i : -1);                                        // no input while a transition or an intro is on screen
       for (i2 = 0; i2 < views.length; i2++) { views[i2].t = t; views[i2].m = m; }
       if (u <= 0) {
         A.draw(ctx, views[i], {});
@@ -135,6 +137,7 @@
           ctx.save(); ctx.globalAlpha = smooth((u - 0.25) / 0.5); B.draw(ctx, views[i + 1], {}); ctx.restore();
         }
       }
+      if (C && u <= 0 && hold) C.draw(ctx, w, h, ORDER[i], dt, views[i].side);
       var strength = (views[i] && views[i].lod) ? 0.4 : 0.5;
       G.vignette(ctx, w, h, strength);
       if (!(views[i] && views[i].lod)) G.grain(ctx, w, h, 0.05);

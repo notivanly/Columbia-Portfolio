@@ -354,3 +354,35 @@ html.film-on .sky-part .lab-out.small { flex: 1 1 100%; }
   html.film-on #contact .contact-list { margin-top: .4rem; } html.film-on #contact .contact-list a { min-height: 44px; padding: .2rem 0; }
   html.film-on #contact .contact-list .v { font-size: 1rem; }
 }
+
+/* a small phone held upright: everything in the ending is a little tighter so the sky keeps room */
+@media (max-width: 860px) and (orientation: portrait) and (max-height: 700px) {
+  html.film-on .sky-part { padding-top: .35rem; }
+  html.film-on .sky-part h2 { font-size: 1.05rem; }
+  html.film-on .sky-part .seg button, html.film-on .sky-part .chip, html.film-on .sky-part .lab-more summary { min-height: 38px; padding: 0 .7rem; font-size: .84rem; }
+  html.film-on #about { padding-bottom: 12.8rem; }
+  html.film-on #about h2, html.film-on #contact h2 { font-size: 1.05rem; }
+  html.film-on #about .prose { font-size: .8rem; line-height: 1.36; } html.film-on #about .prose p + p { margin-top: .3rem; }
+  html.film-on #contact { padding-bottom: 5.2rem; }
+  html.film-on #contact .contact-list a { min-height: 40px; }
+}
+
+/* a phone held sideways: About and Contact stack down the left, the sky takes the rest */
+@media (max-height: 520px) and (orientation: landscape) {
+  html.film-on #about { align-items: flex-start; justify-content: flex-start; padding-top: .6rem; padding-bottom: 0; }
+  html.film-on #about .copy { --tw: min(37vw, 340px); max-height: none; overflow: visible; padding: 0; -webkit-mask-image: none; mask-image: none; }
+  html.film-on #contact { align-items: flex-end; justify-content: flex-start; padding-bottom: 3.4rem; }
+  html.film-on #contact .copy { --tw: min(37vw, 340px); padding: .5rem 0 0; }
+  html.film-on #about h2, html.film-on #contact h2 { font-size: 1.05rem; }
+  html.film-on #about .prose { font-size: .8rem; line-height: 1.34; } html.film-on #about .prose p + p { margin-top: .3rem; }
+  html.film-on #contact .contact-list { display: flex; flex-wrap: wrap; gap: 0 1.2rem; margin-top: .2rem; border-top: 0; }
+  html.film-on #contact .contact-list a { border-bottom: 0; }
+  html.film-on #contact .contact-list a { min-height: 40px; padding: .2rem 0; }
+  html.film-on #contact .contact-list .k { display: none; }
+  html.film-on #contact .contact-list .v { font-size: .95rem; }
+  html.film-on .sky-part { justify-content: flex-end; padding: .5rem var(--pad) 0 calc(min(37vw, 340px) + var(--pad) + 14px); }
+  html.film-on .sky-part .copy { --tw: 100%; }
+  html.film-on .sky-part .lab > .lab-l, html.film-on .sky-part .lab .lab-row > .lab-l, html.film-on .sky-part .lab-out.small { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  html.film-on .sky-part h2 { font-size: 1.05rem; }
+  html.film-on .sky-part .seg button, html.film-on .sky-part .chip, html.film-on .sky-part .lab-more summary { min-height: 40px; }
+}

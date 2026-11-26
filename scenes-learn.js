@@ -67,20 +67,22 @@
 
     function drawSat(ctx, V, W, alpha) {
       var cx0 = W.x, cy0 = W.y + W.bar, cw = W.w, ch = W.h - W.bar, pad = Math.max(8, cw * 0.03), n = Lr.marks.length, i;
-      var listW = cw * (V.lod ? 0.64 : 0.62), rowH = (ch - pad * 2 - 16) / n, fs = V.lod ? 10 : 12.5;
+      var narrow = cw < 340;                                                                // a small phone: the rows take the whole window, and the counts are in the panel below
+      var listW = narrow ? cw - pad * 2 : cw * (V.lod ? 0.64 : 0.62), rowH = (ch - pad * 2 - 16) / n, fs = V.lod ? 10 : 12.5;
       ctx.save(); ctx.globalAlpha = alpha; ctx.beginPath(); ctx.rect(cx0, cy0, cw, ch); ctx.clip();
       U.text(ctx, 'Questions', cx0 + pad, cy0 + pad + 11, V.lod ? 10 : 12, 'rgba(245,245,242,0.55)', 'left', true);
       st.rows = [];
       for (i = 0; i < n; i++) {
-        var y = cy0 + pad + 16 + i * rowH, m = Lr.marks[i], b = BADGE[m], pop = Lr.pop[i] || 0, bw = (V.lod ? 62 : 84) * (1 + 0.12 * pop), bh = Math.min(rowH * 0.62, 24) * (1 + 0.1 * pop), bx = cx0 + pad + listW - bw;
+        var y = cy0 + pad + 16 + i * rowH, m = Lr.marks[i], b = BADGE[m], pop = Lr.pop[i] || 0, bw = (narrow ? 56 : V.lod ? 62 : 84) * (1 + 0.12 * pop), bh = Math.min(rowH * 0.62, 24) * (1 + 0.1 * pop), bx = cx0 + pad + listW - bw;
         ctx.fillStyle = i === Lr.last ? 'rgba(142,201,255,0.07)' : 'rgba(255,255,255,0.03)'; rr(ctx, cx0 + pad, y, listW, rowH - 4, 6); ctx.fill();
         U.text(ctx, 'Question ' + (i + 1), cx0 + pad + 9, y + (rowH - 4) / 2 - 2, fs, 'rgba(245,245,242,0.92)', 'left', true);
-        if (!V.lod || rowH > 30) U.text(ctx, DOMAINS[i % DOMAINS.length], cx0 + pad + 9, y + (rowH - 4) / 2 + fs + 1, V.lod ? 8 : 10, 'rgba(245,245,242,0.5)', 'left', true);
+        if (!narrow && (!V.lod || rowH > 30)) U.text(ctx, DOMAINS[i % DOMAINS.length], cx0 + pad + 9, y + (rowH - 4) / 2 + fs + 1, V.lod ? 8 : 10, 'rgba(245,245,242,0.5)', 'left', true);
         ctx.fillStyle = b.fill; ctx.strokeStyle = b.line; ctx.lineWidth = 1.2; if (m === 0) ctx.setLineDash([3, 3]);
         rr(ctx, bx - 6, y + (rowH - 4) / 2 - bh / 2, bw, bh, bh / 2); ctx.fill(); ctx.stroke(); ctx.setLineDash([]);
         U.text(ctx, b.name, bx - 6 + bw / 2, y + (rowH - 4) / 2 + 3.6, V.lod ? 9 : 11, b.ink, 'center', true);
         st.rows.push({ x: cx0 + pad, y: y, w: listW, h: rowH - 4 });
       }
+      if (narrow) { ctx.restore(); return; }
       var px = cx0 + pad * 2 + listW, pw = cx0 + cw - pad - px, py = cy0 + pad + 16, ph = Math.min(ch - pad * 2 - 16, (V.lod ? 118 : 150));
       ctx.fillStyle = 'rgba(8,10,13,0.85)'; rr(ctx, px, py, pw, ph, 8); ctx.fill(); ctx.strokeStyle = 'rgba(255,255,255,0.18)'; ctx.lineWidth = 1; ctx.stroke();
       U.text(ctx, 'Summary', px + 10, py + 17, V.lod ? 10 : 12, '#fff', 'left', true);
@@ -124,7 +126,7 @@
       drawTool(ctx, V, W, tool, st.prev && e < 1 ? e : 1, st.prev && e < 1 ? 26 * (1 - e) : 0);
       if (!o.nolabels) {
         var cy = W.y + W.h + (V.lod ? 16 : 20);
-        U.text(ctx, tool.name, W.x + 2, cy, V.lod ? 13 : 16, '#fff', 'left', true);
+        U.text(ctx, tool.name, W.x + 2, cy, V.lod ? (W.w < 300 ? 11 : 13) : 16, '#fff', 'left', true);
         U.text(ctx, V.lod && tool.capS ? tool.capS : tool.cap, W.x + 2, cy + (V.lod ? 15 : 19), V.lod ? 10 : 12, 'rgba(245,245,242,0.74)', 'left', true);
         var k, n = TOOLS.length;                                                   // which of the four is showing
         for (k = 0; k < n; k++) { ctx.fillStyle = TOOLS[k].id === Lr.tool ? A(1) : 'rgba(255,255,255,0.25)'; ctx.beginPath(); ctx.arc(W.x + W.w - 8 - (n - 1 - k) * 14, cy - 4, TOOLS[k].id === Lr.tool ? 4 : 3, 0, TAU); ctx.fill(); }
