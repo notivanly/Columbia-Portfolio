@@ -23,10 +23,23 @@
     (function () { var r = U.rng(23), i; for (i = 0; i < 130; i++) st.dust.push([r(), r(), 0.5 + r() * 1.1, r() * TAU, 0.1 + r() * 0.35]); })();
 
     /* where the sky is: the whole row when it is an ordinary row; in the film, the band between the panel above and the About and Contact text below */
+    var meas = { t: -1e9, w: 0, h: 0, top: null, bot: null };
+    function measure(V) {                                                // the sky lies between the control strip above it and the About and Contact text below it, wherever the layout puts them
+      var d = global.document, now = global.performance ? global.performance.now() : 0;
+      if (!d || (now - meas.t < 200 && meas.w === V.w && meas.h === V.h)) return meas;
+      meas.t = now; meas.w = V.w; meas.h = V.h; meas.top = meas.bot = null;
+      var cv = d.getElementById('filmCanvas'); if (!cv) return meas;
+      var cr = cv.getBoundingClientRect(), k = V.h / (cr.height || 1), sky = d.querySelector('#build-your-own-constellation .copy'), tops = [];
+      if (sky) meas.top = (sky.getBoundingClientRect().bottom - cr.top) * k + 6;
+      ['#about .copy', '#contact .copy'].forEach(function (q) { var e = d.querySelector(q); if (e) tops.push((e.getBoundingClientRect().top - cr.top) * k - 12); });
+      if (tops.length) meas.bot = Math.min.apply(null, tops);
+      return meas;
+    }
     function region(V) {
       if (V.mode === 'still') return { x: V.free.x0 + 6, y: V.free.y0 + 6, w: V.free.w - 12, h: V.free.h - 12 };
-      var top = V.compact ? 0.2 : 0.17, bot = V.compact ? 0.6 : 0.64;
-      return { x: 12, y: V.h * top, w: V.w - 24, h: V.h * (bot - top) };
+      var m = measure(V), top = m.top != null ? m.top : V.h * 0.17, bot = m.bot != null ? m.bot : V.h * 0.5;
+      if (bot - top < 110) { top = V.h * 0.17; bot = Math.max(top + 110, V.h * 0.5); }
+      return { x: 12, y: top, w: V.w - 24, h: bot - top };
     }
     function toS(R, s) { return [R.x + s.x * R.w, R.y + s.y * R.h]; }
     function inRegion(R, x, y) { return x >= R.x && x <= R.x + R.w && y >= R.y && y <= R.y + R.h; }

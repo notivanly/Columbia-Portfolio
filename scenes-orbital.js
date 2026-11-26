@@ -102,11 +102,12 @@
       }
 
       /* the craft */
-      var cp = toS(F, Orb.x, Orb.y), vx = Orb.vx, vy = Orb.vy, head = Orb.status === 'crashed' ? Math.atan2(Orb.y, Orb.x) : Math.atan2(-vy, vx), sz = V.lod ? 7 : 8.5;
+      var cp = toS(F, Orb.x, Orb.y), vx = Orb.vx, vy = Orb.vy, head = Orb.status === 'crashed' ? Math.atan2(Orb.y, Orb.x) : Math.atan2(-vy, vx), sz = V.lod ? 8 : 10.5;
       if (Orb.status === 'crashed' && Orb.impact) {
         var t = clamp((Orb.flightT - Orb.impact.t) / 40 + 1, 0, 1); ctx.strokeStyle = 'rgba(255,150,110,0.9)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(cp[0], cp[1], 9 + 5 * t, 0, TAU); ctx.stroke();
         ctx.fillStyle = 'rgba(255,170,120,0.55)'; ctx.beginPath(); ctx.arc(cp[0], cp[1], 5, 0, TAU); ctx.fill();
       } else {
+        G.glow(ctx, cp[0], cp[1], sz * 2.4, [142, 201, 255], 0.35);
         ctx.save(); ctx.translate(cp[0], cp[1]); ctx.rotate(head);
         if (FLASH.t > 0) { var fl = FLASH.t / 0.5 * 16 * (0.6 + 0.4 * Math.sin(V.t * 60)); ctx.fillStyle = 'rgba(255,190,120,0.9)'; ctx.beginPath(); if (FLASH.dir > 0) { ctx.moveTo(-sz * 0.7, -sz * 0.3); ctx.lineTo(-sz * 0.7 - fl, 0); ctx.lineTo(-sz * 0.7, sz * 0.3); } else { ctx.moveTo(sz * 0.9, -sz * 0.3); ctx.lineTo(sz * 0.9 + fl * 0.7, 0); ctx.lineTo(sz * 0.9, sz * 0.3); } ctx.closePath(); ctx.fill(); }
         ctx.fillStyle = '#eef3f9'; ctx.strokeStyle = A(1); ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(sz, 0); ctx.lineTo(-sz * 0.7, -sz * 0.62); ctx.lineTo(-sz * 0.35, 0); ctx.lineTo(-sz * 0.7, sz * 0.62); ctx.closePath(); ctx.fill(); ctx.stroke();
@@ -128,9 +129,9 @@
       /* labels */
       if (!o.nolabels) {
         U.text(ctx, 'Seen from above. Dashed: predicted path. Solid: path flown.', fr.x0 + 8, fr.y1 - 4, V.lod ? 10 : 11, 'rgba(245,245,242,0.78)', 'left', true);
-        var bar = niceLen(F.range * 0.3), bw = bar * F.sc;
-        ctx.strokeStyle = 'rgba(245,245,242,0.7)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(fr.x1 - 10 - bw, fr.y1 - 14); ctx.lineTo(fr.x1 - 10, fr.y1 - 14); ctx.moveTo(fr.x1 - 10 - bw, fr.y1 - 18); ctx.lineTo(fr.x1 - 10 - bw, fr.y1 - 10); ctx.moveTo(fr.x1 - 10, fr.y1 - 18); ctx.lineTo(fr.x1 - 10, fr.y1 - 10); ctx.stroke();
-        U.text(ctx, kmText(bar), fr.x1 - 10, fr.y1 - 22, V.lod ? 10 : 11, 'rgba(245,245,242,0.85)', 'right', true);
+        var bar = niceLen(F.range * 0.3), bw = bar * F.sc, up = V.lod ? 16 : 0;                     // on a narrow screen the scale bar rides above the caption
+        ctx.strokeStyle = 'rgba(245,245,242,0.7)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(fr.x1 - 10 - bw, fr.y1 - 14 - up); ctx.lineTo(fr.x1 - 10, fr.y1 - 14 - up); ctx.moveTo(fr.x1 - 10 - bw, fr.y1 - 18 - up); ctx.lineTo(fr.x1 - 10 - bw, fr.y1 - 10 - up); ctx.moveTo(fr.x1 - 10, fr.y1 - 18 - up); ctx.lineTo(fr.x1 - 10, fr.y1 - 10 - up); ctx.stroke();
+        U.text(ctx, kmText(bar), fr.x1 - 10, fr.y1 - 22 - up, V.lod ? 10 : 11, 'rgba(245,245,242,0.85)', 'right', true);
         var msg = Orb.status === 'crashed' ? Orb.msg : Orb.status === 'escaped' ? Orb.msg : Orb.done ? Orb.msg : '';
         if (msg) {
           ctx.font = '500 ' + (V.lod ? 12 : 14) + 'px Hanken Grotesk, system-ui, sans-serif'; var bw2 = Math.min(fr.w * 0.92, ctx.measureText(msg).width + 28);

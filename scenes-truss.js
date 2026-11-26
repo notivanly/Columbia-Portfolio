@@ -99,7 +99,7 @@
         if (Tr.mag > 0.01) {
           var L1 = Math.max(18, Tr.mag * kf); ctx.strokeStyle = A(0.95); ctx.fillStyle = A(0.95); ctx.lineWidth = 2.6;
           U.arrow(ctx, ln[0], ln[1] - 12 - L1, ln[0], ln[1] - 10, 9);
-          U.text(ctx, Tr.mag.toFixed(0) + ' kN', ln[0] + 8, ln[1] - 14 - L1 * 0.5, V.lod ? 11 : 12, A(1), 'left', true);
+          U.text(ctx, Tr.mag.toFixed(0) + ' kN', ln[0], Math.max(fr.y0 + 12, ln[1] - 22 - L1), V.lod ? 11 : 12, A(1), 'center', true);
         }
         res.reactions.forEach(function (r) {
           if (Math.abs(r.value) < 0.05) return;

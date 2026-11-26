@@ -416,7 +416,7 @@
     S.setBurn = function (m) { S.burnSize = clamp(+m, 5, 1000); };
     function checkChallenge() {
       var ch = S.CH()[S.challenge], el = S.elements(), B = S.B();
-      if (S.done || S.status !== 'flying') return;
+      if (S.done || S.status !== 'flying' || S.dv <= 0) return;                  // the craft starts in a 400 km circle: a challenge counts only once a burn has been made
       var okNow = false;
       if (ch.kind === 'escape') okNow = !el.bound && el.alt > 2 * B.R;
       else if (el.bound && el.peri > B.R) { var tol = ch.alt * 0.04 + 15; okNow = Math.abs(el.peri - B.R - ch.alt) <= tol && Math.abs(el.apo - B.R - ch.alt) <= tol; }

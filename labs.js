@@ -86,6 +86,14 @@
     if (PF.input && PF.input.repaint) PF.input.repaint();
     else if (PF.start) PF.start();
   };
+  /* readouts that change by themselves (a vehicle crossing, a craft flying) are refreshed a few times a second for the panels that are live */
+  L.syncLive = function () {
+    for (var i = 0; i < L.items.length; i++) {
+      var it = L.items[i]; if (it.root.getAttribute('data-live') !== '1') continue;
+      try { it.sync(); } catch (e) { if (global.console) console.warn('lab ' + it.name, e); }
+    }
+  };
+  if (global.setInterval) global.setInterval(function () { if (!global.document.hidden && L.ready) L.syncLive(); }, 160);
   /* which scene is settled: its panel is live, the others are inert */
   L.setLive = function (scene) {
     for (var i = 0; i < L.items.length; i++) { var it = L.items[i], on = it.scene === scene ? '1' : '0'; if (it.root.getAttribute('data-live') !== on) it.root.setAttribute('data-live', on); }

@@ -2,16 +2,21 @@
    film.js
    One stage, one canvas, one camera for the whole page.
 
-   The page is a sequence of 11 scenes (Home, nine projects, About/Contact) with a
-   transition between each pair. Scroll position is the only input:
+   The page is a sequence of 9 scenes (Home, seven experiments and tools, and the
+   constellation ending with About and Contact) with a transition between each
+   pair. Scroll position is the only thing that moves through them:
 
        timeline position s (in stage heights)
-         [ hold 0 ][ transition 0->1 ][ hold 1 ][ transition 1->2 ] ... [ hold 10 ]
+         [ hold 0 ][ transition 0->1 ][ hold 1 ][ transition 1->2 ] ... [ hold 8 ]
 
-   During a hold the scene is settled and still live (the simulation keeps
-   running) so the text beside it can be read and its links used. During a
-   transition the film moves the camera and changes the objects' configuration.
-   Everything is reversible because the picture is a pure function of s.
+   During a hold the scene is settled and LIVE: its simulation runs, its controls and
+   its picture take input, and whatever the visitor changes is simply there. During a
+   transition the film moves the camera and the scenes' input is switched off
+   (PF.film.live is -1), so a stray touch cannot edit a scene that is on its way out.
+   A scene keeps its state (a truss that was edited, a constellation) when the visitor
+   leaves and comes back, because the simulations are not owned by the film.
+   The picture is a pure function of s and of those simulations, so scrolling back
+   is always possible.
 
    main.js writes PF.film.target from the scroll position. The film follows it
    with a little damping so movement has weight, and snaps when paused.
@@ -23,9 +28,9 @@
   'use strict';
   var PF = global.PF, U = PF.util, G = PF.g3d, clamp = U.clamp, lerp = U.lerp, smooth = U.smooth;
 
-  var ORDER = ['home', 'bridge', 'wind', 'truss', 'sandbox', 'gravity', 'orbital', 'sat', 'amc', 'calc', 'finale'];
-  var HOLD = [0.32, 0.46, 0.46, 0.46, 0.46, 0.46, 0.46, 0.46, 0.46, 0.46, 0.7];     // stable viewing, in stage heights
-  var TRANS = [0.85, 0.95, 0.9, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85];        // between scene i and i + 1
+  var ORDER = ['home', 'bridge', 'wind', 'truss', 'sandbox', 'planets', 'orbital', 'learn', 'finale'];
+  var HOLD = [0.32, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.8];                       // settled and live, in stage heights: long enough to use the scene
+  var TRANS = [0.85, 0.95, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85];                    // between scene i and i + 1
 
   /* ---------- timeline ---------- */
   var TL = { hold: [], trans: [], total: 0 };
@@ -61,7 +66,7 @@
     order: ORDER, TL: TL, target: 0, cur: 0, info: { i: 0, u: 0 }, locate: locate, weights: weights,
     sceneCenter: function (i) { return (TL.hold[i][0] + TL.hold[i][1]) / 2; },
     snap: function () { F.cur = F.target; },
-    onUpdate: null, transitions: [], debug: {}
+    live: -1, scenes: {}, onUpdate: null, transitions: [], debug: {}
   };
 
   /* ---------- a placeholder for any scene that is not defined (never shown in the finished site) ---------- */
@@ -72,6 +77,12 @@
     };
   }
 
+  /* which scene takes input: only a settled one. The panels follow, so a control in a scene that is leaving does nothing. */
+  function setLive(i) {
+    if (F.live === i) return;
+    F.live = i; if (PF.labs && PF.labs.setLive) PF.labs.setLive(i);
+  }
+
   /* ---------- the film visual ---------- */
   PF.visuals.film = function () {
     var shared = PF.BridgeModel ? PF.BridgeModel() : null, scenes = [], views = [], t = 0, lastW = 0, lastH = 0, frameNo = 0;
@@ -79,6 +90,7 @@
       var f = PF.scenes[name];
       scenes.push(f ? f({ model: shared }) : stub(name));
     });
+    scenes.forEach(function (sc, i) { F.scenes[ORDER[i]] = sc; });
 
     function init(w, h) {
       lastW = w; lastH = h;
@@ -111,6 +123,7 @@
       if (w !== lastW || h !== lastH) init(w, h);
       var loc = locate(F.cur); F.info = loc;
       var i = loc.i, u = loc.u, A = scenes[i], B = scenes[i + 1], i2;
+      setLive(u <= 0 ? i : -1);
       for (i2 = 0; i2 < views.length; i2++) { views[i2].t = t; views[i2].m = m; }
       if (u <= 0) {
         A.draw(ctx, views[i], {});
@@ -136,6 +149,7 @@
   PF.visuals.still = function (opts) {
     var make = PF.scenes[opts.key], sc = make ? make({}) : stub(opts.key), V = null;
     return {
+      scene: sc,                                                                // so pointer input on a row can reach the scene
       init: function (w, h) { V = PF.makeView(w, h, sc.side, 'still'); if (sc.init) sc.init(V); },
       advance: function (dt, m) { if (sc.advance) sc.advance(dt, m); },
       draw: function (ctx, w, h, t, dt, m) {

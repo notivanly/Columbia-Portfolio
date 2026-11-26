@@ -22,12 +22,15 @@
     if (canvas._host && PF.paused) canvas._host.refresh();
     else if (PF.start) PF.start();
   }
-  I.repaint = function (canvas) { repaint(canvas || I.canvas); };
+  I.canvases = [];
+  I.repaint = function (canvas) {                                           // one canvas, or (from a control panel) every canvas that takes input
+    if (canvas) repaint(canvas); else I.canvases.forEach(repaint);
+  };
 
   /* resolve() returns the scene that is live on this canvas, or null */
   I.attach = function (canvas, resolve) {
     var drag = null, TAP_MS = 600, TAP_PX = 9;
-    I.canvas = I.canvas || canvas;
+    I.canvas = I.canvas || canvas; I.canvases.push(canvas);
     function scene() { var s = resolve(); return s && s.input ? s : null; }
 
     canvas.addEventListener('pointerdown', function (e) {

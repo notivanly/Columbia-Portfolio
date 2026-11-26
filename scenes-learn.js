@@ -15,7 +15,7 @@
   var PF = global.PF, U = PF.util, G = PF.g3d, S = PF.scenes, TAU = U.TAU, clamp = U.clamp, lerp = U.lerp, smooth = U.smooth, A = U.A;
 
   var TOOLS = [
-    { id: 'sat',   name: 'SAT Question Bank Tracker', host: 'Chrome Web Store', cap: 'Illustration of the idea, not a screenshot. Click a badge to change it.' },
+    { id: 'sat',   name: 'SAT Question Bank Tracker', host: 'Chrome Web Store', cap: 'Illustration of the idea, not a screenshot. Click a badge to change it.', capS: 'Illustration, not a screenshot. Tap a badge.' },
     { id: 'amc',   name: 'AMC Practice',              host: 'notivanly.github.io/AMCPRactice', img: 'assets/learn/amc-practice.webp', cap: 'Capture of the site.' },
     { id: 'calc',  name: 'Calculus III Visualizer',   host: 'notivanly.github.io/Calculus-III-Visualizer', img: 'assets/learn/calculus-iii.webp', cap: 'Capture of the site.' },
     { id: 'atlas', name: 'AP Atlas',                  host: 'notivanly.github.io/AP-Atlas', img: 'assets/learn/ap-atlas.webp', cap: 'Capture of the site.' }
@@ -125,7 +125,7 @@
       if (!o.nolabels) {
         var cy = W.y + W.h + (V.lod ? 16 : 20);
         U.text(ctx, tool.name, W.x + 2, cy, V.lod ? 13 : 16, '#fff', 'left', true);
-        U.text(ctx, tool.cap, W.x + 2, cy + (V.lod ? 15 : 19), V.lod ? 10 : 12, 'rgba(245,245,242,0.74)', 'left', true);
+        U.text(ctx, V.lod && tool.capS ? tool.capS : tool.cap, W.x + 2, cy + (V.lod ? 15 : 19), V.lod ? 10 : 12, 'rgba(245,245,242,0.74)', 'left', true);
         var k, n = TOOLS.length;                                                   // which of the four is showing
         for (k = 0; k < n; k++) { ctx.fillStyle = TOOLS[k].id === Lr.tool ? A(1) : 'rgba(255,255,255,0.25)'; ctx.beginPath(); ctx.arc(W.x + W.w - 8 - (n - 1 - k) * 14, cy - 4, TOOLS[k].id === Lr.tool ? 4 : 3, 0, TAU); ctx.fill(); }
       }

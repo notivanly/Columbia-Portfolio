@@ -17,7 +17,7 @@
   function rr(ctx, x, y, w, h, r) { if (ctx.roundRect) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); } else { ctx.beginPath(); ctx.rect(x, y, w, h); } }
 
   S.sandbox = function () {
-    var st = { sc: 1, ox: 0, oy: 0, touched: false, kind: 'ball', arr: null, trail: [], trailBody: null, V: null };
+    var st = { armed: false, sc: 1, ox: 0, oy: 0, touched: false, kind: 'ball', arr: null, trail: [], trailBody: null, V: null };
     var coarse = global.matchMedia && global.matchMedia('(pointer: coarse)').matches;
 
     function frame(V) {
@@ -28,6 +28,7 @@
     function toW(F, sx, sy) { return [(sx - F.ox) / F.sc, (F.oy - sy) / F.sc]; }
 
     function advance(dt) {
+      if (st.V && st.V.mode === 'film' && !st.armed) { if (PF.film.live === PF.film.order.indexOf('sandbox')) st.armed = true; else return; }     // hold the first pose until the scene is settled
       Ph.step(dt);
       var b = Ph.hot;                                                   // a faint trail behind the body you last touched, so a throw can be read
       if (b !== st.trailBody) { st.trailBody = b; st.trail.length = 0; }
@@ -145,6 +146,11 @@
       id: 'sandbox', sim: Ph, side: 1, init: function () {}, advance: advance, draw: draw, input: input, st: st,
       room: room,
       anchor: function (V) { var r = room(V); return { x: r.x + r.w / 2, y: r.y + r.h / 2, r: Math.min(r.w, r.h) / 2 }; },
+      focus: function (V) {                                              // the body you last touched: where a transition aims
+        var F = frame(V), b = Ph.hot, a;
+        if (!b) { a = room(V); return { x: a.x + a.w / 2, y: a.y + a.h / 2, r: Math.min(a.w, a.h) / 2 }; }
+        var p = toS(F, b.x, b.y); return { x: p[0], y: p[1], r: Math.max(6, (b.r || Math.max(b.hx, b.hy)) * F.sc) };
+      },
       setKind: function (k) { st.kind = k; }, touched: function () { st.touched = true; }, resetHint: function () { st.touched = false; }
     };
   };

@@ -155,7 +155,7 @@ ok('challenge: reaching the 35,786 km orbit with two burns completes it; sitting
   assert.ok(O.done, 'done; apo ' + O.elements().apo.toFixed(0) + ' peri ' + O.elements().peri.toFixed(0)); console.log('        transfer cost ' + Math.round(O.dv) + ' m/s (theory ' + Math.round((dv1 + dv2) * 1000) + ' m/s)'); near(O.dv, (dv1 + dv2) * 1000, 120);
 });
 ok('challenge: escape completes once the craft is unbound and far away', () => {
-  O.setBody('earth'); O.setAlt(400); O.setV(1.45); O.setChallenge(2); O.launch(); O.setWarp(1000); for (let i = 0; i < 400 && !O.done; i++) O.step(0.05); assert.ok(O.done || O.status === 'escaped');
+  O.setBody('earth'); O.setAlt(400); O.setV(1.45); O.setChallenge(2); O.launch(); O.setWarp(1000); for (let i = 0; i < 400 && !O.done; i++) O.step(0.05); assert.ok(!O.done, 'no burn has been made, so nothing is complete yet'); assert.ok(O.burn(1)); for (let i = 0; i < 400 && !O.done; i++) O.step(0.05); assert.ok(O.done || O.status === 'escaped');
   O.setChallenge(0);
 });
 ok('changing the starting altitude or speed only moves the craft while it is on the pad', () => {

@@ -228,3 +228,129 @@ html.film-on .film-bar { position: absolute; left: 0; right: 0; bottom: 0; z-ind
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }
+
+/* ==========================================================================
+   EXPERIMENT PANELS
+   Real controls (buttons, sliders, menus) beside each picture. They are
+   ordinary page elements: readable labels, native keyboard use, visible focus.
+   Without JavaScript they are not shown (nothing would drive them).
+   ========================================================================== */
+.lab { display: none; margin-top: .9rem; }
+html.js .lab { display: block; }
+.lab[data-live="0"] { opacity: .6; }
+html.film-on .lab[data-live="0"] { pointer-events: none; }
+.lab-row { display: flex; flex-direction: column; gap: .35rem; margin-top: .75rem; }
+.lab-l { font-size: .78rem; line-height: 1.3; color: var(--ink-3); letter-spacing: .02em; }
+.lab-o { font-family: var(--mono); font-size: .74rem; color: var(--accent); margin-left: .35rem; }
+.lab-rng { display: flex; flex-direction: column; gap: .15rem; min-width: 0; }
+.lab-rng input[type="range"] { width: 100%; height: 30px; accent-color: var(--accent); background: transparent; cursor: pointer; }
+.lab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .5rem 1rem; margin-top: .7rem; }
+.lab-grid .lab-sel { min-width: 0; }
+.lab-sel { display: flex; flex-direction: column; gap: .25rem; }
+.lab-sel select { width: 100%; min-height: 40px; padding: 0 .6rem; font: inherit; font-size: .875rem; color: #fff; background: var(--panel); border: 1px solid var(--line-2); border-radius: 8px; }
+.lab-btns { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; margin-top: .75rem; }
+.lab-btns .lab-row { margin-top: 0; flex-direction: row; align-items: center; gap: .5rem; }
+.seg { display: flex; flex-wrap: wrap; gap: .35rem; }
+.seg button, .chip { display: inline-flex; align-items: center; justify-content: center; gap: .35rem; min-height: 40px; padding: 0 .9rem; font-size: .875rem; line-height: 1.15; color: #fff; background: rgba(255,255,255,.03); border: 1px solid var(--line-2); border-radius: 999px; transition: background .15s ease, border-color .15s ease, color .15s ease; text-align: center; }
+.seg button:hover:not(:disabled), .chip:hover:not(:disabled) { border-color: var(--accent); background: rgba(142,201,255,.1); }
+.seg button[aria-pressed="true"], .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.seg button:disabled, .chip:disabled { opacity: .4; cursor: default; }
+.chip.sq { width: 44px; padding: 0; font-size: 1.1rem; }
+.seg.inline { flex-wrap: nowrap; }
+/* thumbnails: a small picture above its label, with a clear selected state */
+.seg.thumbs button { flex-direction: column; gap: .2rem; min-width: 60px; padding: .4rem .5rem .35rem; border-radius: 12px; font-size: .75rem; }
+.seg.thumbs button svg { width: 44px; height: 26px; fill: rgba(255,255,255,.07); stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.seg.thumbs button svg .thin { fill: none; stroke-width: 1.1; opacity: .7; } .seg.thumbs button svg .fillbg { fill: var(--bg); }
+.seg.thumbs button[aria-pressed="true"] { background: rgba(142,201,255,.16); border-color: var(--accent); color: #fff; box-shadow: inset 0 0 0 1px var(--accent); }
+.seg.thumbs.wide { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .4rem; }
+.seg.thumbs.wide button { min-width: 0; padding: .3rem .3rem .35rem; }
+.seg.thumbs.wide button svg, .seg.thumbs.wide button img { width: 100%; height: auto; aspect-ratio: 8 / 5; border-radius: 6px; object-fit: cover; fill: none; stroke: none; }
+.seg.thumbs.wide button span { font-size: .68rem; line-height: 1.2; }
+.lab-out { margin-top: .4rem; font-size: .8125rem; line-height: 1.45; color: var(--ink-2); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.lab-out.strong { color: #fff; font-size: .9rem; }
+.lab-out.small { font-size: .74rem; color: var(--ink-3); }
+.lab-out.warn { color: #ffb88f; }
+.lab-out:empty, .lab-status:empty { display: none; }
+.lab-status { margin-top: .5rem; font-size: .8125rem; line-height: 1.4; color: var(--ink-2); }
+.lab-status[data-urgent="1"] { color: #ffb88f; font-weight: 500; }
+.lab-more { margin-top: .7rem; border-top: 1px solid var(--line); }
+.lab-more summary { display: flex; align-items: center; justify-content: space-between; min-height: 44px; cursor: pointer; list-style: none; font-size: .875rem; font-weight: 500; color: #fff; }
+.lab-more summary::-webkit-details-marker { display: none; }
+.lab-more summary::after { content: "+"; font-family: var(--mono); color: var(--accent); }
+.lab-more[open] summary::after { content: "\2212"; }
+.nudge { display: flex; gap: .35rem; margin-top: .6rem; }
+.facts dl { display: grid; gap: .3rem; margin-top: .7rem; padding: .6rem .75rem; font-size: .8125rem; line-height: 1.4; background: rgba(255,255,255,.04); border: 1px solid var(--line); border-radius: 10px; }
+.facts dl > div { display: grid; grid-template-columns: 7.2rem minmax(0, 1fr); gap: .6rem; }
+.facts dt { color: var(--ink-3); } .facts dd { color: #fff; }
+.tool[hidden] { display: none; }
+.tool h4 { margin-top: 1rem; font-size: 1.15rem; line-height: 1.2; font-weight: 500; color: #fff; }
+.tool .p-desc { margin-top: .4rem; }
+
+/* the ending: a strip of controls above the sky, which is the picture itself */
+#build-your-own-constellation { --ar: 16 / 9; }
+.sky-part { max-width: none; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); column-gap: clamp(24px, 3.5vw, 48px); align-items: start; }
+.sky-part .copy { grid-column: 1; grid-row: 1; } .sky-part .preview { grid-column: 2; grid-row: 1; }
+.sky-part .sky-hint { margin-top: .5rem; }
+@media (max-width: 860px) { .sky-part { grid-template-columns: minmax(0, 1fr); } .sky-part .copy, .sky-part .preview { grid-column: 1; grid-row: auto; } }
+html.film-on .sky-part { justify-content: center; align-items: flex-start; padding: .7rem var(--pad) 0; display: flex; }
+html.film-on .sky-part .copy { --tw: min(62rem, 100%); width: var(--tw); display: flex; flex-wrap: wrap; align-items: center; gap: .3rem 1.1rem; }
+html.film-on .sky-part h2 { font-size: 1.2rem; flex: none; margin: 0; }
+html.film-on .sky-part .sky-hint { display: none; }
+html.film-on .sky-part .lab { margin-top: 0; flex: 1 1 22rem; display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .8rem; }
+html.film-on .sky-part .lab > * { margin-top: 0; }
+html.film-on .sky-part .lab-btns { margin-top: 0; }
+html.film-on .sky-part .lab-more { border-top: 0; flex: 0 0 auto; }
+html.film-on .sky-part .lab-more summary { display: inline-flex; gap: .5rem; min-height: 40px; padding: 0 .85rem; border: 1px solid var(--line-2); border-radius: 999px; }
+html.film-on .sky-part .lab-more[open] { flex: 1 1 100%; }
+html.film-on .sky-part .lab-more[open] summary { margin-bottom: .4rem; }
+html.film-on .sky-part .lab-more-body { padding: .1rem .75rem .75rem; background: rgba(14,15,16,.94); border: 1px solid var(--line); border-radius: 10px; }
+html.film-on .sky-part .lab-out.small { flex: 1 1 100%; }
+.lab > .lab-sel, .lab > .lab-grid { margin-top: .7rem; }
+@media (hover: none), (pointer: coarse) { .seg button, .chip, .lab-sel select { min-height: 44px; } }
+@media (prefers-reduced-motion: reduce) { .seg button, .chip { transition: none; } }
+
+/* ---------- film on a desktop: the side column is dense, so it is kept compact enough to show without its own scrolling ---------- */
+@media (min-width: 861px) {
+  html.film-on .scene:not(.hero) .p-desc { margin-top: .45rem; font-size: 1rem; line-height: 1.45; }
+  html.film-on .scene:not(.hero) h2 { font-size: clamp(1.4rem, 1.9vw, 1.75rem); }
+  html.film-on .scene:not(.hero) .hint { margin-top: .3rem; font-size: .875rem; line-height: 1.35; }
+  html.film-on .scene:not(.hero) .actions { margin-top: .75rem; gap: .45rem; }
+  html.film-on .scene:not(.hero) .btn { min-height: 42px; padding: .45rem 1.05rem; font-size: .92rem; }
+  html.film-on .scene .lab { margin-top: .5rem; }
+  html.film-on .scene .lab-row, html.film-on .scene .lab-grid, html.film-on .scene .lab > .lab-sel { margin-top: .5rem; }
+  html.film-on .scene .lab-btns { margin-top: .5rem; }
+  html.film-on .scene .lab-out { margin-top: .3rem; font-size: .8rem; line-height: 1.4; }
+  html.film-on .scene .tech { margin-top: .4rem; } html.film-on .scene .tech summary { min-height: 40px; }
+  html.film-on .scene .lab-more summary { min-height: 40px; }
+}
+@media (min-width: 861px) and (hover: hover) {
+  html.film-on .scene .seg button, html.film-on .scene .chip { min-height: 34px; padding: 0 .75rem; font-size: .84rem; }
+  html.film-on .scene .seg.thumbs button { min-height: 0; padding: .3rem .4rem .25rem; }
+  html.film-on .scene .lab-sel select { min-height: 36px; }
+  html.film-on .scene .lab-rng input[type="range"] { height: 24px; }
+}
+@media (min-width: 861px) and (max-height: 780px) {
+  html.film-on .scene:not(.hero) .p-desc { font-size: .94rem; line-height: 1.38; }
+  html.film-on .scene:not(.hero) h2 { font-size: 1.35rem; }
+  html.film-on .scene:not(.hero) .hint { display: none; }
+}
+
+/* ---------- a phone held upright ---------- */
+@media (max-width: 860px) and (orientation: portrait) {
+  /* the panel scrolls, so its lower edge fades to say so */
+  html.film-on .scene:not(.finale-part):not(.sky-part) .copy { padding-bottom: 28px; -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 30px), transparent); mask-image: linear-gradient(180deg, #000 calc(100% - 30px), transparent); }
+  html.film-on .scene:not(.finale-part):not(.sky-part) .copy:has(details[open]) { -webkit-mask-image: none; mask-image: none; }
+  /* the ending, top to bottom: the controls for the sky, the sky, About, Contact */
+  html.film-on .sky-part { padding: .5rem var(--pad) 0; align-items: flex-start; }
+  html.film-on .sky-part .copy { max-height: none; overflow: visible; -webkit-mask-image: none; mask-image: none; padding: 0; }
+  html.film-on .sky-part .lab > .lab-l, html.film-on .sky-part .lab .lab-row > .lab-l { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  html.film-on .sky-part .lab-out.small { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  html.film-on #about { align-items: flex-end; padding-top: 0; padding-bottom: 15.2rem; }
+  html.film-on #about .copy { max-height: none; overflow: visible; padding: 0; -webkit-mask-image: none; mask-image: none; }
+  html.film-on #about h2, html.film-on #contact h2 { font-size: 1.2rem; }
+  html.film-on #about .prose { font-size: .86rem; line-height: 1.42; } html.film-on #about .prose p + p { margin-top: .35rem; }
+  html.film-on #contact { padding-bottom: 5.6rem; }
+  html.film-on #contact .copy { padding: 0; -webkit-mask-image: none; mask-image: none; }
+  html.film-on #contact .contact-list { margin-top: .4rem; } html.film-on #contact .contact-list a { min-height: 44px; padding: .2rem 0; }
+  html.film-on #contact .contact-list .v { font-size: 1rem; }
+}

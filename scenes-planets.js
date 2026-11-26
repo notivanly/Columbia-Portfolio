@@ -31,9 +31,12 @@
     var rnd = U.rng(hash(key) % 90000 + 7), L = { kind: sysId === 'trappist' ? 'plain' : (KIND[p.name] || 'plain'), things: [], bands: [] }, i, n;
     if (L.kind === 'cratered') for (i = 0; i < 16; i++) { var a = rnd() * TAU, d = Math.sqrt(rnd()) * 0.86; L.things.push([Math.cos(a) * d, Math.sin(a) * d, 0.05 + rnd() * 0.1]); }
     if (L.kind === 'earth' || L.kind === 'mars' || L.kind === 'ocean' || L.kind === 'lava') {
-      n = L.kind === 'earth' ? 7 : 6;
-      for (i = 0; i < n; i++) { var a2 = rnd() * TAU, d2 = Math.sqrt(rnd()) * 0.62, s = 0.16 + rnd() * 0.2; L.things.push([Math.cos(a2) * d2, Math.sin(a2) * d2, s, rnd()]); }
-      for (i = 0; i < 5; i++) L.bands.push([-0.7 + i * 0.35 + (rnd() - 0.5) * 0.15, (rnd() - 0.5) * 0.4, 0.3 + rnd() * 0.4]);       // cloud streaks: latitude, bend, length
+      n = L.kind === 'earth' ? 6 : 5;
+      for (i = 0; i < n; i++) {                                                                      // a landmass: a cluster of small discs, so the coast is irregular
+        var a2 = rnd() * TAU, d2 = Math.sqrt(rnd()) * 0.6, cx = Math.cos(a2) * d2, cy = Math.sin(a2) * d2, tone = rnd(), j, cr = 0.1 + rnd() * 0.14;
+        for (j = 0; j < 9; j++) { var a3 = rnd() * TAU, d3 = Math.sqrt(rnd()) * cr * 1.6; L.things.push([cx + Math.cos(a3) * d3, cy + Math.sin(a3) * d3 * 0.8, 0.045 + rnd() * 0.075, tone]); }
+      }
+      for (i = 0; i < 9; i++) L.bands.push([-0.8 + rnd() * 1.6, (rnd() - 0.5) * 0.5, 0.18 + rnd() * 0.3, (rnd() - 0.5) * 1.1]);       // cloud streaks: latitude, bend, length, sideways position
     }
     if (L.kind === 'bands' || L.kind === 'ice' || L.kind === 'clouds') { n = L.kind === 'bands' ? 11 : 6; for (i = 0; i < n; i++) L.bands.push([-1 + (i + rnd() * 0.5) * 2 / n, (rnd() - 0.5) * 0.25, 0.5 + rnd() * 0.5, rnd() < 0.5 ? 0.82 : 1.14]); }
     return (LOOKS[key] = L);
@@ -57,13 +60,14 @@
       } else if (L.kind === 'cratered') {
         L.things.forEach(function (c) { ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.beginPath(); ctx.arc(x + c[0] * r, y + c[1] * r, c[2] * r, 0, TAU); ctx.fill(); ctx.strokeStyle = 'rgba(255,255,255,0.12)'; ctx.lineWidth = Math.max(0.8, r * 0.02); ctx.stroke(); });
       } else {
-        var land = L.kind === 'earth' ? [[104, 138, 84], [150, 136, 96]] : L.kind === 'mars' ? [[110, 62, 48], [150, 92, 66]] : L.kind === 'lava' ? [[70, 34, 28], [250, 150, 70]] : [[210, 230, 240], [160, 200, 214]];
+        var land = L.kind === 'earth' ? [[84, 118, 76], [128, 116, 82]] : L.kind === 'mars' ? [[96, 58, 46], [150, 92, 66]] : L.kind === 'lava' ? [[62, 30, 26], [250, 150, 70]] : [[214, 232, 242], [166, 204, 218]];
         L.things.forEach(function (b) {
-          ctx.fillStyle = G.shade(land[b[3] < 0.5 ? 0 : 1], 1, L.kind === 'ocean' ? 0.4 : 0.9); ctx.beginPath(); ctx.arc(x + b[0] * r, y + b[1] * r, b[2] * r, 0, TAU);
-          ctx.arc(x + b[0] * r + b[2] * r * 0.8, y + b[1] * r + b[2] * r * 0.3, b[2] * r * 0.7, 0, TAU); ctx.fill();
+          ctx.fillStyle = G.shade(land[b[3] < 0.5 ? 0 : 1], 1, L.kind === 'ocean' ? 0.45 : L.kind === 'mars' ? 0.75 : 0.94); ctx.beginPath(); ctx.arc(x + b[0] * r, y + b[1] * r, b[2] * r, 0, TAU); ctx.fill();
         });
-        ctx.strokeStyle = L.kind === 'lava' ? 'rgba(255,190,120,0.35)' : 'rgba(255,255,255,0.36)'; ctx.lineWidth = r * 0.06; ctx.lineCap = 'round';
-        L.bands.forEach(function (b) { ctx.beginPath(); ctx.moveTo(x - r * b[2], y + b[0] * r); ctx.quadraticCurveTo(x, y + b[0] * r + b[1] * r, x + r * b[2], y + b[0] * r - b[1] * r * 0.4); ctx.stroke(); });
+        if (L.kind !== 'mars') {
+          ctx.strokeStyle = L.kind === 'lava' ? 'rgba(255,190,120,0.3)' : 'rgba(255,255,255,0.3)'; ctx.lineWidth = r * 0.04; ctx.lineCap = 'round';
+          L.bands.forEach(function (b) { var cx0 = x + b[3] * r, cy0 = y + b[0] * r; ctx.beginPath(); ctx.moveTo(cx0 - r * b[2], cy0); ctx.quadraticCurveTo(cx0, cy0 + b[1] * r, cx0 + r * b[2], cy0 - b[1] * r * 0.4); ctx.stroke(); });
+        }
         if (L.kind === 'mars' || L.kind === 'earth') { ctx.fillStyle = 'rgba(245,248,252,0.85)'; ctx.beginPath(); ctx.ellipse(x, y - r * 0.97, r * 0.38, r * 0.17, 0, 0, TAU); ctx.fill(); }
       }
       g = ctx.createRadialGradient(x - r * 0.34, y - r * 0.4, r * 0.1, x, y, r * 1.02);                    // put the sphere's shading back over the features
