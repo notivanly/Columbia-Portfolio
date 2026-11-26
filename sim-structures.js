@@ -96,7 +96,7 @@
   };
 
   function BridgeSim() {
-    var n = 8, L = 16, H = 2.6, Wd = 3.6, T = U.warren(n, L, H), dx = L / n;
+    var n = 8, L = 16, H = 3.4, Wd = 3.6, T = U.warren(n, L, H), dx = L / n;
     var loads = new Float64Array(T.nodes.length * 2);
     var S = {
       n: n, L: L, H: H, Wd: Wd, T: T, EA: 6.0e5, VEH: VEH,

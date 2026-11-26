@@ -36,8 +36,8 @@
   function R(a) { return 'rgba(255,138,92,' + a + ')'; }          // warm tone, used for compression and Mars
   var MONO = '"Martian Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace';
 
-  function text(ctx, str, x, y, size, color, align) {
-    if (PF.hideNumbers && /[0-9]/.test(str)) return;        // previews are illustrations: never show invented readings
+  function text(ctx, str, x, y, size, color, align, real) {
+    if (PF.hideNumbers && !real && /[0-9]/.test(str)) return;        // previews are illustrations: never show invented readings (real = a number the simulation computed)
     ctx.font = '500 ' + size + 'px ' + MONO;
     ctx.fillStyle = color;
     ctx.textAlign = align || 'left';
